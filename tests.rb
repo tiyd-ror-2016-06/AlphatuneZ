@@ -18,15 +18,18 @@ class UserTests < Minitest::Test
     MyApp
   end
 
+
   def setup
     MyApp::LOGGED_IN_USERS.clear
     User.delete_all
     Song.delete_all
   end
 
+
   def login_as user
     MyApp::LOGGED_IN_USERS.push user
   end
+
 
   def test_can_fake_logged_in_requests
     user = User.create! email: "art@example.com", password: "password"
@@ -39,11 +42,13 @@ class UserTests < Minitest::Test
     assert_equal "art@example.com", body["email"]
   end
 
+
   def test_isnt_logged_in_unless_you_say_so
     response = get "/api/me"
 
     assert_equal 401, response.status
   end
+
 
   def fake_song
     {"title" => "songblah",
@@ -75,7 +80,6 @@ class UserTests < Minitest::Test
 
 
   def test_user_can_delete_songs
-    # header "Authorization", user.email #or is it user.email or user.spotify_name or #user.spotify_id?
     user = User.create! email: "art@example.com", password: "password"
     login_as user
     song1 = Song.create! title: "songtitle", artist: "songartist", suggester_id: user.id
@@ -90,6 +94,32 @@ class UserTests < Minitest::Test
   end
 
 
+#I think i have the address for these next post/delete requests right? Not entirely sure...
+  def test_user_can_save_songs_to_their_own_page
+    user = User.create! email: "dootdoot@example.com", password: "password"
+    login_as user
+    assert_equal 0, Song.count
+
+    r = post "/api/:user", body = fake_song
+
+    assert_equal 200, r.status
+    assert_equal 1, Song.count
+  end
+
+
+  def test_user_can_delete_songs_fron_their_own_page
+    user = User.create! email: "art@example.com", password: "password"
+    login_as user
+    song1 = Song.create! title: "songtitle", artist: "songartist", suggester_id: user.id
+    song2 = Song.create! title: "songtitle", artist: "songartist", suggester_id: user.id
+
+    assert_equal 2, Song.count
+
+    r = delete "/api/:user", body = song1.to_json
+
+    assert_equal 200, r.status
+    assert_equal 1, Song.count
+  end
 
 
 
