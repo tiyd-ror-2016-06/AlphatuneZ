@@ -29,17 +29,10 @@
 
 <h2><%= @songs.count %> songs</h2>
 
-<h3>A</h3>
-<%= @songs.first.title %>
 
-<!-- <div class="newsong">
-  <p>Suggest a new song</p>
-  <form action="/userinfo" method="post">
-    <ul class="songform">
-      <li><input type="text" placeholder="Title" name="title"></li>
-      <li> <input type="text" placeholder="Artist" name="artist"></li>
-      <li><input type="submit"></li>
-    </ul>
-  </form>
-
-</div> -->
+<% @songs.each do |l, a| %>
+<h3><%= "#{l}" %></h3>
+<% a.each do |s| %>
+<p><%= "Title: #{s["title"]}, Artist: #{s["artist"]}" %></p>
+<% end %>
+<% end %>

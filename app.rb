@@ -34,7 +34,9 @@ class MyApp < Sinatra::Base
   end
 
   get '/dashboard' do
-    @songs = #[ Song.new(title: "First song"), Song.new(title: "Second song") ]
+    list = SongList.new
+    @songs = list.get_list
+    # binding.pry
     erb :dashboard
   end
 

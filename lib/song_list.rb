@@ -8,7 +8,7 @@ class SongList
     @songs = Song.all
   end
 
-  def categorize
+  def categorize song
     if song.standardized_title[0].nil?
       "#"
     elsif song.standardized_title[0].to_i.to_s != song.standardized_title[0]
