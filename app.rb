@@ -6,6 +6,9 @@ require "./db/setup"
 require "./lib/all"
 
 class MyApp < Sinatra::Base
+
+  LOGGED_IN_USERS = []
+
   set :logging, true
   set :show_exceptions, false
 
@@ -25,6 +28,10 @@ class MyApp < Sinatra::Base
       # raise e
       puts e.message
     end
+  end
+
+  def current_user
+    LOGGED_IN_USERS.last
   end
 
   run! if $PROGRAM_NAME == __FILE__
