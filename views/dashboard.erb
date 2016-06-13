@@ -1,7 +1,45 @@
 <!--navagation bar  -->
-<ul>
+<ul class= "bar">
   <li><a href="#home">Home</a></li>
   <li><a href="#newsong">Suggest New Song</a></li>
   <li><a href="#playlist">Weekly Playlist</a></li>
   <li style="float:right"><a class="active" href="#logout">Logout</a></li>
 </ul>
+
+<div>
+  <ul class=song_letters>
+
+  </ul>
+</div>
+
+<div class="login-modal">
+    <div class="login-container">
+
+        <div class=login>
+            <input id="username-login" placeholder="title" name="title"></input>
+        </div>
+        <div>
+            <input type="password"id="password-login" placeholder="artist"></input>
+        </div>
+        <div>
+            <!-- <input type="submit" class="submit"> -->
+            <input type="submit" class="submit">
+    </div>
+</div>
+
+<h2><%= @songs.count %> songs</h2>
+
+<h3>A</h3>
+<%= @songs.first.title %>
+
+<!-- <div class="newsong">
+  <p>Suggest a new song</p>
+  <form action="/userinfo" method="post">
+    <ul class="songform">
+      <li><input type="text" placeholder="Title" name="title"></li>
+      <li> <input type="text" placeholder="Artist" name="artist"></li>
+      <li><input type="submit"></li>
+    </ul>
+  </form>
+
+</div> -->

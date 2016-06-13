@@ -34,7 +34,9 @@ class MyApp < Sinatra::Base
   end
 
   get '/dashboard' do
+    @songs = #[ Song.new(title: "First song"), Song.new(title: "Second song") ]
     erb :dashboard
+  end
 
   def current_user
     LOGGED_IN_USERS.last

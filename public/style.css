@@ -8,9 +8,9 @@ h1 {
    padding: 10px;
 }
 
-.centered-container {
+.login-container {
   border: 1px solid grey;
-  height: 450px;
+  height: 250px;
   width: 350px;
   /*padding: 0%;*/
   margin: auto;
@@ -19,7 +19,7 @@ h1 {
 
 }
 /*navagation bar*/
-ul {
+.bar {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -32,14 +32,75 @@ li {
 }
 
 li a {
+    font-family: Century Gothic;
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
-
 /* Change the link color to #111 (black) on hover */
 li a:hover {
     background-color: #111;
 }
+
+#username-login {
+    /*margin-top: 4em;*/
+    /*padding-top: 15px;*/
+    padding: 7px;
+    letter-spacing: 5.5px;
+    display: block;
+    text-align: center;
+    margin: 0 9.4em;
+}
+#password-login {
+    /*padding-top: 15px;*/
+    padding: 7px;
+    visibility: visible;
+    letter-spacing: 5.5px;
+    display: block;
+    text-align: center;
+    margin: 0 9.4em;
+}
+
+.login {
+  margin-top: 4em;
+}
+
+.submit {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 23.3em;
+    height: 25px;
+    text-align: center;
+    background-color: #D5D5D5;
+    color: white;
+    /*border: none;*/
+    outline-style: none;
+  }
+
+  .newsong {
+    border: 1px solid grey;
+    height: 250px;
+    width: 350px;
+    padding: 7px;
+    visibility: visible;
+    letter-spacing: 5.5px;
+    display: block;
+    text-align: center;
+    margin: auto;
+  }
+
+ .songform{
+    list-style-type: none;
+    text-align: center;
+    /*font-family: Century Gothic;*/
+
+
+
+  }
+/*.active {
+    background-color: #4CAF50;
+}*/
