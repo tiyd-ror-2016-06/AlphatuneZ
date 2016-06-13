@@ -1,6 +1,7 @@
 require "sinatra/base"
 require "sinatra/json"
 require "rack/cors"
+require "date"
 
 require "./db/setup"
 require "./lib/all"
@@ -30,17 +31,26 @@ class MyApp < Sinatra::Base
   end
 
   post "/:user/:song/:vote" do
+  user = User.find(params[:user])
+  song = Song.find(params[:song])
   binding.pry
-    # if params[:user] == user.id && params[:song] == song.id
-    #   if params[:vote] == up
-    #     vote_val = 1
-    #   else
-    #     vote_val = -1
-    #   end
-    #   Vote.create!(user: user.id, song: song.id, vote: vote_val, placed_at: Date.time)
-    # else
-    #   status 404
-    # end
+    if user
+      if params[:vote] == "up"
+        vote_val = 1
+        binding.pry
+      else
+        vote_val = -1
+      end
+      v = Vote.create!(user: user.id, song: song.id, vote: vote_val, placed_at: DateTime.now)
+
+      binding.pry
+
+      v.to_json
+
+
+    else
+      status 404, json(error: "User not found")
+    end
   end
 
   def current_user
