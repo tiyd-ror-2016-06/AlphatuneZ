@@ -73,7 +73,7 @@ class UserTests < Minitest::Test
     assert_equal "User not found", body["error"]
 
   end
-focus
+
   def test_cannot_vote_if_song_does_not_exist
     user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
     login_as user
@@ -83,6 +83,9 @@ focus
     assert_equal 404, r.status
     assert_equal "Not Found", body["error"]
   end
+
+
+
 
 
 end
