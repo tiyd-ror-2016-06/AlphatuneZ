@@ -34,5 +34,15 @@ class MyApp < Sinatra::Base
     LOGGED_IN_USERS.last
   end
 
+
+  get "/api/me" do
+    if current_user
+      json current_user
+    else
+      status 401
+    end
+  end
+
+
   run! if $PROGRAM_NAME == __FILE__
 end

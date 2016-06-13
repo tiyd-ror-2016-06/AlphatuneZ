@@ -44,6 +44,7 @@ class UserTests < Minitest::Test
   end
 
 
+
 def test_user_can_post_songs
   header "Authorization", user.email #or is it user.email or user.spotify_name or #user.spotify_id?
   assert_equal 0, Song.count
@@ -63,5 +64,6 @@ end
 def test_user_can_only_post_spotify_song
 
 end
+
 
 end
