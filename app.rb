@@ -33,21 +33,15 @@ class MyApp < Sinatra::Base
   post "/:user/:song/:vote" do
   user = User.find(params[:user])
   song = Song.find(params[:song])
-  binding.pry
     if user
       if params[:vote] == "up"
         vote_val = 1
-        binding.pry
       else
         vote_val = -1
       end
       v = Vote.create!(user_id: user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
 
-      binding.pry
-
       v.to_json
-
-
     else
       status 404, json(error: "User not found")
     end
