@@ -27,5 +27,13 @@ class MyApp < Sinatra::Base
     end
   end
 
+  get '/' do
+    erb :login
+  end
+
+  get '/dashboard' do
+    erb :dashboard
+  end
+
   run! if $PROGRAM_NAME == __FILE__
 end
