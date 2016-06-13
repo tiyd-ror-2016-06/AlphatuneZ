@@ -3,9 +3,11 @@ source 'https://rubygems.org'
 
 gem 'activerecord'
 gem 'pry'
+gem 'rack-cors', require: 'rack/cors'
 gem 'rake'
-gem 'sinatra', require: false
+gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib'
+
 
 group :development do
   gem 'sqlite3'
@@ -17,5 +19,4 @@ end
 
 group :production do
   gem 'pg'
-  gem 'rack-cors', require: 'rack/cors'
 end
