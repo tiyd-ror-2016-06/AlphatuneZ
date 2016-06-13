@@ -29,7 +29,6 @@ class MyApp < Sinatra::Base
     end
   end
 
-<<<<<<< HEAD
   post "/:user/:song/:vote" do
   binding.pry
     # if params[:user] == user.id && params[:song] == song.id
@@ -44,7 +43,6 @@ class MyApp < Sinatra::Base
     # end
   end
 
-=======
   def current_user
     LOGGED_IN_USERS.last
   end
@@ -56,7 +54,6 @@ class MyApp < Sinatra::Base
       status 401
     end
   end
->>>>>>> master
 
   run! if $PROGRAM_NAME == __FILE__
 end
