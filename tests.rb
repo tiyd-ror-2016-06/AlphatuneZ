@@ -56,14 +56,14 @@ def test_user_can_post_songs
 end
 
 
-def test_user_cant_post_same_song_twice
-
-end
-
-
-def test_user_can_only_post_spotify_song
-
-end
+# def test_user_cant_post_same_song_twice
+#
+# end
+#
+#
+# def test_user_can_only_post_spotify_song
+#
+# end
 
 
 end

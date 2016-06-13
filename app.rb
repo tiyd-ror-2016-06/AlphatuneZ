@@ -44,5 +44,23 @@ class MyApp < Sinatra::Base
   end
 
 
+  post "/api/songs" do
+    begin
+      song = parsed_body
+    rescue
+      status 400
+      halt "Can't parse json: '#{body}'"
+    end
+    begin
+      Song.create!(title: song["title"], artist: artist["description"], suggester_id: current_user.id) #suggest_id hardcoded for testing
+    rescue
+      status 403
+      halt "Entry doesn't include Title, Artist, or Suggester ID"
+    end
+    200
+    json "Song added!"
+  end
+
+
   run! if $PROGRAM_NAME == __FILE__
 end
