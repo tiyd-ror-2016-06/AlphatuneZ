@@ -34,6 +34,13 @@ class MyApp < Sinatra::Base
     LOGGED_IN_USERS.last
   end
 
+  def parsed_body
+    begin
+      @parsed_body ||= JSON.parse request.body.read
+    rescue
+      halt 400
+    end
+  end
 
   get "/api/me" do
     if current_user
