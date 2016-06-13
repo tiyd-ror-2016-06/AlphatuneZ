@@ -6,15 +6,15 @@
   <li style="float:right"><a class="active" href="#logout">Logout</a></li>
 </ul>
 
+<!--padding  -->
 <div>
-  <ul class=song_letters>
-
+  <ul>
   </ul>
 </div>
 
+<!--add a new song  -->
 <div class="login-modal">
     <div class="login-container">
-
         <div class=login>
             <input id="username-login" placeholder="title" name="title"></input>
         </div>
@@ -22,13 +22,12 @@
             <input type="password"id="password-login" placeholder="artist"></input>
         </div>
         <div>
-            <!-- <input type="submit" class="submit"> -->
             <input type="submit" class="submit">
     </div>
 </div>
 
+<!--song titles/artist and letters  -->
 <h2><%= @songs.count %> songs</h2>
-
 
 <% @songs.each do |l, a| %>
 <h3><%= "#{l}" %></h3>

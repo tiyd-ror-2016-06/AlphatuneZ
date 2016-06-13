@@ -8,6 +8,23 @@ h1 {
    padding: 10px;
 }
 
+h2 {
+  font-family: Century Gothic;
+  text-align: center;
+   padding: 10px;
+}
+
+h3 {
+  font-family: Century Gothic;
+  text-align: center;
+   padding: 10px;
+}
+
+p {
+  font-family: Century Gothic;
+  text-align: center;
+}
+
 .login-container {
   border: 1px solid grey;
   height: 250px;
@@ -97,10 +114,9 @@ li a:hover {
     list-style-type: none;
     text-align: center;
     /*font-family: Century Gothic;*/
-
-
-
   }
+
+
 /*.active {
     background-color: #4CAF50;
 }*/
