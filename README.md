@@ -45,6 +45,10 @@ Spotify provides a web interface for accessing the API through the browser. No `
 
 #### Song Search
 
-- Header bears the authorization token in the form
-
-    `Bearer <token_here>`
+    GET /v1/search?q=Fireflies&type=track HTTP/1.1
+    Host: api.spotify.com
+    Accept: application/json
+    Content-Type: application/json
+    Accept-Encoding: gzip, deflate, compress
+    Authorization: Bearer Token_goes_here
+    User-Agent: Spotify API Console v0.1
