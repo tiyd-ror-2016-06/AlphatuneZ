@@ -6,6 +6,8 @@ require "./db/setup"
 require "./lib/all"
 
 class MyApp < Sinatra::Base
+  LOGGED_IN_USERS = []
+
   set :logging, true
   set :show_exceptions, false
 
@@ -27,6 +29,7 @@ class MyApp < Sinatra::Base
     end
   end
 
+<<<<<<< HEAD
   post "/:user/:song/:vote" do
   binding.pry
     # if params[:user] == user.id && params[:song] == song.id
@@ -41,6 +44,19 @@ class MyApp < Sinatra::Base
     # end
   end
 
+=======
+  def current_user
+    LOGGED_IN_USERS.last
+  end
+
+  get "/api/me" do
+    if current_user
+      json current_user
+    else
+      status 401
+    end
+  end
+>>>>>>> master
 
   run! if $PROGRAM_NAME == __FILE__
 end

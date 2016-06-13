@@ -10,21 +10,49 @@ Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new
 require 'rack/test'
 require './app'
 
+class UserTests < Minitest::Test
+  include Rack::Test::Methods
 
+  def app
+    MyApp
+  end
 
-focus
-def test_users_can_upvote_songs
-  song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock").first_or_create!
-  binding.pry
-  user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
-  post "/#{user.id}/#{song.id}/up"
-  binding.pry
-  assert_equal 1, song.votes.value
+  def setup
+    MyApp::LOGGED_IN_USERS.clear
+    User.delete_all
+  end
 
-end
+  def login_as user
+    MyApp::LOGGED_IN_USERS.push user
+  end
 
+  def test_can_fake_logged_in_requests
+    user = User.create! email: "art@example.com", password: "password"
+    login_as user
 
-def test_users_can_downvote_songs
+    response = get "/api/me"
+    assert_equal 200, response.status
+
+    body = JSON.parse response.body
+    assert_equal "art@example.com", body["email"]
+  end
+
+  def test_isnt_logged_in_unless_you_say_so
+    response = get "/api/me"
+
+    assert_equal 401, response.status
+  end
+
+  focus
+  def test_users_can_upvote_songs
+    song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock").first_or_create!
+    binding.pry
+    user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
+    post "/#{user.id}/#{song.id}/up"
+    binding.pry
+    assert_equal 1, song.votes.value
+
+  end
 
 
 end
