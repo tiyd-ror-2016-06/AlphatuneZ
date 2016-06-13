@@ -1,11 +1,13 @@
 require "./db/setup"
 require "./lib/all"
 
+[User, Song].each { |klass| klass.delete_all }
 
 user = User.create!(email: "fake@compuserve.com", password: "password")
 
 #A
-Song.create!(title: "A Winter's Tale",artist: "Queen",genre: "Rock", suggester_id: user.id)
+Song.create!(title: "Absolutely (Story of a Girl)",artist: "Nine Days",genre: "Pop", suggester_id: user.id)
+Song.create!(title: "Always",artist: "Saliva",genre: "Alternative", suggester_id: user.id)
 
 #B
 Song.create!(title: "Baby Got Back",artist: "Sir Mix-A-Lot",genre: "Rap", suggester_id: user.id)
@@ -15,9 +17,11 @@ Song.create!(title: "C.R.E.A.M.",artist: "Wu-Tang Clan",genre: "Rap", suggester_
 
 #D
 Song.create!(title: "Dead",artist: "My Chemical Romance",genre: "Emo", suggester_id: user.id)
+Song.create!(title: "Devil Went Down to Georgia",artist: "The Charlie Daniels Band",genre: "Country", suggester_id: user.id)
 
 #E
 Song.create!(title: "Empire State Of Mind",artist: "Jay-Z",genre: "Rap", suggester_id: user.id)
+Song.create!(title: "(Everything I Do) I Do It For You",artist: "Bryan Adams",genre: "Soundtrack", suggester_id: user.id)
 
 #F
 Song.create!(title: "Fancy",artist: "Iggy Azalea",genre: "Pop", suggester_id: user.id)
@@ -84,3 +88,5 @@ Song.create!(title: "Ziggy Stardust",artist: "David Bowie",genre: "Pop", suggest
 
 #numbers
 Song.create!(title: "9 Crimes",artist: "Damien Rice",genre: "Indie", suggester_id: user.id)
+Song.create!(title: "867-5309 (Jenny)",artist: "Tommy Tutone",genre: "Oldies", suggester_id: user.id)
+Song.create!(title: "(-_-)",artist: "Adebisi Shank",genre: "Math Rock", suggester_id: user.id)
