@@ -52,3 +52,34 @@ Spotify provides a web interface for accessing the API through the browser. No `
     Accept-Encoding: gzip, deflate, compress
     Authorization: Bearer Token_goes_here
     User-Agent: Spotify API Console v0.1
+
+    HTTParty.get "https://api.spotify.com/v1/search?q=Fireflies&type=track", headers: { "Accept" => "application/json", "Authorization" => "Bearer Token_goes_here" }
+
+
+    rawdata["tracks"]["items"].first.keys
+    Gives ["album",
+          "artists",
+           "available_markets",
+           "disc_number",
+           "duration_ms",
+           "explicit",
+           "external_ids",
+           "external_urls",
+           "href",
+           "id",
+           "name",
+           "popularity",
+           "preview_url",
+           "track_number",
+           "type",
+           "uri"]
+
+list_of_songs = []
+Some song Details
+songs.each do |s|
+list_of_songs.push(s)
+songs.first["album"]["name"]
+
+
+
+  e = JSON.parse(File.read "spotifytest1")
