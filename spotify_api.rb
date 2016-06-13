@@ -43,6 +43,5 @@ raw_songs.each do |song|
     when "name"
       song_hash["title"] = song[key]
     end
-    binding.pry
   end
 end
