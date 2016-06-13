@@ -82,3 +82,6 @@ Which each contains:
             "type",
             "uri"
         ]
+
+f << raw_data.to_json
+e = JSON.parse(File.read "spotifytest1")

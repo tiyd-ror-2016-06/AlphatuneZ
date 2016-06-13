@@ -1,5 +1,5 @@
 
-    HTTParty.get "https://api.spotify.com/v1/search?q=Fireflies&type=track", headers: { "Accept" => "application/json", "Authorization" => "Bearer Token_goes_here" }
+HTTParty.get "https://api.spotify.com/v1/search?q=Fireflies&type=track", headers: { "Accept" => "application/json", "Authorization" => "Bearer #{Token}" }
 
 list_of_songs = []
 
@@ -11,7 +11,7 @@ songs.first["album"]["name"]
 
 
 
-  e = JSON.parse(File.read "spotifytest1")
+e = JSON.parse(File.read "spotifytest1")
 
 
 raw_songs = []
@@ -25,7 +25,7 @@ songs.each do |s|
   s.keys.each do |key|
     case key
     when "album"
-      #song_hash[key] = s[key]["name"]
+      song_hash[key] = s[key]["name"]
     when "artists"
       song_hash["artist"] = s[key]["name"]
     when "id"
