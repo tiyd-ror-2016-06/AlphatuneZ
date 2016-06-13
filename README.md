@@ -26,3 +26,25 @@ You may need to fiddle around with remotes assuming that you don't want to push 
 └── lib                 # Your ruby code (models, etc.) should go here
     └── all.rb          # Require this file to auto-require _all_ `.rb` files in `lib`
 ```
+
+## Spotify API
+
+"Function that queries a song and returns spotify id."
+
+### Apply for the API
+
+- easy
+
+### Explore the API Tools
+
+see <https://developer.spotify.com/>
+
+Spotify provides a web interface for accessing the API through the browser. No `curl` requests! Hooray!
+
+### Use the API
+
+#### Song Search
+
+- Header bears the authorization token in the form
+
+    `Bearer <token_here>`
