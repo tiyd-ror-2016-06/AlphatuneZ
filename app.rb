@@ -32,7 +32,7 @@ class MyApp < Sinatra::Base
   end
 
   post "/:user/:song/:vote" do
-  user = current_user
+  user = User.find(params[:user])
   song = Song.find(params[:song])
 
     if song == nil
