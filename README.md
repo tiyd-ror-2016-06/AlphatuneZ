@@ -43,8 +43,42 @@ Spotify provides a web interface for accessing the API through the browser. No `
 
 ### Use the API
 
+*Main Url*: https://api.spotify.com/
+*Authorization Header* `Bearer <authorization token>`
+
 #### Song Search
 
-- Header bears the authorization token in the form
+- Songs are sorted by popularity
 
-    `Bearer <token_here>`
+            GET /v1/search?q=Fireflies&type=track HTTP/1.1
+            Host: api.spotify.com
+            Accept: application/json
+            Content-Type: application/json
+            Accept-Encoding: gzip, deflate, compress
+            Authorization: Bearer Token_goes_here
+            User-Agent: Spotify API Console v0.1
+
+A query for a son yields:
+
+    rawdata["tracks"]["items"]
+
+Which each contains:
+
+        [
+            "album",
+            "artists",
+            "available_markets",
+            "disc_number",
+            "duration_ms",
+            "explicit",
+            "external_ids",
+            "external_urls",
+            "href",
+            "id",
+            "name",
+            "popularity",
+            "preview_url",
+            "track_number",
+            "type",
+            "uri"
+        ]

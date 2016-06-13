@@ -1,4 +1,23 @@
 
+    HTTParty.get "https://api.spotify.com/v1/search?q=Fireflies&type=track", headers: { "Accept" => "application/json", "Authorization" => "Bearer Token_goes_here" }
+
+list_of_songs = []
+
+# Some song Details
+
+songs.each do |s|
+list_of_songs.push(s)
+songs.first["album"]["name"]
+
+
+
+  e = JSON.parse(File.read "spotifytest1")
+
+
+raw_songs = []
+rawdata["tracks"]["items"].each do |f|
+raw_songs.push(f)
+end
 
 
 songs.each do |s|
@@ -15,4 +34,3 @@ songs.each do |s|
       song_hash["title"] = s[key]["name"]
     end
   end
-end
