@@ -4,7 +4,7 @@ require 'json'
 
 Spotify_api = "https://api.spotify.com"
 Token =
-
+@token = ENV["SPOTIFY_TOKEN"] || File.read("./token.txt").chomp
 
 
 def get_song_query song_title
