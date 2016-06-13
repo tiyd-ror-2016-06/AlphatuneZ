@@ -6,6 +6,8 @@ require "./db/setup"
 require "./lib/all"
 
 class MyApp < Sinatra::Base
+  LOGGED_IN_USERS = []
+
   set :logging, true
   set :show_exceptions, false
 
@@ -33,6 +35,17 @@ class MyApp < Sinatra::Base
 
   get '/dashboard' do
     erb :dashboard
+
+  def current_user
+    LOGGED_IN_USERS.last
+  end
+
+  get "/api/me" do
+    if current_user
+      json current_user
+    else
+      status 401
+    end
   end
 
   run! if $PROGRAM_NAME == __FILE__
