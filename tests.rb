@@ -18,6 +18,7 @@ class UserTests < Minitest::Test
   end
 
   def setup
+    MyApp::LOGGED_IN_USERS.clear
     User.delete_all
   end
 
