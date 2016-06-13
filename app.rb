@@ -41,7 +41,7 @@ class MyApp < Sinatra::Base
       else
         vote_val = -1
       end
-      v = Vote.create!(user: user.id, song: song.id, vote: vote_val, placed_at: DateTime.now)
+      v = Vote.create!(user_id: user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
 
       binding.pry
 
