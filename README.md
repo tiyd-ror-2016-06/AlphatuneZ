@@ -101,7 +101,7 @@ The `SpotifyApiRequest` class is used to facilitate requests to Spotify.
 
 Specify the song to query as an argument to the keyword `song:` when instantiating the class:
 
-    my_request = SpotifyApiRequest.new song: 'Two Tickets to Paradise'
+    my_request = SpotifyApiRequest.new song: 'Take Me Home Tonight'
 
 Parse the request from JSON:
 
@@ -110,9 +110,9 @@ Parse the request from JSON:
 The method `#get_songs` can be called on it, and it will return an array of songs with each song a hash structured in this way:
 
     "album"     => "Eddie Money"
-    "artist"    => "Eddie Money"
+    "artist"    => "Eddie Money, Ronnie Spector"
     "id"        => "59eevcAetPY5PU5B8dpVc8"
-    "title"     => "Two Tickets To Paradise"
+    "title"     => "Take Me Home Tonight"
 
 Pass a file as an argument to the keyword `test:` to use test_data (JSON formatted):
 
