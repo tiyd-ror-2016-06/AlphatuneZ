@@ -1,7 +1,7 @@
 
 <div class="container">
-  <h1>Profile</h1>
-  <p class="tagline"><%=current_user.email%></p>
+  <h1>Account Information</h1>
+  <h2 class="tagline"><%=current_user.email%></h2>
 </div>
 
 <!-- <div class="nav-container">
@@ -32,9 +32,11 @@
 
   <div class="widget">
     <h3>Songs</h3>
+    <ul>
     <% current_user.suggested_songs.each do |song| %>
-      <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+      <li><p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p></li>
     <% end %>
+    <ul>
   </div>
   <div class="clear"></div>
 
