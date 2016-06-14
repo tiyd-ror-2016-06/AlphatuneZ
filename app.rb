@@ -8,8 +8,7 @@ require "./db/setup"
 require "./lib/all"
 
 class MyApp < Sinatra::Base
-
-  LOGGED_IN_USERS = []
+  enable :sessions
 
   set :logging, true
   set :show_exceptions, false
@@ -38,16 +37,18 @@ class MyApp < Sinatra::Base
 
 # if login info is not found redirect to new user page
   post '/' do
-   if User.find_by(username: params[:username], password: params[:password])
+   if u = User.find_by(email: params[:username], password: params[:password])
+     login_user u
      erb :login
    else
-   redirect '/newuser'
+     redirect '/newuser'
    end
  end
 
 # create new user info
  post '/newuser' do
-  User.create(username: params[:username], password: params[:password])
+  User.create!(email: params[:username], password: params[:password])
+  redirect '/'
 end
 
 # new user page show
@@ -85,8 +86,16 @@ end
     end
   end
 
+  def login_user user
+    session[:logged_in_user_id] = user.id
+  end
+
   def current_user
-    LOGGED_IN_USERS.last
+    if id = session[:logged_in_user_id]
+      User.find_by id: id
+    else
+      nil
+    end
   end
 
   def parsed_body
@@ -137,8 +146,6 @@ end
       halt "This doesn't exist"
     end
   end
-
-
 
   run! if $PROGRAM_NAME == __FILE__
 end

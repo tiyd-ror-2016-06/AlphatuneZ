@@ -5,6 +5,9 @@
   </head>
   <body>
     <h1>AlphatuneZ</h1>
+    <% if current_user %>
+      <p>Welcome, <%= current_user.email %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
