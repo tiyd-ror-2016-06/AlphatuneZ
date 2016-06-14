@@ -22,11 +22,9 @@
 
   <div class="widget">
     <h3>Songs</h3>
-    <ul>
-      <li><a href="http://www.twitter.com/castig" target="_blank">Twitter</a></li>
-      <li><a href="http://instagram.com/castig" target="_blank">Instagram</a></li>
-      <li><a href="https://www.facebook.com/OneMonthRails" target="_blank">Facebook</a></li>
-    </ul>
+    <% current_user.suggested_songs.each do |song| %>
+      <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+    <% end %>
   </div>
   <div class="clear"></div>
 
