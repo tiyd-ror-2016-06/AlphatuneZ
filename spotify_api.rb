@@ -1,34 +1,53 @@
 require 'httparty'
 require 'pry'
 require 'json'
+
+Spotify_api = "https://api.spotify.com"
+
 class SpotifyApiRequest
-  Spotify_api = "https://api.spotify.com"
-  Token =
+  def initialize song:
+  @song = song
   @token = ENV["SPOTIFY_TOKEN"] || File.read("./token.txt").chomp
+  @raw_data = []
+end
 
+def self.get_song_query
+  st_encoded = URI.encode @song
+  HTTParty.get(
+    Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
+                headers: { "Accept" => "application/json", "Authorization" => "Bearer " + Token }
+  )
+end
 
-  def get_song_query song_title
-    st_encoded = URI.encode song_title
-    HTTParty.get(
-      Spotify_api + "/v1/search?q=#{st_encoded}&type=track",
-                  headers: { "Accept" => "application/json", "Authorization" => "Bearer " + Token }
-    )
-  end
+def parse!
+
+  @type = track
+  # if song:
+  #   type = track
+
+  # elsif album:
+  #   type = album
+  # end
 
   if ENV["TEST"]
-    raw_data = JSON.parse(File.read "spotifytest1")
+    @raw_data = JSON.parse(File.read "spotifytest1")
   else
-    raw_data = get_song_query("")
+    @raw_data = JSON.parse(self.get_song_query(@song))
   end
+end
 
+
+def get_songs
   #if raw_data == []
     #return []
   #else
     raw_songs = []
-    raw_data["tracks"]["items"].each do |item|
+    @raw_data["tracks"]["items"].each do |item|
     raw_songs.push(item)
     end
-
+    return raw_songs
+  end
+  
     raw_songs.each do |song|
       song_hash = {}
       song.keys.each do |key|
