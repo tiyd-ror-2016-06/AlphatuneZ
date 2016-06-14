@@ -190,8 +190,8 @@ a {
 	float: left;
 	background: #FFF;
 	padding: 25px;
-	border-left: 3px solid #BBB;
-	border-bottom: 3px solid #BBB;
+	/*border-left: 3px solid #BBB;
+	border-bottom: 3px solid #BBB;*/
 }
 	.sidebar img {
 		border-radius: 300px;
