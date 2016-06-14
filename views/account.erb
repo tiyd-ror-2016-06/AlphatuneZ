@@ -37,7 +37,15 @@
   <% end %>
 
   <div class="widget" id="points">
-    <h3>Points: <%= array.reduce(:+) %></h3>
+    <%if current_user.votes.count == 0 %>
+      <h3>Points: 0</h3>
+    <% else %>
+      <h3>Points: <%= array.reduce(:+) %></h3>
+    <% end %>
+
+  </div>
+
+  <div class="widget" id="points">
     <h3>Premium: <%= current_user.premium %></h3>
   </div>
 
