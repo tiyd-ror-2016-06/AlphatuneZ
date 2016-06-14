@@ -27,11 +27,11 @@
 </div>
 
 <!--song titles/artist and letters  -->
-<h2><%= @songs.count %> songs</h2>
+<h2><%= @songs.values.flatten.count %> songs</h2>
 
-<% @songs.each do |l, a| %>
-<h3><%= "#{l}" %></h3>
-<% a.each do |s| %>
-<p><%= "Title: #{s["title"]}, Artist: #{s["artist"]}" %></p>
-<% end %>
+<% @songs.each do |letter, songs| %>
+  <h3><%= letter %></h3>
+  <% songs.each do |song| %>
+    <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+  <% end %>
 <% end %>
