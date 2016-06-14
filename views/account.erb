@@ -20,10 +20,10 @@
   </div><!-- .sidebar -->
 
   <div class="widget">
-    <h3>Songs</h3>
+    <h3>Suggested Songs</h3>
     <ul>
     <% current_user.suggested_songs.each do |song| %>
-      <li><p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p></li>
+      <li><p><strong>Title:</strong> <%= song.title %>, <strong>Artist:</strong> <%= song.artist %></p></li>
     <% end %>
     <ul>
   </div>
