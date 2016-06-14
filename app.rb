@@ -143,9 +143,12 @@ class MyApp < Sinatra::Base
   end
 
 
-
   post "/delete" do
     song = Song.where(title: params[:title], suggester_id: current_user.id)
+    if song == []
+      status 200
+      redirect "/dashboard"
+    end
     if song.first.delete
       status 200
       redirect "/dashboard"

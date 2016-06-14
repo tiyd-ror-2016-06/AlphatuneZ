@@ -20,17 +20,19 @@
     </div>
 </div>
 
-<!--song titles/artist and letters  -->
 <h2><%= @songs.values.flatten.count %> songs</h2>
 
+<!--song titles/artist and letters  -->
 <% @songs.each do |letter, songs| %>
   <h3><%= letter %></h3>
   <% songs.each do |song| %>
     <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+    <% if current_user == song.suggester  %>
         <form style="float:center" method="post" action="/delete">
           <input name="title" type="hidden" value="<%= song.title %>"></input>
           <input name="artist" type="hidden" value="<%= song.artist %>"></input>
         <input type="submit" value="trash">
       </form>
+      <% end %>
   <% end %>
 <% end %>
