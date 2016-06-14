@@ -10,21 +10,21 @@ class SpotifyApiRequest
 
   def initialize song:, test_data: nil
     @song = song
-    @token = nil # ENV["SPOTIFY_TOKEN"] || File.read("./token.txt").chomp
+    @token = ENV["SPOTIFY_TOKEN"] # || File.read("./token.txt").chomp
     @raw_data = []
     @test_data = test_data
   end
 
-  def self.get_song_query
+  def get_song_query
     st_encoded = URI.encode @song
     HTTParty.get(
       Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-      headers: { "Accept" => "application/json", "Authorization" => "Bearer " + Token }
+      headers: { "Accept" => "application/json", "Authorization" => "Bearer " + @token }
     )
   end
 
   def parse!
-    if song:
+    if @song
          @type = "track"
 
       # branch to @type assignment for more user-friendly, and optimal search ?
@@ -33,16 +33,16 @@ class SpotifyApiRequest
         #@type =
     end
 
-    if test:
+    if @test_data
       @raw_data = JSON.parse(File.read @test_data)
     else
-      @raw_data = JSON.parse(get_song_query)
+      @raw_data = get_song_query
     end
   end
 
 
   def get_songs
-    raw_data == [] && return []
+    return [] if raw_data == []
 
     raw_songs = []
     @raw_data["tracks"]["items"].each do |item|
