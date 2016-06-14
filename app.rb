@@ -36,6 +36,11 @@ class MyApp < Sinatra::Base
     erb :login
   end
 
+#account page
+  get '/account' do
+    erb :account
+  end
+
 # if login info is not found redirect to new user page
   post '/' do
    if u = User.find_by(email: params[:username], password: params[:password])

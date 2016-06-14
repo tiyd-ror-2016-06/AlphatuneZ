@@ -20,6 +20,16 @@
           <a href="/">Login</a>
         <% end %>
       </li>
+      <li style"float:right">
+        <% if current_user %>
+          <p>Account</p>
+          <form method="GET" action="/account">
+            <input type="submit" class="active" value="Account">
+          </form>
+        <% else %>
+          <a href="/">Login</a>
+        <% end %>
+      </li>
     </ul>
     <%= yield %>
   </body>
