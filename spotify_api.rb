@@ -36,7 +36,7 @@ class SpotifyApiRequest
       @raw_data = JSON.parse(get_song_query)   #(@song))
     end
 binding.pry
-    24
+
   end
 
 
@@ -73,7 +73,8 @@ binding.pry
 end
 # correct
 spotify = SpotifyApiRequest.new(song: "This is a song")
-spotify = spotify.parse!
+#spotify = spotify.parse!
+# this assignment is tmaking spotify return into a hash; should work ? now
 binding.pry
 spotify.get_songs
 binding.pry
