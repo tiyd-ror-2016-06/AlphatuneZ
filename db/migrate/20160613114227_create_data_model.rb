@@ -14,6 +14,7 @@ class CreateDataModel < ActiveRecord::Migration
       t.string :genre
       t.string :spotify_id
       t.integer :suggester_id, null: false
+      t.timestamp :posted_at
     end
 
     create_table :votes do |t|
