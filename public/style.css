@@ -173,14 +173,14 @@ a {
 
 .container {
 	margin: 0 auto 0 auto;
-	width: 950px;
+	width: 1250px;
 }
 
 .main {
 	width: 600px;
-	float: left;
+	float: right;
 	background: #FFF;
-	padding: 25px;
+	padding: 10px;
 	margin-right: 10px;
 	font-size: 12px;
 }
@@ -198,8 +198,12 @@ a {
 	}
 
 /*-----------------------------------------------------------------------------
-03=MAIN
+03=Account page
 -----------------------------------------------------------------------------*/
+.profile {
+  text-align: left;
+}
+
 
 .tagline {
 	margin-top: -30px;
