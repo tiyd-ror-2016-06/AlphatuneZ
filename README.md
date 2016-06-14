@@ -56,7 +56,7 @@ Spotify provides a web interface for accessing the API through the browser. No `
     - specify `type` of search `artist`, `album`, `track`, etc.
     - within the scope of `type`, specify multiple fields such as `artists`, `name`, etc.
 
-*EXAMPLE REQUEST*
+*EXAMPLE REQUEST* (Query by type `track` with generic query)
 
             GET /v1/search?q=Fireflies&type=track HTTP/1.1
             Host: api.spotify.com
@@ -123,5 +123,7 @@ Pass a file as an argument to the keyword `test:` to use test_data (JSON formatt
 - _It would be nice to instantiate the `SpotifyApiRequest` object with any combination of `song:`, `artist:`, and `album:`, and have it branch to the correct `type` resulting in a "better" `GET` request._
 
 - _It may make sense to create another class to split the duties?_
+
+- _It may make sense to have a procedural part, and an object part.
 
 - _Are there any additonal methods outside of just returning songs that might be useful?_
