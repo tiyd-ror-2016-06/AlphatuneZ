@@ -67,10 +67,12 @@ class SpotifyApiRequest
       end
       each_song_array.push(song_hash)
     end
-    if each_song_array == []
-      status 404
-    else
-      each_song_array
-    end
+    each_song_array
   end
+end
+
+def no_song title, artist
+  s = SpotifyApiRequest.new(title: param[:title], artist: param[:artist])
+  s.parse!
+  hits = s.get_songs
 end

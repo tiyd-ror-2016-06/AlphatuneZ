@@ -6,35 +6,38 @@
 
 <!--add a new song  -->
 <div class="login-modal">
-    <div class="login-container">
-      <form method="post" action="/songs">
-        <div class=login>
-          <p> suggest a new song</p>
-            <input id="username-login" placeholder="title" name="title"></input>
-        </div>
-        <div>
-            <input id="password-login" placeholder="artist" name="artist"></input>
+  <div class="login-container">
+    <form method="post" action="/songs">
+      <div class=login>
+        <p> suggest a new song</p>
+        <input id="username-login" placeholder="title" name="title"></input>
+      </div>
+    <div>
+      <input id="password-login" placeholder="artist" name="artist"></input>
 
-        </div>
-        <div>
-            <input type="submit" class="submit">
-            </form>
     </div>
+  <div>
+      <input type="submit" class="submit">
+    </form>
+  </div>
+  <% if @no_song %>
+    <p> There is no song by that name. Try again.</p>
+  <% end %>
 </div>
 
-<h2><%= @songs.values.flatten.count %> songs</h2>
+  <h2><%= @songs.values.flatten.count %> songs</h2>
 
-<!--song titles/artist and letters  -->
+  <!--song titles/artist and letters  -->
 <% @songs.each do |letter, songs| %>
-  <h3><%= letter %></h3>
-  <% songs.each do |song| %>
-    <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
-    <% if current_user == song.suggester  %>
-        <form style="float:center" method="post" action="/delete">
-          <input name="title" type="hidden" value="<%= song.title %>"></input>
-          <input name="artist" type="hidden" value="<%= song.artist %>"></input>
+<h3><%= letter %></h3>
+<% songs.each do |song| %>
+  <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+  <% if current_user == song.suggester  %>
+      <form style="float:center" method="post" action="/delete">
+        <input name="title" type="hidden" value="<%= song.title %>"></input>
+        <input name="artist" type="hidden" value="<%= song.artist %>"></input>
         <input type="submit" value="trash">
       </form>
-      <% end %>
+    <% end %>
   <% end %>
 <% end %>

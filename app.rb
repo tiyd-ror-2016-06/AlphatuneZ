@@ -129,8 +129,11 @@ class MyApp < Sinatra::Base
   post "/songs" do
     # begin
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-
-    if @song.save!
+    if hits = SongList.new 
+      hits.count == 0
+      @no_song = true
+      erb :dashboard
+    elsif @song.save!
       200
       redirect "/dashboard"
     else
