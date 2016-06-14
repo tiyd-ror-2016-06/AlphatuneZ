@@ -8,6 +8,10 @@
             <input type="password" id="password-login" placeholder="password" name="password"></input>
         </div>
         <div>
-            <input type="submit" class="submit">
+        <input type="submit" class="submit">
     </form>
+
+    <% if @failed_login %>
+      <p><a href="/newuser">Click here</a> to create a new account</p>
+    <% end %>
 </div>

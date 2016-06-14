@@ -40,10 +40,16 @@ class MyApp < Sinatra::Base
   post '/' do
    if u = User.find_by(email: params[:username], password: params[:password])
      login_user u
-     erb :login
+     redirect '/dashboard'
    else
-     redirect '/newuser'
+     @failed_login = true
+     erb :login
    end
+ end
+
+ post '/logout' do
+   logout
+   redirect '/'
  end
 
 # create new user info
@@ -89,6 +95,10 @@ end
 
   def login_user user
     session[:logged_in_user_id] = user.id
+  end
+
+  def logout
+    session.delete :logged_in_user_id
   end
 
   def current_user

@@ -5,9 +5,22 @@
   </head>
   <body>
     <h1>AlphatuneZ</h1>
-    <% if current_user %>
-      <p>Welcome, <%= current_user.email %></p>
-    <% end %>
+    <!--navagation bar  -->
+    <ul class= "bar">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#newsong">Suggest New Song</a></li>
+      <li><a href="#playlist">Weekly Playlist</a></li>
+      <li style="float:right">
+        <% if current_user %>
+          <p><%= current_user.email %></p>
+          <form method="POST" action="/logout">
+            <input type="submit" class="active" value="Logout">
+          </form>
+        <% else %>
+          <a href="/">Login</a>
+        <% end %>
+      </li>
+    </ul>
     <%= yield %>
   </body>
 </html>
