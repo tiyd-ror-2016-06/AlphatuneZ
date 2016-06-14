@@ -32,21 +32,20 @@ class MyApp < Sinatra::Base
   end
 
   post "/:user/:song/:vote" do
-  user = User.find(params[:user])
-  song = Song.find(params[:song])
+    song = Song.find(params[:song])
 
     if song == nil
       halt 403
       JSON error: "Song does not exist"
     end
 
-    if user
+    if current_user
       if params[:vote] == "up"
         vote_val = 1
       else
         vote_val = -1
       end
-      v = Vote.create!(user_id: user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
+      v = Vote.create!(user_id: current_user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
 
       v.to_json
     else
