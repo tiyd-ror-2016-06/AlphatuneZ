@@ -9,7 +9,11 @@
   <div class="login-container">
     <form method="post" action="/songs">
       <div class=login>
+        <% if @no_song %>
+          <p> There is no song by that name. Try again.</p>
+        <% else %>
         <p> suggest a new song</p>
+        <% end %>
         <input id="username-login" placeholder="title" name="title"></input>
       </div>
     <div>
@@ -20,9 +24,6 @@
       <input type="submit" class="submit">
     </form>
   </div>
-  <% if @no_song %>
-    <p> There is no song by that name. Try again.</p>
-  <% end %>
 </div>
 
   <h2><%= @songs.values.flatten.count %> songs</h2>

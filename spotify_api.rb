@@ -71,8 +71,8 @@ class SpotifyApiRequest
   end
 end
 
-def no_song title, artist
-  s = SpotifyApiRequest.new(title: param[:title], artist: param[:artist])
-  s.parse!
-  hits = s.get_songs
+def no_song # title, artist
+  spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+  spotify.parse!
+  hits = spotify.get_songs
 end
