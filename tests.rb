@@ -49,7 +49,6 @@ class UserTests < Minitest::Test
     assert_equal 401, response.status
   end
 
-
   def fake_song
     {"title" => "songblah",
     "artist" => "singerblah",
@@ -123,16 +122,53 @@ class UserTests < Minitest::Test
     assert_equal 1, Song.count
   end
 
+  def test_users_can_upvote_songs
+    song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock", suggester_id: 1).first_or_create!
+    user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
+    login_as user
+    r = post "/#{user.id}/#{song.id}/up"
 
+    assert_equal 1, Vote.where(user_id: user.id).first.value
 
-# def test_user_cant_post_same_song_twice
-#
-# end
-#
-#
-# def test_user_can_only_post_spotify_song
-#
-# end
+  end
 
+  def test_users_can_downvote_songs
+    song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock", suggester_id: 1).first_or_create!
+    user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
+    login_as user
+    r = post "/#{user.id}/#{song.id}/down"
+
+    assert_equal 200, r.status
+    assert_equal -1, Vote.where(user_id: user.id).first.value
+
+  end
+
+  def test_cannot_vote_if_user_does_not_exist
+    song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock", suggester_id: 1).first_or_create!
+    r = post "/500000/#{song.id}/up"
+    body = JSON.parse r.body
+
+    assert_equal 403, r.status
+    assert_equal "User not found", body["error"]
+
+  end
+
+  def test_cannot_vote_if_song_does_not_exist
+    user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
+    login_as user
+    r = post "/#{user.id}/70000000000000/down"
+    body = JSON.parse r.body
+
+    assert_equal 404, r.status
+    assert_equal "Not Found", body["error"]
+  end
+
+  def test_user_cant_post_same_song_twice
+    skip
+  end
+
+  def test_user_can_only_post_spotify_song
+    skip
+  end
 
 end

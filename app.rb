@@ -1,6 +1,8 @@
 require "sinatra/base"
 require "sinatra/json"
 require "rack/cors"
+require "date"
+require "json"
 
 require "./db/setup"
 require "./lib/all"
@@ -58,6 +60,29 @@ end
     list = SongList.new
     @songs = list.get_list
     erb :dashboard
+  end
+
+  post "/:user/:song/:vote" do
+    song = Song.find(params[:song])
+
+    if song == nil
+      halt 403
+      JSON error: "Song does not exist"
+    end
+
+    if current_user
+      if params[:vote] == "up"
+        vote_val = 1
+      else
+        vote_val = -1
+      end
+      v = Vote.create!(user_id: current_user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
+
+      v.to_json
+    else
+      status 403
+      JSON error: "User not found"
+    end
   end
 
   def current_user
