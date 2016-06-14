@@ -67,6 +67,10 @@ class SpotifyApiRequest
       end
       each_song_array.push(song_hash)
     end
-    each_song_array
+    if each_song_array == []
+      status 404
+    else
+      each_song_array
+    end
   end
 end
