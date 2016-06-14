@@ -20,16 +20,14 @@ class UserTests < Minitest::Test
 
 
   def setup
-    MyApp::LOGGED_IN_USERS.clear
     User.delete_all
     Song.delete_all
   end
 
 
   def login_as user
-    MyApp::LOGGED_IN_USERS.push user
+    post "/", username: user.email, password: user.password
   end
-
 
   def test_can_fake_logged_in_requests
     user = User.create! email: "art@example.com", password: "password"
