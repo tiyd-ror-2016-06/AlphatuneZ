@@ -8,4 +8,9 @@ class Song < ActiveRecord::Base
 
   has_many :playlist_songs
   has_many :playlists, through: :playlist_songs
+
+
+  def standardized_title
+    self.title.gsub(/[^a-zA-Z0-9]/, "")
+  end
 end

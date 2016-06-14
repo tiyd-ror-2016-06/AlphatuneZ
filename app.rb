@@ -28,6 +28,36 @@ class MyApp < Sinatra::Base
       puts e.message
     end
   end
+# login page show
+  get '/' do
+    erb :login
+  end
+
+# if login info is not found redirect to new user page
+  post '/' do
+   if User.find_by(username: params[:username], password: params[:password])
+     erb :login
+   else
+   redirect '/newuser'
+   end
+ end
+
+# create new user info
+ post '/newuser' do
+  User.create(username: params[:username], password: params[:password])
+end
+
+# new user page show
+get '/newuser' do
+  erb :newuser
+end
+
+# get songs info for dashboard
+  get '/dashboard' do
+    list = SongList.new
+    @songs = list.get_list
+    erb :dashboard
+  end
 
   def current_user
     LOGGED_IN_USERS.last

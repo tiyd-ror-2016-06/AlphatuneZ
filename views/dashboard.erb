@@ -1,0 +1,37 @@
+<!--navagation bar  -->
+<ul class= "bar">
+  <li><a href="#home">Home</a></li>
+  <li><a href="#newsong">Suggest New Song</a></li>
+  <li><a href="#playlist">Weekly Playlist</a></li>
+  <li style="float:right"><a class="active" href="#logout">Logout</a></li>
+</ul>
+
+<!--padding  -->
+<div>
+  <ul>
+  </ul>
+</div>
+
+<!--add a new song  -->
+<div class="login-modal">
+    <div class="login-container">
+        <div class=login>
+            <input id="username-login" placeholder="title" name="title"></input>
+        </div>
+        <div>
+            <input type="password"id="password-login" placeholder="artist"></input>
+        </div>
+        <div>
+            <input type="submit" class="submit">
+    </div>
+</div>
+
+<!--song titles/artist and letters  -->
+<h2><%= @songs.values.flatten.count %> songs</h2>
+
+<% @songs.each do |letter, songs| %>
+  <h3><%= letter %></h3>
+  <% songs.each do |song| %>
+    <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+  <% end %>
+<% end %>
