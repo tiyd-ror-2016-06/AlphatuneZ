@@ -31,15 +31,16 @@
   </div>
   <div class="clear"></div>
 
-  <div class="widget">
-    <h3>Points</h3>
-    <% array = [] %>
-    <% current_user.suggested_songs.each do |song| %>
-      <% song.votes.each do |vote| %>
-        <% array.push vote.value %>
-      <% end %>
+  <% array = [] %>
+  <% current_user.suggested_songs.each do |song| %>
+    <% song.votes.each do |vote| %>
+      <% array.push vote.value %>
     <% end %>
-    <h4><%= array.reduce(:+) %></h4>
+  <% end %>
+
+  <div class="widget" id="points">
+    <h3>Points: <%= array.reduce(:+) %></h3>
+
 
   </div>
 

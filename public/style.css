@@ -189,7 +189,7 @@ a {
 	width: 340px;
 	float: left;
 	background: #FFF;
-	padding: 25px;
+	padding: 1px;
 	/*border-left: 3px solid #BBB;
 	border-bottom: 3px solid #BBB;*/
 }
@@ -222,4 +222,10 @@ border-top: #BBB solid 1px;
 
 .widget {
 	margin-bottom: 45px;
+  margin-top: -30px;
+  float: left;
+}
+
+#points {
+  margin-top: -100px;
 }
