@@ -28,7 +28,7 @@
   <% songs.each do |song| %>
     <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
     <% if current_user == song.suggester  %>
-        <form style="float:center" method="post" action="/delete">
+        <form align="center" method="post" action="/delete">
           <input name="title" type="hidden" value="<%= song.title %>"></input>
           <input name="artist" type="hidden" value="<%= song.artist %>"></input>
         <input type="submit" value="trash">
