@@ -138,9 +138,7 @@ class MyApp < Sinatra::Base
 
     elsif @song.save!
       200
-      binding.pry
       redirect '/dashboard'
-      binding.pry
     else
       403
       erb
