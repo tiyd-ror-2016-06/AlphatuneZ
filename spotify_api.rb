@@ -3,51 +3,54 @@ require 'pry'
 require 'json'
 
 Spotify_api = "https://api.spotify.com"
-
 class SpotifyApiRequest
+  attr_reader :song, :raw_data
+
+
   def initialize song:
-  @song = song
-  @token = ENV["SPOTIFY_TOKEN"] || File.read("./token.txt").chomp
-  @raw_data = []
-end
-
-def self.get_song_query
-  st_encoded = URI.encode @song
-  HTTParty.get(
-    Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-                headers: { "Accept" => "application/json", "Authorization" => "Bearer " + Token }
-  )
-end
-
-def parse!
-
-  @type = track
-  # if song:
-  #   type = track
-
-  # elsif album:
-  #   type = album
-  # end
-
-  if ENV["TEST"]
-    @raw_data = JSON.parse(File.read "spotifytest1")
-  else
-    @raw_data = JSON.parse(self.get_song_query(@song))
+    @song = song
+    @token = ENV["SPOTIFY_TOKEN"] || File.read("./token.txt").chomp
+    @raw_data = []
   end
-end
+
+  def self.get_song_query
+    st_encoded = URI.encode @song
+    HTTParty.get(
+    Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
+    headers: { "Accept" => "application/json", "Authorization" => "Bearer " + Token }
+    )
+  end
+
+  def parse!
+    @type = "track"
+    # if song:
+    #   type = track
+
+    # elsif album:
+    #   type = album
+    # end
+
+    if ENV["TEST"]
+      @raw_data = JSON.parse(File.read "spotifytest1")
+    else
+      @raw_data = JSON.parse(get_song_query)   #(@song))
+    end
+binding.pry
+    24
+  end
 
 
-def get_songs
-  #if raw_data == []
+  def get_songs
+    #if raw_data == []
     #return []
-  #else
+    #else
     raw_songs = []
     @raw_data["tracks"]["items"].each do |item|
-    raw_songs.push(item)
+      binding.pry
+      raw_songs.push(item)
     end
-    return raw_songs
-  end
-  
+
+    each_song_array = []
     raw_songs.each do |song|
       song_hash = {}
       song.keys.each do |key|
@@ -62,7 +65,15 @@ def get_songs
         when "name"
           song_hash["title"] = song[key]
         end
+        each_song_array.push(song_hash)
       end
     end
+  end
   # end
 end
+# correct
+spotify = SpotifyApiRequest.new(song: "This is a song")
+spotify = spotify.parse!
+binding.pry
+spotify.get_songs
+binding.pry
