@@ -25,5 +25,16 @@
   <h3><%= letter %></h3>
   <% songs.each do |song| %>
     <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+    <form method="POST" action="/user/song/vote">
+      <input type="submit" value="upvote"></input>
+      <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+      <input type="hidden" name="vote" value="up"></input>
+    </form>
+    <form method="POST" action="/user/song/vote">
+      <input type="submit" value="downvote"></input>
+      <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+      <input type="hidden" name="vote" value="down"></input>
+    </form>
+
   <% end %>
 <% end %>
