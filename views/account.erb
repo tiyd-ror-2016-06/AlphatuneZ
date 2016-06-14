@@ -17,7 +17,6 @@
       <h3 class="profile">Profile</h3>
     </div><!-- .widget -->
 
-
   </div><!-- .sidebar -->
 
   <div class="widget">
@@ -29,6 +28,18 @@
     <ul>
   </div>
   <div class="clear"></div>
+
+  <div class="widget">
+    <h3>Points</h3>
+    <% array = [] %>
+    <% current_user.suggested_songs.each do |song| %>
+      <% song.votes.each do |vote| %>
+        <% array.push vote.value %>
+      <% end %>
+    <% end %>
+    <h4><%= array.reduce(:+) %></h4>
+
+  </div>
 
 
 </div><!-- .container -->
