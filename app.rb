@@ -9,6 +9,7 @@ require "./lib/all"
 
 class MyApp < Sinatra::Base
   enable :sessions
+  set :session_secret, "hunter2"
 
   set :logging, true
   set :show_exceptions, false
