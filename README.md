@@ -43,26 +43,38 @@ Spotify provides a web interface for accessing the API through the browser. No `
 
 ### Use the API
 
-*Main Url*: https://api.spotify.com/
-*Authorization Header* `Bearer <authorization token>`
+*Main Url*: for api calls: https://api.spotify.com/
+*Authorization Header* must be of the form: `Bearer <authorization token>`
 
-#### Song Search
+### Endpoints
 
-- Songs are sorted by popularity
+#### Search Endpoint
+
+- See https://developer.spotify.com/web-api/search-item/
+
+- This endpoint seems to offer the most flexibility...
+    - specify `type` of search `artist`, `album`, `track`, etc.
+    - within the scope of `type`, specify multiple fields such as `artists`, `name`, etc.
+
+*EXAMPLE REQUEST*
 
             GET /v1/search?q=Fireflies&type=track HTTP/1.1
             Host: api.spotify.com
             Accept: application/json
             Content-Type: application/json
             Accept-Encoding: gzip, deflate, compress
-            Authorization: Bearer Token_goes_here
+            Authorization: Bearer <Token_goes_here>
             User-Agent: Spotify API Console v0.1
 
-A query for a son yields:
+
+This query yields a JSON.
+When parsed, it is a hash with the songs sorted by popularity rating.
+
+With `raw_data` as the hash, the songs can be accessed in this way:
 
     rawdata["tracks"]["items"]
 
-Which each contains:
+Each item (song) contains:
 
         [
             "album",
@@ -83,5 +95,33 @@ Which each contains:
             "uri"
         ]
 
-f << raw_data.to_json
-e = JSON.parse(File.read "spotifytest1")
+### SpotifyApiRequest
+
+The `SpotifyApiRequest` class is used to facilitate requests to Spotify.
+
+Specify the song to query as an argument to the keyword `song:` when instantiating the class:
+
+    my_request = SpotifyApiRequest.new song: 'Two Tickets to Paradise'
+
+Parse the request from JSON:
+
+    my_request.parse!
+
+The method `#get_songs` can be called on it, and it will return an array of songs with each song a hash structured in this way:
+
+    "album"     => "Eddie Money"
+    "artist"    => "Eddie Money"
+    "id"        => "59eevcAetPY5PU5B8dpVc8"
+    "title"     => "Two Tickets To Paradise"
+
+Pass a file as an argument to the keyword `test:` to use test_data (JSON formatted):
+
+    my_request = SpotifyApiRequest.new song: "empty", test: "mytestfile.json"
+
+#### Notes, Improvements, Etc.
+
+- _It would be nice to instantiate the `SpotifyApiRequest` object with any combination of `song:`, `artist:`, and `album:`, and have it branch to the correct `type` resulting in a "better" `GET` request._
+
+- _It may make sense to create another class to split the duties?_
+
+- _Are there any additonal methods outside of just returning songs that might be useful?_
