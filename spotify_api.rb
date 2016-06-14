@@ -38,7 +38,6 @@ class SpotifyApiRequest
     else
       @raw_data = JSON.parse(get_song_query)
     end
-
   end
 
 
