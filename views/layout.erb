@@ -33,6 +33,7 @@
           <!-- <p>Invite Friend:</p> -->
           <form method="POST" class="invite-container" action="/invite">
             <input name="email" type="email" placeholder="friend's email"></input>
+            <input name="current_user" type="hidden" value="<%= current_user %>"></input>
             <input type="submit" class="active" value="Invite">
           </form>
         <% end %>

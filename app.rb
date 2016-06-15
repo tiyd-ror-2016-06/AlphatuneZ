@@ -96,10 +96,13 @@ class MyApp < Sinatra::Base
   end
 
   post '/invite' do
+    if params[:email] == ""
+    else
     Pony.mail :to => params[:email],
               :from => "friend@alphatunez.com",
               :subject => "Welcome to AlphatuneZ!",
               :body => erb(:invite_email)
+    end
               redirect '/'
   end
 
