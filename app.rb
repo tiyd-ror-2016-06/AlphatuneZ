@@ -11,6 +11,8 @@ class MyApp < Sinatra::Base
   enable :sessions
   set :session_secret, "hunter2"
 
+  set :method_override, true
+
   set :logging, true
   set :show_exceptions, false
 
@@ -31,39 +33,39 @@ class MyApp < Sinatra::Base
       puts e.message
     end
   end
-# login page show
+  # login page show
   get '/' do
     erb :login
   end
 
-# if login info is not found redirect to new user page
+  # if login info is not found redirect to new user page
   post '/' do
-   if u = User.find_by(email: params[:username], password: params[:password])
-     login_user u
-     redirect '/dashboard'
-   else
-     @failed_login = true
-     erb :login
-   end
- end
+    if u = User.find_by(email: params[:username], password: params[:password])
+      login_user u
+      redirect '/dashboard'
+    else
+      @failed_login = true
+      erb :login
+    end
+  end
 
- post '/logout' do
-   logout
-   redirect '/'
- end
+  post '/logout' do
+    logout
+    redirect '/'
+  end
 
-# create new user info
- post '/newuser' do
-  User.create!(email: params[:username], password: params[:password])
-  redirect '/'
-end
+  # create new user info
+  post '/newuser' do
+    User.create!(email: params[:username], password: params[:password])
+    redirect '/'
+  end
 
-# new user page show
-get '/newuser' do
-  erb :newuser
-end
+  # new user page show
+  get '/newuser' do
+    erb :newuser
+  end
 
-# get songs info for dashboard
+  # get songs info for dashboard
   get '/dashboard' do
     list = SongList.new
     @songs = list.get_list
@@ -126,36 +128,28 @@ end
   end
 
 
-  post "/api/songs" do
-    begin
-      song = parsed_body
-    rescue
-      status 400
-      halt "Can't parse json: '#{body}'"
+  post "/songs" do
+    # begin
+    @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
+    if @song.save!
+      200
+      redirect "/dashboard"
+    else
+      403
+      erb
     end
-    begin
-      Song.create!(title: song["title"], artist: song["artist"], suggester_id: current_user.id) #suggest_id hardcoded for testing
-    rescue
-      status 403
-      halt "Entry doesn't include Title, Artist"
-    end
-    200
-    json "Song added!"
+    # rescue
+    #   status 403
+    #   # redirect "/dashboard"
+    #   halt "Entry doesn't include Title, Artist"
   end
 
-  delete "/api/songs" do
-    if current_user
-      body = parsed_body
-      song = Song.where(title: body["title"], suggester_id: current_user.id).first.delete
-      status 200
-      json "Song deleted!"
-    elsif Song.where(title: body["title"])
-      status 403
-      halt "You can't delete that"
-    else
-      status 400
-      halt "This doesn't exist"
-    end
+
+
+  delete "/songs" do
+    song = Song.where(title: params[:title], suggester_id: current_user.id)
+    song.delete_all
+    redirect "/dashboard"
   end
 
   run! if $PROGRAM_NAME == __FILE__

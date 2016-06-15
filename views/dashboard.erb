@@ -7,14 +7,16 @@
 <!--add a new song  -->
 <div class="login-modal">
     <div class="login-container">
+      <form method="post" action="/songs">
         <div class=login>
             <input id="username-login" placeholder="title" name="title"></input>
         </div>
         <div>
-            <input type="password"id="password-login" placeholder="artist"></input>
+            <input id="password-login" placeholder="artist" name="artist"></input>
         </div>
         <div>
             <input type="submit" class="submit">
+            </form>
     </div>
 </div>
 
@@ -25,5 +27,13 @@
   <h3><%= letter %></h3>
   <% songs.each do |song| %>
     <p><%= "Title: #{song.title}, Artist: #{song.artist}" %></p>
+    <% if current_user == song.suggester  %>
+        <form align="center" method="POST" action="/songs">
+          <input name="_method" type="hidden" value="DELETE">
+          <input name="title" type="hidden" value="<%= song.title %>"></input>
+          <input name="artist" type="hidden" value="<%= song.artist %>"></input>
+        <input type="submit" value="trash">
+      </form>
+      <% end %>
   <% end %>
 <% end %>
