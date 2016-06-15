@@ -7,6 +7,8 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rake'
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib'
+gem 'puma'
+gem 'httparty'
 
 
 group :development do

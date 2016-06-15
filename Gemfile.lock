@@ -19,6 +19,9 @@ GEM
     backports (3.6.8)
     builder (3.2.2)
     coderay (1.1.0)
+    httparty (0.13.7)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
     method_source (0.8.2)
@@ -31,11 +34,13 @@ GEM
       minitest (>= 5.0)
       ruby-progressbar
     multi_json (1.12.1)
+    multi_xml (0.5.5)
     pg (0.18.3)
     pry (0.10.2)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (3.4.0)
     rack (1.6.4)
     rack-cors (0.4.0)
     rack-protection (1.5.3)
@@ -67,11 +72,13 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  httparty
   minitest
   minitest-focus
   minitest-reporters
   pg
   pry
+  puma
   rack-cors
   rack-test
   rake
