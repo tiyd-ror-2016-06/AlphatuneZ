@@ -34,19 +34,10 @@
   </div>
   <div class="clear"></div>
 
-  <% results = [] %>
-  <% current_user.suggested_songs.find_each do |song| %>
-    <% song.votes.find_each do |vote| %>
-      <% results.push vote.value %>
-    <% end %>
-  <% end %>
+
 
   <div class="widget" id="points">
-    <%if current_user.votes.count == 0 %>
-      <h3>Points: 0</h3>
-    <% else %>
-      <h3>Points: <%= results.reduce(:+) %></h3>
-    <% end %>
+    <h3>Points: <%= current_user.points %></h3>
   </div>
   <div class="clear"></div>
 
