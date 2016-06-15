@@ -26,7 +26,9 @@ class MyApp < Sinatra::Base
   end
 
   def require_login!
+    unless current_user
     redirect '/'
+    end
   end
 
   before do
@@ -117,9 +119,6 @@ class MyApp < Sinatra::Base
     end
     redirect '/dashboard'
   end
-
-
-
 
   def login_user user
     session[:logged_in_user_id] = user.id
