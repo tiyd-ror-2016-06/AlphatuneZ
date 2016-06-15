@@ -10,16 +10,46 @@ class SpotifyApiRequest
 
   def initialize song:, test_data: nil
     @song = song
-    @token = ENV["SPOTIFY_TOKEN"] # || File.read("./token.txt").chomp
+    @token = generate_beginning_token #ENV["SPOTIFY_TOKEN"] # || File.read("./token.txt").chomp
     @raw_data = []
     @test_data = test_data
   end
+
+
+  def generate_beginning_token
+    beginning_token = refresh_access_token
+  end
+
+  # def token
+  #   @token = generate_beginning_token
+  # end
+
+  def token #check_token_freshness
+    if generate_beginning_token["expires_in"] = "0"
+      refresh_access_token
+    else
+    @token 
+    end
+  end
+
+
+  def refresh_access_token
+    new_token = HTTParty.post(
+    'https://accounts.spotify.com/api/token',
+    headers: {"Authorization" => "Basic ZGQzMmI2MTgwZDZhNGY0ZGI0Yjk3ZGU2NDVhNmNmYjM6NDczNTllNzQxNGM4NDgzYWI1MjM2NGZhYjkzNjdjOTI=\n"},
+    body: {
+    grant_type: "refresh_token",
+    refresh_token: "AQB1I4NoUT_LE5ylmkrvWHyrxu_TNJJ0nQIL24nNgncdrxFAFc_ATeynDz6vj-RsyLUMkO0eJsGZYF6wBUu629aVBMtVU61401xAXcToXVKVFqVikJVTzRgF0yTredQ0-kw"
+    })
+  end
+
+
 
   def get_song_query
     st_encoded = URI.encode @song
     HTTParty.get(
       Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-      headers: { "Accept" => "application/json", "Authorization" => "Bearer " + @token }
+      headers: { "Accept" => "application/json", "Authorization" => @token }
     )
   end
 
