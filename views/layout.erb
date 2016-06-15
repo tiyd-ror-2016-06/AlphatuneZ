@@ -28,9 +28,9 @@
           </form>
         <% end %>
       </li>
-      <li >
+      <li style="float:right">
         <% if current_user %>
-          <p>Invite Friend:</p>
+          <!-- <p>Invite Friend:</p> -->
           <form method="POST" class="invite-container" action="/invite">
             <input name="email" type="email" placeholder="friend's email"></input>
             <input type="submit" class="active" value="Invite">

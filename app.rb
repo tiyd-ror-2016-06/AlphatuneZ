@@ -19,18 +19,18 @@ class MyApp < Sinatra::Base
   set :show_exceptions, false
 
 
-    Pony.options = {
-    :via => :smtp,
-    :via_options => {
-      :address => 'smtp.sendgrid.net',
-      :port => '587',
-      :domain => 'myapp.com',
-      :user_name => ENV['SENDGRID_USERNAME'],
-      :password => ENV['SENDGRID_PASSWORD'],
-      :authentication => :plain,
-      :enable_starttls_auto => true
-    }
-  }
+  #   Pony.options = {
+  #   :via => :smtp,
+  #   :via_options => {
+  #     :address => 'smtp.sendgrid.net',
+  #     :port => '587',
+  #     :domain => 'myapp.com',
+  #     :user_name => ENV['SENDGRID_USERNAME'],
+  #     :password => ENV['SENDGRID_PASSWORD'],
+  #     :authentication => :plain,
+  #     :enable_starttls_auto => true
+  #   }
+  # }
 
 
   use Rack::Cors do
