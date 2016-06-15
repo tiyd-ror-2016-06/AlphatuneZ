@@ -25,6 +25,12 @@ class MyApp < Sinatra::Base
     end
   end
 
+  before do
+    unless path == "/", "/newuser"
+      require_login!
+    end
+  end
+
   error do |e|
     if e.is_a? ActiveRecord::RecordNotFound
       halt 404, json(error: "Not Found")
