@@ -25,9 +25,14 @@ class MyApp < Sinatra::Base
     end
   end
 
+  def require_login!
+    redirect '/'
+  end
+
   before do
-    unless path == "/", "/newuser"
+    unless ["/", "/newuser"].include?(request.path)
       require_login!
+      return
     end
   end
 
