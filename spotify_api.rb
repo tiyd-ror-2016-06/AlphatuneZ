@@ -28,7 +28,7 @@ class SpotifyApiRequest
     if generate_beginning_token["expires_in"] = "0"
       refresh_access_token
     else
-    @token 
+    @token
     end
   end
 
@@ -49,8 +49,37 @@ class SpotifyApiRequest
     st_encoded = URI.encode @song
     HTTParty.get(
       Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-      headers: { "Accept" => "application/json", "Authorization" => @token }
+      headers: { "Accept" => "application/json", "Authorization" => "Bearer #{@token['access_token']}" }
     )
+  end
+
+  def create_playlist
+    r = HTTParty.post(
+      Spotify_api + "/v1/users/ferretpenguin/playlists",
+      headers: { "Accept" => "application/json", "Authorization" => "Bearer #{@token['access_token']}"},
+      body: {
+      name: "Test Playlist",
+      }.to_json)
+
+
+    body = JSON.parse r.body
+    @playlist_id = body["id"]
+  end
+
+  def export_songs_to_playlist
+    songs_array =[]
+    songs = get_songs
+
+    songs.each do |song|
+      songs_array.push "spotify:track:#{song['id']}"
+    end
+
+    r = HTTParty.post(
+      Spotify_api + "/v1/users/ferretpenguin/playlists/#{@playlist_id}/tracks",
+      headers: { "Accept" => "application/json", "Authorization" => "Bearer #{@token['access_token']}"},
+      body: {
+      uris: songs_array
+      }.to_json)
   end
 
   def parse!
