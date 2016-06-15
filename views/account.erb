@@ -34,10 +34,10 @@
   </div>
   <div class="clear"></div>
 
-  <% array = [] %>
+  <% results = [] %>
   <% current_user.suggested_songs.find_each do |song| %>
     <% song.votes.find_each do |vote| %>
-      <% array.push vote.value %>
+      <% results.push vote.value %>
     <% end %>
   <% end %>
 
@@ -45,7 +45,7 @@
     <%if current_user.votes.count == 0 %>
       <h3>Points: 0</h3>
     <% else %>
-      <h3>Points: <%= array.reduce(:+) %></h3>
+      <h3>Points: <%= results.reduce(:+) %></h3>
     <% end %>
   </div>
   <div class="clear"></div>
