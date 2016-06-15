@@ -11,6 +11,8 @@ class MyApp < Sinatra::Base
   enable :sessions
   set :session_secret, "hunter2"
 
+  set :method_override, true
+
   set :logging, true
   set :show_exceptions, false
 
@@ -144,19 +146,10 @@ class MyApp < Sinatra::Base
 
 
 
-  post "/delete" do
+  delete "/songs" do
     song = Song.where(title: params[:title], suggester_id: current_user.id)
-    if song == []
-      status 200
-      redirect "/dashboard"
-    end
-    if song.first.delete
-      status 200
-      redirect "/dashboard"
-    else
-      status 403
-      erb
-    end
+    song.delete_all
+    redirect "/dashboard"
   end
 
   run! if $PROGRAM_NAME == __FILE__
