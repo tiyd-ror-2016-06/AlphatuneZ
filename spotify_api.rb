@@ -58,7 +58,7 @@ class SpotifyApiRequest
       Spotify_api + "/v1/users/ferretpenguin/playlists",
       headers: { "Accept" => "application/json", "Authorization" => "Bearer #{@token['access_token']}"},
       body: {
-      name: "Test Playlist",
+      name: "Weekly Playlist",
       }.to_json)
 
 
@@ -67,18 +67,19 @@ class SpotifyApiRequest
   end
 
   def export_songs_to_playlist
-    songs_array =[]
+    tracks_array =[]
+    # This could be changed to parse through the winning playlist hash
     songs = get_songs
 
     songs.each do |song|
-      songs_array.push "spotify:track:#{song['id']}"
+      tracks_array.push "spotify:track:#{song['id']}"
     end
 
     r = HTTParty.post(
       Spotify_api + "/v1/users/ferretpenguin/playlists/#{@playlist_id}/tracks",
       headers: { "Accept" => "application/json", "Authorization" => "Bearer #{@token['access_token']}"},
       body: {
-      uris: songs_array
+      uris: tracks_array
       }.to_json)
   end
 
