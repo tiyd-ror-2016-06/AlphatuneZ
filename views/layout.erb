@@ -26,6 +26,16 @@
           <form method="GET" action="/account">
             <input type="submit" class="active" value="Account">
           </form>
+
+        <% end %>
+      </li>
+      <li >
+        <% if current_user %>
+          <p>Invite Friend</p>
+          <form method="GET" action="/account">
+            <input type="submit" class="active" value="Account">
+          </form>
+
         <% end %>
       </li>
     </ul>

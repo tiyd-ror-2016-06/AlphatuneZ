@@ -7,6 +7,7 @@ require "./spotify_api"
 
 require "./db/setup"
 require "./lib/all"
+require 'pony'
 
 class MyApp < Sinatra::Base
   enable :sessions
@@ -77,6 +78,13 @@ class MyApp < Sinatra::Base
     list = SongList.new
     @songs = list.get_list
     erb :dashboard
+  end
+
+  post '/invite' do
+    Pony.mail :to => params[:email],
+              :from => "friend@alphatunez.com",
+              :subject => "Welcome to AlphatuneZ, #{params[:name]}!",
+              :body => erb(:invite_email)
   end
 
   post "/user/song/vote" do
