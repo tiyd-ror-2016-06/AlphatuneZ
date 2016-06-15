@@ -6,4 +6,14 @@ class User < ActiveRecord::Base
 
   has_many :votes
   has_many :voted_songs, through: :votes, source: :song
+
+  def points
+    results = []
+    suggested_songs.find_each do |song|
+      song.votes.find_each do |vote|
+        results.push vote.value
+      end
+    end
+    results.reduce :+
+  end
 end

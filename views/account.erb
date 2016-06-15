@@ -1,0 +1,46 @@
+
+<div class="container">
+  <h1>Account Information</h1>
+  <h2 class="tagline"><%=current_user.email%></h2>
+  <% if current_user.premium %>
+    <h4 class="vip">Premium Account</h4>
+  <% else %>
+    <h4 class="vip">Basic Account</h4>
+  <% end %>
+</div>
+
+
+<div class="container">
+  <div class="main">
+
+  </div><!-- .main -->
+
+  <div class="sidebar">
+
+    <div class="widget">
+      <img src="https://www.rit.edu/science/sites/rit.edu.science/files/root/man-placeholder_27.jpg" alt="Profile Picture" width="150">
+      <h2 class="profile">Stats</h2>
+    </div><!-- .widget -->
+    <div class="clear"></div>
+  </div><!-- .sidebar -->
+
+  <div class="widget" id="songs">
+    <h3>Suggested Songs</h3>
+    <ul>
+    <% current_user.suggested_songs.find_each do |song| %>
+      <li><p><strong>Title:</strong> <%= song.title %>, <strong>Artist:</strong> <%= song.artist %></p></li></br>
+    <% end %>
+    <ul>
+  </div>
+  <div class="clear"></div>
+
+
+
+  <div class="widget" id="points">
+    <h3>Points: <%= current_user.points %></h3>
+  </div>
+  <div class="clear"></div>
+
+
+
+</div><!-- .container -->

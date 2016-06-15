@@ -120,3 +120,126 @@ li a:hover {
 /*.active {
     background-color: #4CAF50;
 }*/
+
+
+
+* {
+     -moz-box-sizing: border-box; /* Firexfox */
+     -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+     box-sizing: border-box; /* IE */
+}
+
+.clear {
+	clear: both;
+}
+
+body {
+	background: url('../images/notebook.png'); /* add a fallback color of #d6d6d6 */
+	color: #000000;
+	font-family: 'Lato', sans-serif;
+	line-height: 1.7; /* line-height is unit-less */
+	font-size: 100%;
+}
+
+h1 {
+	letter-spacing: -5px;
+	font-size: 55px;
+	margin-bottom: 10px;
+}
+
+h2 {
+	font-size: 32px;
+	margin: 0;
+}
+
+blockquote {
+	border-left: 5px #BBB solid;
+	padding-left: 10px;
+	margin-left: 0;
+	font-style: italic;
+}
+
+a {
+	color: #ff3300;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+
+
+/*-----------------------------------------------------------------------------
+02=LAYOUT
+-----------------------------------------------------------------------------*/
+
+.container {
+	margin: 0 auto 0 auto;
+	width: 1250px;
+}
+
+.main {
+	width: 600px;
+	float: right;
+	background: #FFF;
+	padding: 10px;
+	margin-right: 10px;
+	font-size: 12px;
+}
+
+.sidebar {
+	width: 340px;
+	float: left;
+	background: #FFF;
+	padding: 1px;
+	border-right: 3px solid #BBB;
+	/*border-bottom: 3px solid #BBB;*/
+}
+	.sidebar img {
+		border-radius: 300px;
+	}
+
+/*-----------------------------------------------------------------------------
+03=Account page
+-----------------------------------------------------------------------------*/
+.profile {
+  text-align: left;
+  font-size: 26px;
+}
+
+
+.tagline {
+	margin-top: -30px;
+	margin-bottom: 30px;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.post {
+	margin-bottom: 50px;
+}
+
+.post-meta {
+color: #999;
+padding: 10px 0px;
+border-top: #BBB solid 1px;
+}
+
+.widget {
+	margin-bottom: 45px;
+  margin-top: -30px;
+  float: left;
+}
+
+#points {
+  margin-top: -100px;
+}
+
+.vip {
+	margin-top: -50px;
+	margin-bottom: 50px;
+  padding-left: 15px;
+
+}
+
+#songs {
+  margin-top: -100px;
+}
