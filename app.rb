@@ -73,28 +73,23 @@ end
   post "/user/song/vote" do
     song = Song.find(params[:song_id])
 
-    if song == nil
-      halt 403
-      JSON error: "Song does not exist"
-    end
-
     if params[:vote] == "up"
       vote_val = 1
     else
       vote_val = -1
     end
 
-    v = Vote.find_by(user_id: current_user.id, song_id: song.id)
-
-    if v
+    if v = Vote.find_by(user_id: current_user.id, song_id: song.id)
       v.value = vote_val
-      v.placed_at = DateTime.now
     else
-      Vote.create!(user_id: current_user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
-    v.to_json
+      v = Vote.create!(
+        user_id: current_user.id,
+        song_id: song.id,
+        value: vote_val,
+        placed_at: DateTime.now
+      )
     end
-    binding.pry
-
+    redirect '/dashboard'
   end
 
 
