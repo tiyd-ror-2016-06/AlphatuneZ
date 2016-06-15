@@ -124,10 +124,10 @@ class UserTests < Minitest::Test
     song = Song.where(title: "Bohemian Rhapsody", artist: "Queen", genre: "Classic Rock", suggester_id: 1).first_or_create!
     user = User.where(email: "jorgevp5@gmail.com", password: "password").first_or_create!
     login_as user
-    r = post "/#{user.id}/#{song.id}/up"
 
-    assert_equal 1, Vote.where(user_id: user.id).first.value
-
+    r = post "/user/song/vote?vote=up&song_id=#{song.id}"
+    #binding.pry
+    assert.last_response.ok?
   end
 
   def test_users_can_downvote_songs

@@ -79,28 +79,30 @@ class MyApp < Sinatra::Base
     erb :dashboard
   end
 
-  post "/:user/:song/:vote" do
-    song = Song.find(params[:song])
+  post "/user/song/vote" do
+    song = Song.find(params[:song_id])
 
-    if song == nil
-      halt 403
-      JSON error: "Song does not exist"
-    end
-
-    if current_user
-      if params[:vote] == "up"
-        vote_val = 1
-      else
-        vote_val = -1
-      end
-      v = Vote.create!(user_id: current_user.id, song_id: song.id, value: vote_val, placed_at: DateTime.now)
-
-      v.to_json
+    if params[:vote] == "up"
+      vote_val = 1
     else
-      status 403
-      JSON error: "User not found"
+      vote_val = -1
     end
+
+    if v = Vote.find_by(user_id: current_user.id, song_id: song.id)
+      v.value = vote_val
+    else
+      v = Vote.create!(
+        user_id: current_user.id,
+        song_id: song.id,
+        value: vote_val,
+        placed_at: DateTime.now
+      )
+    end
+    redirect '/dashboard'
   end
+
+
+
 
   def login_user user
     session[:logged_in_user_id] = user.id

@@ -96,7 +96,54 @@ li a:hover {
     color: white;
     /*border: none;*/
     outline-style: none;
-  }
+}
+
+.vote-button {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #D5D5D5;
+    color: white;
+    /*border: none;*/
+    outline-style: none;
+}
+
+.vote-button-down {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #333;
+    color: #757575;
+    /*border: none;*/
+    outline-style: none;
+}
+
+.vote-button-down-pressed {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #333;
+    color: pink;
+    /*border: none;*/
+    outline-style: none;
+    border: solid, 1px, yellow;
+}
+
 
   .newsong {
     border: 1px solid grey;
