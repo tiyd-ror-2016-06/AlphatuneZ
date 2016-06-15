@@ -100,3 +100,9 @@ class SpotifyApiRequest
     each_song_array
   end
 end
+
+def no_song # title, artist
+  spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+  spotify.parse!
+  hits = spotify.get_songs
+end

@@ -3,6 +3,7 @@ require "sinatra/json"
 require "rack/cors"
 require "date"
 require "json"
+require "./spotify_api"
 
 require "./db/setup"
 require "./lib/all"
@@ -129,11 +130,17 @@ class MyApp < Sinatra::Base
 
 
   post "/songs" do
-    # begin
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-    if @song.save!
+    spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+    spotify.parse!
+    hits = spotify.get_songs
+    if hits.count == 0
+      @no_song = true
+      erb :dashboard
+
+    elsif @song.save!
       200
-      redirect "/dashboard"
+      redirect '/dashboard'
     else
       403
       erb
@@ -143,8 +150,6 @@ class MyApp < Sinatra::Base
     #   # redirect "/dashboard"
     #   halt "Entry doesn't include Title, Artist"
   end
-
-
 
   delete "/songs" do
     song = Song.where(title: params[:title], suggester_id: current_user.id)
