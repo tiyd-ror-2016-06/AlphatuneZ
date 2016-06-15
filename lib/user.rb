@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  before_create :encrypt
+
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true # TODO: length ?
 
@@ -16,4 +18,9 @@ class User < ActiveRecord::Base
     end
     results.reduce :+
   end
+
+  def encrypt
+    self.password = Digest::SHA256.hexdigest(self.password)
+  end
+
 end

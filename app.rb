@@ -4,6 +4,7 @@ require "rack/cors"
 require "date"
 require "json"
 require "./spotify_api"
+require 'digest/sha2'
 
 require "./db/setup"
 require "./lib/all"
@@ -47,7 +48,10 @@ class MyApp < Sinatra::Base
 
 # if login info is not found redirect to new user page
   post '/' do
-    if u = User.find_by(email: params[:username], password: params[:password])
+    if u = User.find_by(email: params[:username])
+      u.password = Digest::SHA256.hexdigest(u.password)
+        if u.password == params[:password]
+          end
       login_user u
       redirect '/dashboard'
     else
@@ -56,12 +60,14 @@ class MyApp < Sinatra::Base
     end
   end
 
+
   post '/logout' do
     logout
     redirect '/'
   end
 
   # create new user info
+  #puts Digest::SHA256.hexdigest "Hello World"
   post '/newuser' do
     User.create!(email: params[:username], password: params[:password])
     redirect '/'
