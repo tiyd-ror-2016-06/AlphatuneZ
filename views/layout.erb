@@ -7,25 +7,23 @@
     <h1>AlphatuneZ</h1>
     <!--navagation bar  -->
     <ul class= "bar">
+      <% if current_user %>
       <li><a href="#home">Home</a></li>
-      <li><a href="#newsong">Suggest New Song</a></li>
+      <li><a href="#previous">View Previous Playlists</a></li>
       <li><a href="#playlist">Weekly Playlist</a></li>
       <li style="float:right">
-        <% if current_user %>
           <p><%= current_user.email %></p>
           <form method="POST" action="/logout">
             <input type="submit" class="active" value="Logout">
           </form>
-        <% else %>
-          <a href="/">Login</a>
-        <% end %>
       </li>
-      <li >
-        <% if current_user %>
+      <li>
           <p>Account</p>
           <form method="GET" action="/account">
             <input type="submit" class="active" value="Account">
           </form>
+        <% else %>
+          <a href="/">Login</a>
         <% end %>
       </li>
     </ul>
