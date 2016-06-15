@@ -7,16 +7,24 @@
     <h1>AlphatuneZ</h1>
     <!--navagation bar  -->
     <ul class= "bar">
-      <li><a href="/dashboard">Suggest a Song</a></li>
-      <li><a href="/account">Account</a></li>
-      <li><a href="/previousplaylists">View the Previous Playlists</a></li>
-      <li style="float:right">
-      <!-- <li style="float:right"><a href="/logout">Logout</a> -->
-        <form method="POST" action="/logout">
-          <input type="submit" class="active" value="Logout">
+
+      <% if current_user %>
+        <li style="float:left"><a href="/account">Account</a></li>
+        <li style="float:left"><a href="/dashboard">Suggest a Song</a></li>
+        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
+
+        <li style="float:right"><a href="/logout">Logout</a></li>
+
+        <li style="float:right">
+        <form action="/logout" method="POST">
+          <button type="submit"value="Logout" class="active">Logout</button>
         </form>
-      </li>
-      <li style="float:right"><a href="/">Login</a></li>
+        </li>
+
+      <% else %>
+        <li style="float:right"><a href="/">Login</a></li>
+        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
+      <% end %>
     </ul>
     <%= yield %>
   </body>
