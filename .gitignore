@@ -3,3 +3,4 @@ coverage
 db/*.sqlite3
 token.txt
 .bundle
+token.json
