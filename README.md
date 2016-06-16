@@ -118,6 +118,19 @@ Pass a file as an argument to the keyword `test:` to use test_data (JSON formatt
 
     my_request = SpotifyApiRequest.new song: "empty", test: "mytestfile.json"
 
+#### Authorization and Tokens
+
+There are two types of token:
+
+- A "client" token that is derived from `client_id`, and
+- `client secret`, and the "access" token.
+
+To properly intialize the "client" token, place your credentials (`client_id` and `client_secret`) in the `token.json`.
+`SpotifyApiRequest#prepare_client_token_basic_base64` will initialize the `@client_token` for you.
+
+The "access" token must be renewed periodically.
+This is all encapsulted within `#token` i.e. expect that a call to `token` will provide you with an up-to-date token.
+
 #### Notes, Improvements, Etc.
 
 - _It would be nice to instantiate the `SpotifyApiRequest` object with any combination of `song:`, `artist:`, and `album:`, and have it branch to the correct `type` resulting in a "better" `GET` request._

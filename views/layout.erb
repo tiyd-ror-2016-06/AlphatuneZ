@@ -4,31 +4,39 @@
     <title>AlphatuneZ</title>
   </head>
   <body>
-    <h1>AlphatuneZ</h1>
+    <h1>
+      <a href="/dashboard">AlphatuneZ</a>
+    </h1>
     <!--navagation bar  -->
     <ul class= "bar">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#newsong">Suggest New Song</a></li>
-      <li><a href="#playlist">Weekly Playlist</a></li>
-      <li style="float:right">
-        <% if current_user %>
-          <p><%= current_user.email %></p>
-          <form method="POST" action="/logout">
-            <input type="submit" class="active" value="Logout">
+      <% if current_user %>
+        <li style="float:left"><a href="/account">Account</a></li>
+        <li style="float:left"><a href="/dashboard">Suggest a Song</a></li>
+        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
+
+        <li style="float:right">
+        <form action="/logout" method="POST">
+          <button type="submit"value="Logout" class="button">Logout</button>
+        </form>
+        </li>
+        <li style="float:right">
+          <!-- <p>Invite Friend:</p> -->
+          <form method="POST" class="invite-container" action="/invite">
+            <input name="email" type="email" placeholder="friend's email"></input>
+            <input name="current_user.email" type="hidden" value="<%= current_user.email %>"></input>
+            <input type="submit" class="active" value="Invite">
           </form>
-        <% else %>
-          <a href="/">Login</a>
-        <% end %>
-      </li>
-      <li >
-        <% if current_user %>
-          <p>Account</p>
-          <form method="GET" action="/account">
-            <input type="submit" class="active" value="Account">
-          </form>
-        <% end %>
-      </li>
+        </li>
+
+      <% else %>
+        <li style="float:right"><a href="/">Login</a></li>
+        <li style="float:left"><a href="/dashboard">Song List</a></li>
+        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
+      <% end %>
     </ul>
-    <%= yield %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

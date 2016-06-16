@@ -4,9 +4,19 @@ require "rack/cors"
 require "date"
 require "json"
 require "./spotify_api"
+require 'digest/sha2'
 
 require "./db/setup"
 require "./lib/all"
+require 'pony'
+require 'rollbar'
+require 'rollbar/middleware/sinatra'
+
+if ENV['ROLLBAR_ACCESS_TOKEN']
+  Rollbar.configure do |config|
+    config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
+  end
+end
 
 class MyApp < Sinatra::Base
   enable :sessions
@@ -16,6 +26,29 @@ class MyApp < Sinatra::Base
 
   set :logging, true
 
+  # set :show_exceptions, false
+
+
+  if ENV["SENDGRID_USERNAME"]
+    Pony.options = {
+      :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :domain => 'alphatunez.herokuapp.com',
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      }
+    }
+  end
+
+  if ENV['ROLLBAR_ACCESS_TOKEN']
+    use Rollbar::Middleware::Sinatra
+  end
+
+
   use Rack::Cors do
     allow do
       origins "*"
@@ -23,6 +56,25 @@ class MyApp < Sinatra::Base
     end
   end
 
+
+  def require_login!
+    unless current_user
+    redirect '/'
+    end
+  end
+
+  before do
+    unless ["/", "/newuser", "/dashboard"].include?(request.path)
+      require_login!
+      return
+    end
+  end
+
+  if ENV['PRY_ON_ERROR']
+    error do |e|
+      binding.pry
+    end
+  end
 
   # login page show
   get '/' do
@@ -37,7 +89,8 @@ class MyApp < Sinatra::Base
 
 # if login info is not found redirect to new user page
   post '/' do
-    if u = User.find_by(email: params[:username], password: params[:password])
+    u = User.find_by(email: params[:username])
+    if u && u.password == Digest::SHA256.hexdigest(params[:password])
       login_user u
       redirect '/dashboard'
     else
@@ -46,12 +99,14 @@ class MyApp < Sinatra::Base
     end
   end
 
+
   post '/logout' do
     logout
     redirect '/'
   end
 
   # create new user info
+  #puts Digest::SHA256.hexdigest "Hello World"
   post '/newuser' do
     User.create!(email: params[:username], password: params[:password])
     redirect '/'
@@ -67,6 +122,18 @@ class MyApp < Sinatra::Base
     list = SongList.new
     @songs = list.get_list
     erb :dashboard
+  end
+
+  post '/invite' do
+    if params[:email] == ""
+    else
+    Pony.mail :to => params[:email],
+              :from => "friend@alphatunez.herokuapp.com",
+              :headers => { 'Content-Type' => 'text/html' },
+              :subject => "Welcome to AlphatuneZ!",
+              :body => body = erb(:invite_email, layout: false )
+    end
+              redirect '/'
   end
 
   post "/user/song/vote" do
@@ -90,9 +157,6 @@ class MyApp < Sinatra::Base
     end
     redirect '/dashboard'
   end
-
-
-
 
   def login_user user
     session[:logged_in_user_id] = user.id
@@ -129,24 +193,36 @@ class MyApp < Sinatra::Base
 
   post "/songs" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-    spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+    spotify = SpotifyApiRequest.new(song: @song.title)
     spotify.parse!
-    hits = spotify.get_songs
-    if hits.count == 0
+    @hits = spotify.get_songs
+    if @hits.count == 0
       @no_song = true
       erb :dashboard
-
-    elsif @song.save!
+    elsif @hits.count == 1
+      @song.spotify_id = @hits.first["id"]
+      @song.artist = @hits.first["artist"]
+      @song.save!
       200
       redirect '/dashboard'
     else
-      403
-      erb
+      erb :choose_song
     end
     # rescue
     #   status 403
     #   # redirect "/dashboard"
     #   halt "Entry doesn't include Title, Artist"
+  end
+
+  post "/choose_song" do
+    @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
+    if @song.save!
+      200
+      redirect '/dashboard'
+    else
+      status 403
+      redirect '/dashboard'
+    end
   end
 
   delete "/songs" do
@@ -171,6 +247,22 @@ class MyApp < Sinatra::Base
     erb :archived_playlists
   end
 
+
+  get "/weeklyplaylist" do
+      weekly_songs = SongList.new
+      @winners_list = weekly_songs.generate_weekly_winners
+      weekly_playlist = Playlist.create!(created_at: Time.now)
+      @winners_list.each do |letter,song|
+        if song
+          PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
+        end
+      end
+      erb :weeklyplaylist
+  end
+
+  get "/rekt" do
+    1 / 0
+  end
 
   run! if $PROGRAM_NAME == __FILE__
 end

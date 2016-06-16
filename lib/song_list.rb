@@ -19,6 +19,25 @@ class SongList
   end
 
   def get_list
-    songs.group_by{ |s| categorize(s)}
+    Hash[(songs.group_by{ |s| categorize(s)}).sort]
   end
+
+
+  def generate_weekly_winners
+    list = get_list
+    winners = {}
+    list.each do |letter,songs|
+      winner = list[letter].max_by { |song| song.total_votes}
+      winners[letter] = winner
+    end
+    return winners
+    # list.map do |letter,songs|
+    #   songs.max_by do |song|
+    #   song.total_votes
+    #   end
+    # end
+  end
+
+
+
 end

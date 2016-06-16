@@ -1,0 +1,25 @@
+require 'pry'
+require 'httparty'
+
+id, secret = ENV["SPOTIFY_ID"], ENV["SPOTIFY_SECRET"]
+unless id && secret
+  puts "Please set SPOTIFY_ID and SPOTIFY_SECRET"
+  exit 1
+end
+
+puts <<INSTRUCTIONS
+To obtain a Spotify token, please log in to Spotify in your browser and then
+* visit 'https://accounts.spotify.com/authorize?response_type=code&redirect_uri=http://localhost:3000/&scope=playlist-modify-public playlist-read-private&client_id=#{id}'
+* copy the `code` parameter from the response and paste it in now:
+INSTRUCTIONS
+code = gets.chomp
+
+response = HTTParty.post 'https://accounts.spotify.com/api/token', body: {
+  grant_type:    "authorization_code",
+  redirect_uri:  "http://localhost:3000",
+  code:          code,
+  client_id:     id,
+  client_secret: secret
+}
+
+binding.pry

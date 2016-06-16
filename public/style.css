@@ -42,6 +42,24 @@ p {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+
+}
+
+.button {
+  margin-left: 50px;
+  margin-right: 10px;
+  display: block;
+  letter-spacing: 1.5px;
+  margin-top: 1.5em;
+  width: 10.3em;
+  height: 25px;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  border: none;
+  outline-style: none;
+  font-family: Century Gothic;
+  text-decoration: none;
 }
 
 li {
@@ -207,17 +225,24 @@ blockquote {
 }
 
 a {
-	color: #ff3300;
+  color: #333;
 	text-decoration: none;
 	font-weight: bold;
 }
 
+.container a {
+  border-bottom: 1px dotted #333;
+}
+
+a:hover {
+  color: #ff3300;
+  border-color: #ff3300;
+}
 
 
 /*-----------------------------------------------------------------------------
 02=LAYOUT
 -----------------------------------------------------------------------------*/
-
 .container {
 	margin: 0 auto 0 auto;
 	width: 1250px;
@@ -243,6 +268,7 @@ a {
 	.sidebar img {
 		border-radius: 300px;
 	}
+
 
 /*-----------------------------------------------------------------------------
 03=Account page

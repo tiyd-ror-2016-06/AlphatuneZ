@@ -1,5 +1,5 @@
 class Song < ActiveRecord::Base
-  validates_presence_of :title, :artist, :suggester_id
+  validates_presence_of :title, :artist, :suggester_id, :spotify_id
 
   belongs_to :suggester, class_name: "User"
 
@@ -12,5 +12,9 @@ class Song < ActiveRecord::Base
 
   def standardized_title
     self.title.gsub(/[^a-zA-Z0-9]/, "")
+  end
+
+  def total_votes
+    votes.where(placed_at: 6.days.ago .. Time.now).pluck(:value).reduce(0,:+)
   end
 end
