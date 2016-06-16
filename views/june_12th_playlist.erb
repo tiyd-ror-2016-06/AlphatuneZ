@@ -1,0 +1,4 @@
+<h2><%= "Playlist for Sunday, June 12th 2016" %></h2>
+<% @songs.each do |song| %>
+<p><%= " '#{song.title}' by #{song.artist}" %></p>
+<%          end %>
