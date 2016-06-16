@@ -9,13 +9,13 @@ class SpotifyApiRequest
 
   attr_reader :song, :raw_data
 
-  def initialize song:, test_data: nil
+  def initialize song:, test_file: nil
     @song = song
     @token = token
     @client_token = client_token
     @refresh_token = refresh_token
     @raw_data = []
-    @test_data = test_data
+    @test_file = test_file
   end
 
   def token
@@ -90,8 +90,8 @@ class SpotifyApiRequest
         #@type =
     end
 
-    if @test_data
-      @raw_data = JSON.parse(File.read @test_data)
+    if @test_file
+      @raw_data = JSON.parse(File.read @test_file)
     else
       @raw_data = get_song_query
     end
@@ -129,7 +129,7 @@ class SpotifyApiRequest
 end
 
 def no_song # title, artist
-  spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+  spotify = SpotifyApiRequest.new(song: "This is a song", test_file: "spotify_test_data/spotifytest1.json")
   spotify.parse!
   hits = spotify.get_songs
 end
