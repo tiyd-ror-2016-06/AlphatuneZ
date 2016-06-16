@@ -38,28 +38,37 @@ class SpotifyApiRequest
   end
 
   def refresh_token
-    "AQB1I4NoUT_LE5ylmkrvWHyrxu_TNJJ0nQIL24nNgncdrxFAFc_ATeynDz6vj-RsyLUMkO0eJsGZYF6wBUu629aVBMtVU61401xAXcToXVKVFqVikJVTzRgF0yTredQ0-kw"
+    unless @refresh_token
+      if ENV['REFRESH_TOKEN']
+        @refresh_token = ENV['REFRESH_TOKEN']
+      else
+        @refresh_token = File.read("./refresh_token.txt").chomp
+    else
+    @refresh_token
   end
 
   def client_token
     return @client_token if @client_token
-    token_file = './token.json'
-    begin
-      raw_token = JSON.parse(File.read token_file)
-    rescue JSON::ParserError
-      raise "There was a problem parsing your token.json file"
-    rescue Errno::ENOENT
-      raise "No 'token.json' file found."
-    end
+    if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
+      token_string = ENV['CLIENT_ID'] + ":" + ENV['CLIENT_SECRET']
+    else
+      token_file = './token.json'
+      begin
+        raw_token = JSON.parse(File.read token_file)
+      rescue JSON::ParserError
+        raise "There was a problem parsing your token.json file"
+      rescue Errno::ENOENT
+        raise "No 'token.json' file found."
+      end
 
-    if raw_token.values.include? ""
-      raise "'token.json' doesn't include any credentials."
+      if raw_token.values.include? ""
+        raise "'token.json' doesn't include any credentials."
+      end
+      token_string =  raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
     end
-    token_string =  raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
-
     @client_token = "Basic " + Base64.encode64(
-      raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
-    ).sub(/\n/,"")
+                      raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
+                    ).sub(/\n/,"")
   end
 
   def get_song_query
