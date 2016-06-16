@@ -3,6 +3,7 @@
 <%  @hits.each do |song|   %>
 <hr>
 <p><%= "Title: #{song["title"]}, Artist: #{song["artist"]}, Album: #{song["album"]}"   %></p>
+<p><iframe src="https://embed.spotify.com/?uri=spotify:track:<%="#{song["id"]}"%>" frameborder="0" allowtransparency="true"></iframe></p>
 <form align="center" method="POST" action="/choose_song">
   <input name="title" type="hidden" value="<%= song["title"] %>"></input>
   <input name="artist" type="hidden" value="<%= song["artist"] %>"></input>

@@ -199,6 +199,7 @@ class MyApp < Sinatra::Base
       erb :dashboard
     elsif @hits.count == 1
       @song.spotify_id = @hits.first["id"]
+      @song.artist = @hits.first["artist"]
       @song.save!
       200
       redirect '/dashboard'
