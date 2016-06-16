@@ -10,6 +10,7 @@ require "./db/setup"
 require "./lib/all"
 require 'pony'
 require 'rollbar'
+require 'rollbar/middleware/sinatra'
 
 if ENV['ROLLBAR_ACCESS_TOKEN']
   Rollbar.configure do |config|
@@ -41,6 +42,11 @@ class MyApp < Sinatra::Base
       }
     }
   end
+
+  if ENV['ROLLBAR_ACCESS_TOKEN']
+    use Rollbar::Middleware::Sinatra
+  end
+
 
   use Rack::Cors do
     allow do
