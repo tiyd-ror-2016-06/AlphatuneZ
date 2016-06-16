@@ -175,7 +175,7 @@ class MyApp < Sinatra::Base
 
 
   get "/previousplaylists/2016-06-12" do
-    playlist = Playlist.find_by(created_at: 2016-06-12 00:00:00 UTC)
+    playlist = Playlist. #find_by(created_at: "2016-06-12 00:00:00 UTC")
     @songs = playlist.songs
     erb :june_12th_playlist
   end

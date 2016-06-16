@@ -1,7 +1,7 @@
 require "./db/setup"
 require "./lib/all"
 
-[User, Song].each { |klass| klass.delete_all }
+# [User, Song].each { |klass| klass.delete_all }
 
 user = User.create!(email: "fake@compuserve.com", password: "password")
 

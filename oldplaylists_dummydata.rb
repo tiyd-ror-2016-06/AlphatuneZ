@@ -2,11 +2,12 @@ require "./db/setup"
 require "./lib/all"
 
 # [User, Song].each { |klass| klass.delete_all }
-def delete_users
-  User.delete_all
-end
 
-delete_users
+# def delete_users
+#   User.delete_all
+# end
+#
+# delete_users
 
 
 user = User.create!(email: "mep@compuserve.com", password: "secret")
@@ -48,4 +49,3 @@ Song.create!(title: "33", artist: "3artist", genre: "Pop", suggester_id: user.id
 
 
 c = create_playlist
-binding.pry
