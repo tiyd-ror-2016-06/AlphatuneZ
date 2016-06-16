@@ -73,6 +73,9 @@ class MyApp < Sinatra::Base
     erb :login
   end
 
+get '/navbar' do
+  erb :navbar
+end
 
 #account page
   get '/account' do
