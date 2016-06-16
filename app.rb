@@ -32,7 +32,7 @@ class MyApp < Sinatra::Base
   end
 
   before do
-    unless ["/", "/newuser"].include?(request.path)
+    unless ["/", "/newuser", "/dashboard"].include?(request.path)
       require_login!
       return
     end
