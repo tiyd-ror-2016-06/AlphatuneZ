@@ -8,6 +8,7 @@ require 'digest/sha2'
 
 require "./db/setup"
 require "./lib/all"
+require 'pony'
 
 class MyApp < Sinatra::Base
   enable :sessions
@@ -16,7 +17,23 @@ class MyApp < Sinatra::Base
   set :method_override, true
 
   set :logging, true
-  set :show_exceptions, false
+  # set :show_exceptions, false
+
+
+  if ENV["SENDGRID_USERNAME"]
+    Pony.options = {
+      :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :domain => 'alphatunez.herokuapp.com',
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      }
+    }
+  end
 
   use Rack::Cors do
     allow do
@@ -38,16 +55,17 @@ class MyApp < Sinatra::Base
     end
   end
 
-  error do |e|
-    if e.is_a? ActiveRecord::RecordNotFound
-      halt 404, json(error: "Not Found")
-    elsif e.is_a? ActiveRecord::RecordInvalid
-      halt 422, json(error: e.message)
-    else
-      # raise e
-      puts e.message
-    end
-  end
+  # error do |e|
+  #   if e.is_a? ActiveRecord::RecordNotFound
+  #     halt 404, json(error: "Not Found")
+  #   elsif e.is_a? ActiveRecord::RecordInvalid
+  #     halt 422, json(error: e.message)
+  #   else
+  #     # raise e
+  #     puts e.message
+  #   end
+  # end
+
   # login page show
   get '/' do
     erb :login
@@ -94,6 +112,17 @@ class MyApp < Sinatra::Base
     list = SongList.new
     @songs = list.get_list
     erb :dashboard
+  end
+
+  post '/invite' do
+    if params[:email] == ""
+    else
+    Pony.mail :to => params[:email],
+              :from => "friend@alphatunez.com",
+              :subject => "Welcome to AlphatuneZ!",
+              :body => erb(:invite_email)
+    end
+              redirect '/'
   end
 
   post "/user/song/vote" do

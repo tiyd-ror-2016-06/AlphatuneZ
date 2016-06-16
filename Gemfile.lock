@@ -24,7 +24,12 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.3)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
     method_source (0.8.2)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     minitest (5.8.1)
     minitest-focus (1.1.2)
       minitest (>= 4, < 6)
@@ -36,6 +41,8 @@ GEM
     multi_json (1.12.1)
     multi_xml (0.5.5)
     pg (0.18.3)
+    pony (1.11)
+      mail (>= 2.0)
     pry (0.10.2)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -77,6 +84,7 @@ DEPENDENCIES
   minitest-focus
   minitest-reporters
   pg
+  pony
   pry
   puma
   rack-cors
