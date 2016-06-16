@@ -33,38 +33,40 @@
 <h3><%=   letter                                                       %></h3>
 <%        songs.each do |song|                                              %>
 <p><%=      "Title: #{song.title}, Artist: #{song.artist}"              %></p>
-<%          upvote_button = 'vote-button'                                   %>
-<%          downvote_button = 'vote-button'                                 %>
-<%          cast_vote = current_user.votes.find {|o| o.song_id == song.id}  %>
-<%            if cast_vote                                                  %>
-<%              disabled_attr = 'disabled'                                  %>
-<%              if cast_vote.value == 1                                     %>
-<%                upvote_button = 'vote-button-down-pressed'                %>
-<%                downvote_button = 'vote-button-down'                      %>
-<%              else                                                        %>
-<%                upvote_button = 'vote-button-down'                        %>
-<%                downvote_button = 'vote-button-down-pressed'              %>
-<%              end                                                         %>
-<%          end                                                             %>
-<p>
-    <form method="POST" action="/user/song/vote">
-      <input class="<%= upvote_button %>" type="submit" value="upvote" <%= disabled_attr %>></input>
-      <input type="hidden" name="song_id" value="<%= song.id %>"></input>
-      <input type="hidden" name="vote" value="up"></input>
-    </form>
-    <form method="POST" action="/user/song/vote">
-      <input class="<%= downvote_button %>" type="submit" value="downvote" <%= disabled_attr %>></input>
-      <input type="hidden" name="song_id" value="<%= song.id %>"></input>
-      <input type="hidden" name="vote" value="down"></input>
-    </form>
-    <% if current_user == song.suggester  %>
-        <form align="center" method="POST" action="/songs">
-          <input name="_method" type="hidden" value="DELETE">
-          <input name="title" type="hidden" value="<%= song.title %>"></input>
-          <input name="artist" type="hidden" value="<%= song.artist %>"></input>
-        <input type="submit" value="trash">
+<% if current_user %>
+  <%          upvote_button = 'vote-button'                                   %>
+  <%          downvote_button = 'vote-button'                                 %>
+  <%          cast_vote = current_user.votes.find {|o| o.song_id == song.id}  %>
+  <%            if cast_vote                                                  %>
+  <%              disabled_attr = 'disabled'                                  %>
+  <%              if cast_vote.value == 1                                     %>
+  <%                upvote_button = 'vote-button-down-pressed'                %>
+  <%                downvote_button = 'vote-button-down'                      %>
+  <%              else                                                        %>
+  <%                upvote_button = 'vote-button-down'                        %>
+  <%                downvote_button = 'vote-button-down-pressed'              %>
+  <%              end                                                         %>
+  <%          end                                                             %>
+  <p>
+      <form method="POST" action="/user/song/vote">
+        <input class="<%= upvote_button %>" type="submit" value="upvote" <%= disabled_attr %>></input>
+        <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+        <input type="hidden" name="vote" value="up"></input>
       </form>
-    <% end %>
-</p>
-<%        end                                                               %>
-<%      end                                                                 %>
+      <form method="POST" action="/user/song/vote">
+        <input class="<%= downvote_button %>" type="submit" value="downvote" <%= disabled_attr %>></input>
+        <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+        <input type="hidden" name="vote" value="down"></input>
+      </form>
+      <% if current_user == song.suggester  %>
+          <form align="center" method="POST" action="/songs">
+            <input name="_method" type="hidden" value="DELETE">
+            <input name="title" type="hidden" value="<%= song.title %>"></input>
+            <input name="artist" type="hidden" value="<%= song.artist %>"></input>
+          <input type="submit" value="trash">
+        </form>
+      <% end %>
+  </p>
+  <%        end                                                               %>
+  <%      end                                                                 %>
+<% end %>
