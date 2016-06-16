@@ -6,6 +6,7 @@ class SongList
 
   def initialize
     @songs = Song.all
+    @weeklysongs = Song.where()
   end
 
   def categorize song
@@ -21,4 +22,22 @@ class SongList
   def get_list
     songs.group_by{ |s| categorize(s)}
   end
+
+
+  def generate_weekly_playlist
+    list = get_list
+    winners = {}
+    list.each do |letter,songs|
+      winner = list[letter].max_by { |song| song.total_votes}
+      winners[letter] = winner
+    end
+    return winners
+    # list.map do |letter,songs|
+    #   songs.max_by do |song|
+    #   song.first.total_votes
+    #   end
+    # end
+  end
+
+
 end

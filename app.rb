@@ -165,5 +165,11 @@ class MyApp < Sinatra::Base
     redirect "/dashboard"
   end
 
+  # post "/playlist/weekly" do
+  #     songs = SongList.new
+  #     weekly_playlist = songs.get_list.generate_weekly
+  #     redirect "/weeklyplaylist"
+  # end
+
   run! if $PROGRAM_NAME == __FILE__
 end
