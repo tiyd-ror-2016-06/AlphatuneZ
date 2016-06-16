@@ -25,6 +25,10 @@ p {
   text-align: center;
 }
 
+.navbar {
+  background-color: #3d3b3c;
+}
+
 .login-container {
   border: 1px solid grey;
   height: 250px;
