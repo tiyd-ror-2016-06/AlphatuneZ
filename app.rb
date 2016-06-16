@@ -9,6 +9,13 @@ require 'digest/sha2'
 require "./db/setup"
 require "./lib/all"
 require 'pony'
+require 'rollbar'
+
+if ENV['ROLLBAR_ACCESS_TOKEN']
+  Rollbar.configure do |config|
+    config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
+  end
+end
 
 class MyApp < Sinatra::Base
   enable :sessions
@@ -55,16 +62,11 @@ class MyApp < Sinatra::Base
     end
   end
 
-  # error do |e|
-  #   if e.is_a? ActiveRecord::RecordNotFound
-  #     halt 404, json(error: "Not Found")
-  #   elsif e.is_a? ActiveRecord::RecordInvalid
-  #     halt 422, json(error: e.message)
-  #   else
-  #     # raise e
-  #     puts e.message
-  #   end
-  # end
+  if ENV['ROLLBAR_ACCESS_TOKEN']
+    error do |e|
+      Rollbar.error(e)
+    end
+  end
 
   # login page show
   get '/' do
@@ -218,6 +220,10 @@ class MyApp < Sinatra::Base
         end
       end
       erb :weeklyplaylist
+  end
+
+  get "/rekt" do
+    1 / 0
   end
 
   run! if $PROGRAM_NAME == __FILE__
