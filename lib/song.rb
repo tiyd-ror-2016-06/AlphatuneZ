@@ -13,4 +13,8 @@ class Song < ActiveRecord::Base
   def standardized_title
     self.title.gsub(/[^a-zA-Z0-9]/, "")
   end
+
+  def total_votes
+    votes.where(placed_at: 6.days.ago .. Time.now).pluck(:value).reduce(0,:+)
+  end
 end

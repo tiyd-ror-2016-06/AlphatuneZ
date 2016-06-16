@@ -165,5 +165,17 @@ class MyApp < Sinatra::Base
     redirect "/dashboard"
   end
 
+  get "/weeklyplaylist" do
+      weekly_songs = SongList.new
+      @winners_list = weekly_songs.generate_weekly_winners
+      weekly_playlist = Playlist.create!(created_at: Time.now)
+      @winners_list.each do |letter,song|
+        if song
+          PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
+        end
+      end
+      erb :weeklyplaylist
+  end
+
   run! if $PROGRAM_NAME == __FILE__
 end
