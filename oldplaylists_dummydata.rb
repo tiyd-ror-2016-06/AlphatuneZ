@@ -10,10 +10,11 @@ require "./lib/all"
 # delete_users
 
 
-user = User.create!(email: "mep@compuserve.com", password: "secret")
+user = User.create!(email: "ms@compuserve.com", password: "secret")
 
 def create_playlist
-  playlist = Playlist.create!(created_at: "2016-06-12 00:00:00") #DateTime.now)
+  time = Time.new(2016, 06, 12)
+  playlist = Playlist.create!(created_at: time) #DateTime.now)
   Song.last(27).each do |song|
     PlaylistSong.create!(song_id: song.id, playlist_id: playlist.id)
     end
