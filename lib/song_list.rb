@@ -19,7 +19,7 @@ class SongList
   end
 
   def get_list
-    songs.group_by{ |s| categorize(s)}
+    Hash[(songs.group_by{ |s| categorize(s)}).sort]
   end
 
 

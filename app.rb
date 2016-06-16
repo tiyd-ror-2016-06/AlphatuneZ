@@ -118,7 +118,7 @@ class MyApp < Sinatra::Base
   # get songs info for dashboard
   get '/dashboard' do
     list = SongList.new
-    @songs = Hash[(list.get_list).sort]
+    @songs = list.get_list
     erb :dashboard
   end
 
