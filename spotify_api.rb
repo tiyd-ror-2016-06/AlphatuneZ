@@ -68,7 +68,7 @@ class SpotifyApiRequest
       token_string =  raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
     end
     @client_token = "Basic " + Base64.encode64(
-                      raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
+                      token_string
                     ).sub(/\n/,"")
   end
 
