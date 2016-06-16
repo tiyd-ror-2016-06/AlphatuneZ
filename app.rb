@@ -68,9 +68,9 @@ class MyApp < Sinatra::Base
     end
   end
 
-  if ENV['ROLLBAR_ACCESS_TOKEN']
+  if ENV['PRY_ON_ERROR']
     error do |e|
-      Rollbar.error(e)
+      binding.pry
     end
   end
 
