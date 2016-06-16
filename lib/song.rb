@@ -18,7 +18,7 @@ class Song < ActiveRecord::Base
     votes.where(placed_at: 6.days.ago .. Time.now).pluck(:value).reduce(0,:+)
   end
 
-  def week_it_belongs_to
-    Time.now.strftime("%U").to_i
+  def week_number_from_time time: self.suggested_date
+    return time.strftime("%U").to_i
   end
 end
