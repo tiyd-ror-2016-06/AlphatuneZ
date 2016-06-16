@@ -42,3 +42,9 @@ end}.strip
     exit # otherwise rake will try to run the other arguments
   end
 end
+
+desc "Create a playlist "
+task :create_playlist do
+  require './db/setup'
+  require './lib/all'
+end
