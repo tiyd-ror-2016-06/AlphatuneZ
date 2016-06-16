@@ -16,22 +16,23 @@ class MyApp < Sinatra::Base
   set :method_override, true
 
   set :logging, true
-  set :show_exceptions, false
+  # set :show_exceptions, false
 
 
-  #   Pony.options = {
-  #   :via => :smtp,
-  #   :via_options => {
-  #     :address => 'smtp.sendgrid.net',
-  #     :port => '587',
-  #     :domain => 'myapp.com',
-  #     :user_name => ENV['SENDGRID_USERNAME'],
-  #     :password => ENV['SENDGRID_PASSWORD'],
-  #     :authentication => :plain,
-  #     :enable_starttls_auto => true
-  #   }
-  # }
-
+  if ENV["SENDGRID_USERNAME"]
+    Pony.options = {
+      :via => :smtp,
+      :via_options => {
+        :address => 'smtp.sendgrid.net',
+        :port => '587',
+        :domain => 'alphatunez.herokuapp.com',
+        :user_name => ENV['SENDGRID_USERNAME'],
+        :password => ENV['SENDGRID_PASSWORD'],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+      }
+    }
+  end
 
   use Rack::Cors do
     allow do
@@ -40,16 +41,16 @@ class MyApp < Sinatra::Base
     end
   end
 
-  error do |e|
-    if e.is_a? ActiveRecord::RecordNotFound
-      halt 404, json(error: "Not Found")
-    elsif e.is_a? ActiveRecord::RecordInvalid
-      halt 422, json(error: e.message)
-    else
-      # raise e
-      puts e.message
-    end
-  end
+  # error do |e|
+  #   if e.is_a? ActiveRecord::RecordNotFound
+  #     halt 404, json(error: "Not Found")
+  #   elsif e.is_a? ActiveRecord::RecordInvalid
+  #     halt 422, json(error: e.message)
+  #   else
+  #     # raise e
+  #     puts e.message
+  #   end
+  # end
   # login page show
   get '/' do
     erb :login
