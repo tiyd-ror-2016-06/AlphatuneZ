@@ -11,55 +11,30 @@ class SpotifyApiRequest
 
   def initialize song:, test_data: nil
     @song = song
+    @token = token
     @client_token = client_token
-    @token = generate_beginning_token
-    #token #generate_beginning_token #ENV["SPOTIFY_TOKEN"] # || File.read("./token.txt").chomp
+    @refresh_token = refresh_token
     @raw_data = []
     @test_data = test_data
   end
 
-
-  def generate_beginning_token
-    beginning_token = refresh_access_token
-  end
-
-  # def token
-  #   @token = generate_beginning_token
-  # end
-
-  def token #check_token_freshness
-    if generate_beginning_token["expires_in"] = "0"
-      refresh_access_token
-    else
-    @token
+  def token
+    if @token.nil? || @token_expiration < Time.now
+      @token = get_new_token
     end
+    @token
   end
 
-  # def refresh_access_token
-  #   new_token = HTTParty.post(
-  #   'https://accounts.spotify.com/api/token',
-  #   headers: {"Authorization" => "Basic ZGQzMmI2MTgwZDZhNGY0ZGI0Yjk3ZGU2NDVhNmNmYjM6NDczNTllNzQxNGM4NDgzYWI1MjM2NGZhYjkzNjdjOTI=\n"},
-  #   body: {
-  #   grant_type: "refresh_token",
-  #   refresh_token: "AQB1I4NoUT_LE5ylmkrvWHyrxu_TNJJ0nQIL24nNgncdrxFAFc_ATeynDz6vj-RsyLUMkO0eJsGZYF6wBUu629aVBMtVU61401xAXcToXVKVFqVikJVTzRgF0yTredQ0-kw"
-  #   })
-  #   new_token.merge!({"expires_at"=> Time.at(Time.now + new_token["expires_in"])})
-  #   binding.pry
-
-  # end
-
-
-  def refresh_access_token
-    #if new_token["expires_at"] < Time.now
-      new_token = HTTParty.post(
+  def get_new_token
+    new_token = HTTParty.post(
         'https://accounts.spotify.com/api/token',
-        headers: {"Authorization" => @client_token},
+        headers: {"Authorization" => client_token},
         body: {
           grant_type: "refresh_token",
           refresh_token: refresh_token
-    })
-      binding.pry
-      new_token.merge!({"expires_at"=> Time.at(Time.now + new_token["expires_in"])})
+        })
+    @token_expiration = Time.at(Time.now + new_token["expires_in"])
+    new_token["token_type"] + " " + new_token["access_token"]
   end
 
   def refresh_token
@@ -75,15 +50,12 @@ class SpotifyApiRequest
       raise "There was a problem parsing your token.json file"
     rescue Errno::ENOENT
       raise "No 'token.json' file found."
-    rescue => e
-      raise e
     end
 
     if raw_token.values.include? ""
       raise "'token.json' doesn't include any credentials."
     end
     token_string =  raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
-    binding.pry
 
     @client_token = "Basic " + Base64.encode64(
       raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
@@ -94,7 +66,7 @@ class SpotifyApiRequest
     st_encoded = URI.encode @song
     HTTParty.get(
       Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-      headers: { "Accept" => "application/json", "Authorization" => @token }
+      headers: { "Accept" => "application/json", "Authorization" => token }
     )
   end
 
