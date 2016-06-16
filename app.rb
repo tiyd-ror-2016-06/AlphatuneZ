@@ -61,10 +61,8 @@ class MyApp < Sinatra::Base
 
 # if login info is not found redirect to new user page
   post '/' do
-    if u = User.find_by(email: params[:username])
-      u.password = Digest::SHA256.hexdigest(u.password)
-        if u.password == params[:password]
-          end
+    u = User.find_by(email: params[:username])
+    if u && u.password == Digest::SHA256.hexdigest(params[:password])
       login_user u
       redirect '/dashboard'
     else
