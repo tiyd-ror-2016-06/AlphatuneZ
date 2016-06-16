@@ -5,6 +5,13 @@ require "./lib/all"
 
 user = User.create!(email: "fake@compuserve.com", password: "password")
 
+# def create_playlist
+#   playlist = Playlist.create!(created_at: DateTime.now)
+#   Song.all.each do |song|
+#     PlaylistSong.create!(song_id: song.id, playlist_id: playlist.id)
+#     end
+# end
+
 #A
 Song.create!(title: "Absolutely (Story of a Girl)",artist: "Nine Days",genre: "Pop", suggester_id: user.id)
 Song.create!(title: "Always",artist: "Saliva",genre: "Alternative", suggester_id: user.id)
@@ -90,3 +97,5 @@ Song.create!(title: "Ziggy Stardust",artist: "David Bowie",genre: "Pop", suggest
 Song.create!(title: "9 Crimes",artist: "Damien Rice",genre: "Indie", suggester_id: user.id)
 Song.create!(title: "867-5309 (Jenny)",artist: "Tommy Tutone",genre: "Oldies", suggester_id: user.id)
 Song.create!(title: "(-_-)",artist: "Adebisi Shank",genre: "Math Rock", suggester_id: user.id)
+
+# c = create_playlist

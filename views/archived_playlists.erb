@@ -1,0 +1,5 @@
+<h2><p><center><a href="/previousplaylists/<%="#{@playlist.id}"%>"><%=@playlist.created_at%></a> </center></p></h2>
+
+<% @songs.each do |song| %>
+<p><%= " '#{song.title}' by #{song.artist}" %></p>
+<%          end %>

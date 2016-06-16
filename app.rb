@@ -15,7 +15,6 @@ class MyApp < Sinatra::Base
   set :method_override, true
 
   set :logging, true
-  set :show_exceptions, false
 
   use Rack::Cors do
     allow do
@@ -24,16 +23,7 @@ class MyApp < Sinatra::Base
     end
   end
 
-  error do |e|
-    if e.is_a? ActiveRecord::RecordNotFound
-      halt 404, json(error: "Not Found")
-    elsif e.is_a? ActiveRecord::RecordInvalid
-      halt 422, json(error: e.message)
-    else
-      # raise e
-      puts e.message
-    end
-  end
+
   # login page show
   get '/' do
     erb :login
@@ -167,17 +157,18 @@ class MyApp < Sinatra::Base
 
 
   get "/previousplaylists" do
+    @last_playlist = Playlist.last
     playlist = Playlist.last
     @songs = playlist.songs
-    erb :view_previousplaylists
+    @last_5_playlists = Playlist.last(5)
+    erb :previous_playlist
   end
 
 
-  get "/previousplaylists/2016-06-12" do
-    time = Time.new(2016, 06, 12)
-    playlist = Playlist.find_by(created_at: time)
-    @songs = playlist.songs
-    erb :june_12th_playlist
+  get "/previousplaylists/:playlist_id" do
+    @playlist = Playlist.find_by(id: params[:playlist_id])
+    @songs = @playlist.songs
+    erb :archived_playlists
   end
 
 
