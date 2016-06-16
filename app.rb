@@ -126,7 +126,7 @@ class MyApp < Sinatra::Base
     if params[:email] == ""
     else
     Pony.mail :to => params[:email],
-              :from => "friend@alphatunez.com",
+              :from => "friend@alphatunez.herokuapp.com",
               :headers => { 'Content-Type' => 'text/html' },
               :subject => "Welcome to AlphatuneZ!",
               :body => body = erb(:invite_email, layout: false )
