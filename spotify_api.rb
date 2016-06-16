@@ -43,7 +43,8 @@ class SpotifyApiRequest
         @refresh_token = ENV['REFRESH_TOKEN']
       else
         @refresh_token = File.read("./refresh_token.txt").chomp
-    else
+      end
+    end
     @refresh_token
   end
 
