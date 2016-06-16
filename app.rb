@@ -166,7 +166,6 @@ class MyApp < Sinatra::Base
   end
 
 
-
   get "/previousplaylists" do
     playlist = Playlist.last
     @songs = playlist.songs
