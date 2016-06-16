@@ -170,8 +170,10 @@ class MyApp < Sinatra::Base
       @winners_list = weekly_songs.generate_weekly_winners
       weekly_playlist = Playlist.create!(created_at: Time.now)
       @winners_list.each do |letter,song|
-      PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
-    end
+        if song
+          PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
+        end
+      end
       erb :weeklyplaylist
   end
 
