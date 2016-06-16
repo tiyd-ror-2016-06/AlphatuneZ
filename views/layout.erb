@@ -4,7 +4,9 @@
     <title>AlphatuneZ</title>
   </head>
   <body>
-    <h1>AlphatuneZ</h1>
+    <h1>
+      <a href="/dashboard">AlphatuneZ</a>
+    </h1>
     <!--navagation bar  -->
     <ul class= "bar">
 
@@ -24,6 +26,9 @@
         <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
       <% end %>
     </ul>
-    <%= yield %>
+
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -225,11 +225,19 @@ blockquote {
 }
 
 a {
-	color: #ff3300;
+  color: #333;
 	text-decoration: none;
 	font-weight: bold;
 }
 
+.container a {
+  border-bottom: 1px dotted #333;
+}
+
+a:hover {
+  color: #ff3300;
+  border-color: #ff3300;
+}
 
 
 /*-----------------------------------------------------------------------------
