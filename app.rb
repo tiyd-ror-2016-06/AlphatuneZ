@@ -122,7 +122,7 @@ class MyApp < Sinatra::Base
     Pony.mail :to => params[:email],
               :from => "friend@alphatunez.com",
               :subject => "Welcome to AlphatuneZ!",
-              :body => erb(:invite_email)
+              :body => body = erb(:invite_email, layout: false )
     end
               redirect '/'
   end
