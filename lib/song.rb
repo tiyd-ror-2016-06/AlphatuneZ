@@ -1,5 +1,5 @@
 class Song < ActiveRecord::Base
-  validates_presence_of :title, :artist, :suggester_id
+  validates_presence_of :title, :artist, :suggester_id, :spotify_id
 
   belongs_to :suggester, class_name: "User"
 
