@@ -165,5 +165,21 @@ class MyApp < Sinatra::Base
     redirect "/dashboard"
   end
 
+
+
+  get "/previousplaylists" do
+    playlist = Playlist.last
+    @songs = playlist.songs
+    erb :view_previousplaylists
+  end
+
+
+  get "/previousplaylists/2016-06-12" do
+    playlist = Playlist.find_by(created_at: 2016-06-12 00:00:00 UTC)
+    @songs = playlist.songs
+    erb :june_12th_playlist
+  end
+
+
   run! if $PROGRAM_NAME == __FILE__
 end
