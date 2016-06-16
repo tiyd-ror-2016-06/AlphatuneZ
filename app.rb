@@ -168,10 +168,10 @@ class MyApp < Sinatra::Base
   get "/weeklyplaylist" do
       weekly_songs = SongList.new
       @winners_list = weekly_songs.generate_weekly_winners
-    #   weekly_playlist = Playlist.create!(created_at: Time.now)
-    #   @winners_list.each do |letter,song|
-    #   PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
-    # end
+      weekly_playlist = Playlist.create!(created_at: Time.now)
+      @winners_list.each do |letter,song|
+      PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
+    end
       erb :weeklyplaylist
   end
 
