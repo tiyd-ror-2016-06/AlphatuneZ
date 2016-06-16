@@ -184,24 +184,35 @@ class MyApp < Sinatra::Base
 
   post "/songs" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-    spotify = SpotifyApiRequest.new(song: "This is a song", test_data: "spotify_test_data/spotifytest1.json")
+    spotify = SpotifyApiRequest.new(song: @song.title)
     spotify.parse!
-    hits = spotify.get_songs
-    if hits.count == 0
+    @hits = spotify.get_songs
+    if @hits.count == 0
       @no_song = true
       erb :dashboard
-
-    elsif @song.save!
+    elsif @hits.count == 1
+      @song.spotify_id = @hits.first["id"]
+      @song.save!
       200
       redirect '/dashboard'
     else
-      403
-      erb
+      erb :choose_song
     end
     # rescue
     #   status 403
     #   # redirect "/dashboard"
     #   halt "Entry doesn't include Title, Artist"
+  end
+
+  post "/choose_song" do
+    @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
+    if @song.save!
+      200
+      redirect '/dashboard'
+    else
+      status 403
+      redirect '/dashboard'
+    end
   end
 
   delete "/songs" do

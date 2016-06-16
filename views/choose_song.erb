@@ -1,0 +1,13 @@
+<h2><%= @hits.count %> songs fit that criteria</h2>
+<h2> Please choose the song you wish to add:</h2>
+<%      @hits.each do |song|           %>
+<hr>
+<p><%= "Title: #{song["title"]}, Artist: #{song["artist"]}, Album: #{song["album"]}"   %></p>
+<form align="center" method="POST" action="/choose_song">
+  <!-- <input name="_method" type="hidden" value="DELETE"> -->
+  <input name="title" type="hidden" value="<%= song["title"] %>"></input>
+  <input name="artist" type="hidden" value="<%= song["artist"] %>"></input>
+  <input name="spotify_id" type="hidden" value="<%= song["id"] %>"></input>
+<input type="submit" value="Choose">
+</form>
+<% end %>
