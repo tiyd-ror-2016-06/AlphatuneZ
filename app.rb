@@ -167,12 +167,12 @@ class MyApp < Sinatra::Base
 
   post "/playlist/weekly" do
       weekly_songs = SongList.new
-      winners_list = weekly_songs.generate_weekly_winners
+      @winners_list = weekly_songs.generate_weekly_winners
       weekly_playlist = Playlist.create!(created_at: Time.now)
-      winners_list.each do |letter,song|
+      @winners_list.each do |letter,song|
       PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
     end
-      redirect "/weeklyplaylist"
+      erb :weeklyplaylist
   end
 
   run! if $PROGRAM_NAME == __FILE__

@@ -1,5 +1,5 @@
-<%      s = SongList.new                                      %>
-<%      (s.generate_weekly_winners).each do |letter, songs|                                      %>
+
+<%      @winners_list.each do |letter, songs|                                      %>
 <h3><%=   letter                                                       %></h3>
 <%        songs.each do |song|                                              %>
 <p><%=      "Title: #{song.title}, Artist: #{song.artist}"              %></p>
