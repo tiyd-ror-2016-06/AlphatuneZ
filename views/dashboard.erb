@@ -33,6 +33,7 @@
 <h3><%=   letter                                                       %></h3>
 <%        songs.each do |song|                                              %>
 <p><%=      "Title: #{song.title}, Artist: #{song.artist}"              %></p>
+<p><iframe src="https://embed.spotify.com/?uri=spotify:track:<%="#{song.spotify_id}"%>" frameborder="0" allowtransparency="true"></iframe></p>
 <% if current_user %>
   <%          upvote_button = 'vote-button'                                   %>
   <%          downvote_button = 'vote-button'                                 %>
