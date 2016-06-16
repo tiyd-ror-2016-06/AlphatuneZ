@@ -165,7 +165,7 @@ class MyApp < Sinatra::Base
     redirect "/dashboard"
   end
 
-  post "/playlist/weekly" do
+  get "/weeklyplaylist" do
       weekly_songs = SongList.new
       @winners_list = weekly_songs.generate_weekly_winners
       weekly_playlist = Playlist.create!(created_at: Time.now)
