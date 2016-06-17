@@ -88,8 +88,12 @@ class MyApp < Sinatra::Base
   end
 
   #reset password
-  post '/password' do
+  get '/password' do
+    erb :password
+  end
 
+  post '/password' do
+    binding.pry
   end
 
 # if login info is not found redirect to new user page
