@@ -252,7 +252,7 @@ class MyApp < Sinatra::Base
   get "/winningplaylist/:playlist_id" do
     @playlist = Playlist.find_by(id: params[:playlist_id])
     @songs = @playlist.songs
-    erb :winningplaylist_archive 
+    erb :winningplaylist_archive
   end
 
 
