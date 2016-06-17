@@ -15,7 +15,8 @@ end
 
 #[User, Song].each { |klass| klass.delete_all }
 
-user = User.find_by(email: "fake@compuserve.com")
+
+user = User.first_or_create!(email: "fake", password: "fake")
 
 # def create_playlist
 #   playlist = Playlist.create!(created_at: DateTime.now)
