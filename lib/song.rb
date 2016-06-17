@@ -9,16 +9,27 @@ class Song < ActiveRecord::Base
   has_many :playlist_songs
   has_many :playlists, through: :playlist_songs
 
-
   def standardized_title
     self.title.gsub(/[^a-zA-Z0-9]/, "")
   end
 
-  def total_votes
-    votes.where(placed_at: 6.days.ago .. Time.now).pluck(:value).reduce(0,:+)
+  def total_votes_current_week
+    #votes.where(placed_at: 6.days.ago .. Time.now).pluck(:value).reduce(0,:+)
+    votes.
+      select { |o| o.song.suggested_date.week_number == Time.now.week_number }.
+      map { |p| p.value }.
+      reduce(0,:+)
   end
 
-  def week_number_from_time time: self.suggested_date
-    return time.strftime("%U").to_i
+  def alpha_categorize
+    if self.standardized_title[0].nil?
+      "#"
+    elsif self.standardized_title[0].to_i.to_s != self.standardized_title[0]
+      self.standardized_title[0].upcase
+    else
+      "#"
+    end
   end
+
+
 end
