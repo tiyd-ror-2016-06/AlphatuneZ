@@ -110,6 +110,7 @@ class MyApp < Sinatra::Base
   post '/newuser' do
     u = User.create!(email: params[:username], password: params[:password])
     login_user u
+    session[:message] = "Account Creation Successful"
     redirect '/dashboard'
   end
 
