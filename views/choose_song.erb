@@ -3,7 +3,7 @@
 <% else %>
 <h2><%= @hits.count %> songs fit that criteria</h2>
 <h2> Please confirm the song you wish to add:</h2>
-<form align="center" action="/dashboard" method="GET">
+<form align="center" action="/no_song" method="POST">
   <input type="submit" value="Song not on list">
 </form>
 <% end %>

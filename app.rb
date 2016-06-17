@@ -124,15 +124,15 @@ class MyApp < Sinatra::Base
   end
 
   post '/invite' do
-    if params[:email] == ""
-    else
+    unless params[:email] == ""
     Pony.mail :to => params[:email],
               :from => "friend@alphatunez.herokuapp.com",
               :headers => { 'Content-Type' => 'text/html' },
               :subject => "Welcome to AlphatuneZ!",
               :body => body = erb(:invite_email, layout: false )
     end
-              redirect '/'
+    session[:message] = "Email sent to #{params[:email]}"
+    redirect '/dashboard'
   end
 
   post "/user/song/vote" do
@@ -159,9 +159,11 @@ class MyApp < Sinatra::Base
 
   def login_user user
     session[:logged_in_user_id] = user.id
+    session[:message] = "Login Successful"
   end
 
   def logout
+    session[:message] = "Logout Successful"
     session.delete :logged_in_user_id
   end
 
@@ -211,11 +213,18 @@ class MyApp < Sinatra::Base
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
     if @song.save!
       200
+      session[:message] = "Song Added Successfully"
       redirect '/dashboard'
     else
       status 403
+      session[:message] = "Song Could Not Be Added"
       redirect '/dashboard'
     end
+  end
+
+  post "/no_song" do
+  session[:message] = "No Song Was Added"
+  redirect '/dashboard'
   end
 
   delete "/songs" do
