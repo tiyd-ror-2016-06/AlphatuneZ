@@ -119,8 +119,7 @@ class MyApp < Sinatra::Base
 
   # get songs info for dashboard
   get '/dashboard' do
-    list = SongList.new
-    @songs = list.get_list
+    @songs = Playlist.current_alpha_hash
     erb :dashboard
   end
 
@@ -243,15 +242,14 @@ class MyApp < Sinatra::Base
 
 
   get "/weeklyplaylist" do
-      weekly_songs = SongList.new
-      @winners_list = weekly_songs.generate_weekly_winners
-      weekly_playlist = Playlist.create!(created_at: Time.now)
-      @winners_list.each do |letter,song|
-        if song
-          PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
-        end
-      end
-      erb :weeklyplaylist
+    binding.pry
+    playlist = Playlist.by_week.alphabet_winners_hash
+    #   select { |p| p.created_at.week_number == Time.now.week_number - 1 }.
+    #   sort_by {|q| q.created_at }.
+    #   reverse.
+    #   first.
+    binding.pry
+    erb :weeklyplaylist
   end
 
   get "/rekt" do
