@@ -133,6 +133,14 @@ class SpotifyApiRequest
     each_song_array
   end
 
+
+  def login_with_spotify_account
+    login HTTParty.get(
+      Spotify_api + "/v1/me",
+      headers: {"Authorization" => token }
+    )
+  end 
+
   private # --- Everything from here down is only callable from this object ----
 
   def create_playlist
