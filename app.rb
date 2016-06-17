@@ -186,12 +186,12 @@ class MyApp < Sinatra::Base
   end
 
   get "/api/me" do
-    if current_user
-      json current_user
-    else
-      SpotifyApiRequest.login_with_spotify_account
-      erb :index
-    end
+    # if current_user
+    #   json current_user
+    # else
+    #   SpotifyApiRequest.login_with_spotify_account
+    #   erb :index
+    # end
   end
 
 
@@ -242,14 +242,14 @@ class MyApp < Sinatra::Base
     playlist = Playlist.last
     @songs = playlist.songs
     @last_5_playlists = Playlist.last(5)
-    erb :previous_playlist
+    erb :winningplaylist
   end
 
 
   get "/winningplaylist/:playlist_id" do
     @playlist = Playlist.find_by(id: params[:playlist_id])
     @songs = @playlist.songs
-    erb :archived_playlists
+    erb :winningplaylist_archive 
   end
 
 
