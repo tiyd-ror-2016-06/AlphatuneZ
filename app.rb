@@ -201,8 +201,8 @@ class MyApp < Sinatra::Base
     spotify.parse!
     @hits = spotify.get_songs
     if @hits.count == 0
-      @no_song = true
-      erb :dashboard
+      session[:message] = "No Song Found"
+      redirect "/dashboard"
     else
       erb :choose_song
     end
