@@ -94,9 +94,7 @@ class MyApp < Sinatra::Base
 
   post '/password' do
     if (current_user.password == Digest::SHA256.hexdigest(params[:oldpassword])) && (params[:newpassword1] == params[:newpassword2])
-      c = current_user
-      c.password = Digest::SHA256.hexdigest(params[:newpassword1])
-      c.save!
+      change_password(params[:newpassword1])
       session[:message] = "Password Changed Successfully"
       redirect '/account'
     elsif current_user.password != Digest::SHA256.hexdigest(params[:oldpassword])
@@ -188,6 +186,12 @@ class MyApp < Sinatra::Base
   def logout
     session[:message] = "Logout Successful"
     session.delete :logged_in_user_id
+  end
+
+  def change_password newpassword
+    c = current_user
+    c.password = Digest::SHA256.hexdigest(newpassword)
+    c.save!
   end
 
   def current_user
