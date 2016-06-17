@@ -87,6 +87,25 @@ class MyApp < Sinatra::Base
     erb :account
   end
 
+  #reset password
+  get '/password' do
+    erb :password
+  end
+
+  post '/password' do
+    if (current_user.password == Digest::SHA256.hexdigest(params[:oldpassword])) && (params[:newpassword1] == params[:newpassword2])
+      change_password(params[:newpassword1])
+      session[:message] = "Password Changed Successfully"
+      redirect '/account'
+    elsif current_user.password != Digest::SHA256.hexdigest(params[:oldpassword])
+      session[:message] = "Old Password Incorrect"
+      redirect '/password'
+    else
+      session[:message] = "New Password Did Not Match"
+      redirect '/password'
+    end
+  end
+
 # if login info is not found redirect to new user page
   post '/' do
     u = User.find_by(email: params[:username])
@@ -167,6 +186,12 @@ class MyApp < Sinatra::Base
   def logout
     session[:message] = "Logout Successful"
     session.delete :logged_in_user_id
+  end
+
+  def change_password newpassword
+    c = current_user
+    c.password = Digest::SHA256.hexdigest(newpassword)
+    c.save!
   end
 
   def current_user
