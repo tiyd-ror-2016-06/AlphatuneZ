@@ -15,6 +15,15 @@ HELP_MESSAGE
   exit
 end
 
+def write_song_to_file song
+  f = File.new("./spotify_test_data/spotifysong-" + Time.now.tv_sec.to_s, "w")
+  spotify_request = SpotifyApiRequest.new(song: song)
+  spotify_request.parse!
+  f << spotify_request.get_songs.first.to_json
+  f.close
+end
+
+
 unless ARGV.count > 0
   help_message
 end
@@ -31,9 +40,13 @@ elsif command == 'live'
   unless song = ARGV.shift
     song = "I should have been a cowboy" # I should've learned to rope and ride
   end
+elsif command == 'write'
+  binding.pry
+  exit
 else
   help_message
 end
+
 
 spotify_request = SpotifyApiRequest.new(song: song, test_file: test_file)
 parsed_request = spotify_request.clone
