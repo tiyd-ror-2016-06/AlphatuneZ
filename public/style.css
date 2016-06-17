@@ -25,9 +25,47 @@ p {
   text-align: center;
 }
 
+/*------------------------*/
+/*New Layout for all pages*/
+
 .navbar {
   background-color: #3d3b3c;
 }
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position:relative;
+   }
+.title{
+  color: #F8F9F9;
+  position:absolute;
+   left: 920px;
+   top: 55px;
+
+
+}
+.title:hover {
+  color: #ff3300;
+  border-color: #ff3300;
+}
+
+   a {
+     color:#CD5C5C;
+   	text-decoration: none;
+   	font-weight: bold;
+   }
+
+
+
+   a:hover {
+     color: #800000;
+     border-color: #800000;
+   }
+
+
+/*------------------------*/
 
 .login-container {
   border: 1px solid grey;
@@ -42,11 +80,6 @@ p {
 /*navagation bar*/
 .bar {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-
 }
 
 .button {
@@ -228,20 +261,6 @@ blockquote {
 	font-style: italic;
 }
 
-a {
-  color: #333;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.container a {
-  border-bottom: 1px dotted #333;
-}
-
-a:hover {
-  color: #ff3300;
-  border-color: #ff3300;
-}
 
 
 /*-----------------------------------------------------------------------------
