@@ -108,8 +108,10 @@ class MyApp < Sinatra::Base
   # create new user info
   #puts Digest::SHA256.hexdigest "Hello World"
   post '/newuser' do
-    User.create!(email: params[:username], password: params[:password])
-    redirect '/'
+    u = User.create!(email: params[:username], password: params[:password])
+    login_user u
+    session[:message] = "Account Creation Successful"
+    redirect '/dashboard'
   end
 
   # new user page show
@@ -119,21 +121,20 @@ class MyApp < Sinatra::Base
 
   # get songs info for dashboard
   get '/dashboard' do
-    list = SongList.new
-    @songs = list.get_list
+    @songs = Playlist.current_alpha_hash
     erb :dashboard
   end
 
   post '/invite' do
-    if params[:email] == ""
-    else
+    unless params[:email] == ""
     Pony.mail :to => params[:email],
               :from => "friend@alphatunez.herokuapp.com",
               :headers => { 'Content-Type' => 'text/html' },
               :subject => "Welcome to AlphatuneZ!",
               :body => body = erb(:invite_email, layout: false )
     end
-              redirect '/'
+    session[:message] = "Email sent to #{params[:email]}"
+    redirect '/dashboard'
   end
 
   post "/user/song/vote" do
@@ -160,9 +161,11 @@ class MyApp < Sinatra::Base
 
   def login_user user
     session[:logged_in_user_id] = user.id
+    session[:message] = "Login Successful"
   end
 
   def logout
+    session[:message] = "Logout Successful"
     session.delete :logged_in_user_id
   end
 
@@ -213,11 +216,18 @@ class MyApp < Sinatra::Base
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
     if @song.save!
       200
+      session[:message] = "Song Added Successfully"
       redirect '/dashboard'
     else
       status 403
+      session[:message] = "Song Could Not Be Added"
       redirect '/dashboard'
     end
+  end
+
+  post "/no_song" do
+  session[:message] = "No Song Was Added"
+  redirect '/dashboard'
   end
 
   delete "/songs" do
@@ -243,6 +253,7 @@ class MyApp < Sinatra::Base
   end
 
 
+
   # get "/weeklyplaylist" do
   #     weekly_songs = SongList.new
   #     @winners_list = weekly_songs.generate_weekly_winners
@@ -254,6 +265,16 @@ class MyApp < Sinatra::Base
   #     end
   #     erb :weeklyplaylist
   # end
+
+  get "/weeklyplaylist" do
+    @winners_list = Playlist.by_week.alphabet_winners_hash
+    #   select { |p| p.created_at.week_number == Time.now.week_number - 1 }.
+    #   sort_by {|q| q.created_at }.
+    #   reverse.
+    #   first.
+    #binding.pry
+    erb :weeklyplaylist
+  end
 
   get "/rekt" do
     1 / 0
