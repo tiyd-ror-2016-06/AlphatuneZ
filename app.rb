@@ -213,7 +213,10 @@ class MyApp < Sinatra::Base
 
   post "/choose_song" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
-    if @song.save!
+    if @hits.include?(@song)
+      session[:message] = "Song Already On List"
+      redirect '/dashboard'
+    elsif @song.save!
       200
       session[:message] = "Song Added Successfully"
       redirect '/dashboard'
