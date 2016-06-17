@@ -189,7 +189,8 @@ class MyApp < Sinatra::Base
     if current_user
       json current_user
     else
-      status 401
+      SpotifyApiRequest.login_with_spotify_account
+      erb :index
     end
   end
 
@@ -236,7 +237,7 @@ class MyApp < Sinatra::Base
   end
 
 
-  get "/previousplaylists" do
+  get "/winningplaylist" do
     @last_playlist = Playlist.last
     playlist = Playlist.last
     @songs = playlist.songs
@@ -245,12 +246,25 @@ class MyApp < Sinatra::Base
   end
 
 
-  get "/previousplaylists/:playlist_id" do
+  get "/winningplaylist/:playlist_id" do
     @playlist = Playlist.find_by(id: params[:playlist_id])
     @songs = @playlist.songs
     erb :archived_playlists
   end
 
+
+
+  # get "/weeklyplaylist" do
+  #     weekly_songs = SongList.new
+  #     @winners_list = weekly_songs.generate_weekly_winners
+  #     weekly_playlist = Playlist.create!(created_at: Time.now)
+  #     @winners_list.each do |letter,song|
+  #       if song
+  #         PlaylistSong.create!(song_id: song.id, playlist_id: weekly_playlist.id)
+  #       end
+  #     end
+  #     erb :weeklyplaylist
+  # end
 
   get "/weeklyplaylist" do
     @winners_list = Playlist.by_week.alphabet_winners_hash
