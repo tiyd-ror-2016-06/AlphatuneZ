@@ -93,7 +93,19 @@ class MyApp < Sinatra::Base
   end
 
   post '/password' do
-    binding.pry
+    if (current_user.password == Digest::SHA256.hexdigest(params[:oldpassword])) && (params[:newpassword1] == params[:newpassword2])
+      c = current_user
+      c.password = Digest::SHA256.hexdigest(params[:newpassword1])
+      c.save!
+      session[:message] = "Password Changed Successfully"
+      redirect '/account'
+    elsif current_user.password != Digest::SHA256.hexdigest(params[:oldpassword])
+      session[:message] = "Old Password Incorrect"
+      redirect '/password'
+    else
+      session[:message] = "New Password Did Not Match"
+      redirect '/password'
+    end
   end
 
 # if login info is not found redirect to new user page
