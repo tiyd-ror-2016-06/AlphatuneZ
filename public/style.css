@@ -28,22 +28,25 @@ p {
 /*------------------------*/
 /*New Layout for all pages*/
 
-.navbar {
+.background {
   background-color: #3d3b3c;
+}
+
+.topbar{
+  position: relative;
 }
 
 img.displayed {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    position:relative;
    }
+
 .title{
   color: #F8F9F9;
   position:absolute;
-   left: 920px;
-   top: 55px;
-
+   left: 850px;
+   top: 46px;
 
 }
 .title:hover {
@@ -51,19 +54,48 @@ img.displayed {
   border-color: #ff3300;
 }
 
-   a {
-     color:#CD5C5C;
-   	text-decoration: none;
-   	font-weight: bold;
-   }
+#b-account a{
+    position: absolute;
+    top: 250px;
+    left: 173px;
+    text-decoration: none;
+}
 
+#b-dashboard a{
+  position: absolute;
+  top: 250px;
+  left: 250px;
+  text-decoration: none;
+}
 
+#b-pplaylist a{
+  position: absolute;
+  top: 250px;
+  left: 390px;
+  text-decoration: none;
+}
+a {
+  color:#CD5C5C;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-   a:hover {
-     color: #800000;
-     border-color: #800000;
-   }
+a:hover {
+  color: #800000;
+  border-color: #800000;
+}
 
+li a {
+  color: #000000;
+}
+#logout {
+  position: absolute;
+  top: 280px;
+  left: 950px;
+}
+li {
+  text-decoration: none;
+}
 
 /*------------------------*/
 
@@ -78,9 +110,7 @@ img.displayed {
 
 }
 /*navagation bar*/
-.bar {
-    list-style-type: none;
-}
+
 
 .button {
   margin-left: 50px;
@@ -99,18 +129,6 @@ img.displayed {
   text-decoration: none;
 }
 
-li {
-    float: left;
-}
-
-li a {
-    font-family: Century Gothic;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
 /* Change the link color to #111 (black) on hover */
 li a:hover {
     background-color: #111;
@@ -218,13 +236,6 @@ li a:hover {
     /*font-family: Century Gothic;*/
   }
 
-
-/*.active {
-    background-color: #4CAF50;
-}*/
-
-
-
 * {
      -moz-box-sizing: border-box; /* Firexfox */
      -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
@@ -235,6 +246,7 @@ li a:hover {
 	clear: both;
 }
 
+/*account page style*/
 body {
 	background: url('../images/notebook.png'); /* add a fallback color of #d6d6d6 */
 	color: #000000;
