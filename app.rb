@@ -119,7 +119,7 @@ class MyApp < Sinatra::Base
 
   # get songs info for dashboard
   get '/dashboard' do
-    @songs = Playlist.currennt_alpha_hash
+    @songs = Playlist.current_alpha_hash
     erb :dashboard
   end
 
