@@ -108,8 +108,9 @@ class MyApp < Sinatra::Base
   # create new user info
   #puts Digest::SHA256.hexdigest "Hello World"
   post '/newuser' do
-    User.create!(email: params[:username], password: params[:password])
-    redirect '/'
+    u = User.create!(email: params[:username], password: params[:password])
+    login_user u
+    redirect '/dashboard'
   end
 
   # new user page show
