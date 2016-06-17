@@ -17,7 +17,7 @@ class Playlist < ActiveRecord::Base
   end
 
   def Playlist.current_alpha_hash
-    Playlist.current.group_by{ |s| s.alpha_categorize }
+    Hash[(Playlist.current.group_by{ |s| s.alpha_categorize }).sort]
   end
 
   def Playlist.by_week week=-1
