@@ -2,6 +2,7 @@
 <div class="container">
   <h1>Account Information</h1>
   <h2 class="tagline"><%=current_user.email%></h2>
+  <a href="/password">Change your password</a>
   <% if current_user.premium %>
     <h4 class="vip">Premium Account</h4>
   <% else %>
