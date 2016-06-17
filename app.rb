@@ -201,8 +201,8 @@ class MyApp < Sinatra::Base
     spotify.parse!
     @hits = spotify.get_songs
     if @hits.count == 0
-      @no_song = true
-      erb :dashboard
+      session[:message] = "No Song Found"
+      redirect "/dashboard"
     else
       erb :choose_song
     end
@@ -214,7 +214,10 @@ class MyApp < Sinatra::Base
 
   post "/choose_song" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
-    if @song.save!
+    if (Playlist.current.map {|s| s.spotify_id}).include?(@song.spotify_id)
+      session[:message] = "Song Already On List"
+      redirect '/dashboard'
+    elsif @song.save!
       200
       session[:message] = "Song Added Successfully"
       redirect '/dashboard'
