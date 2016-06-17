@@ -42,3 +42,10 @@ end}.strip
     exit # otherwise rake will try to run the other arguments
   end
 end
+
+desc "Generate the weekly winners playlist"
+task :create_playlist do
+  require './db/setup'
+  require './lib/all'
+  Playlist.weekly_winners
+end
