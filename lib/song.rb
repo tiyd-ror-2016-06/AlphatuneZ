@@ -1,4 +1,5 @@
 class Song < ActiveRecord::Base
+  before_create :suggested_date_to_now
   validates_presence_of :title, :artist, :suggester_id, :spotify_id
 
   belongs_to :suggester, class_name: "User"
@@ -8,6 +9,10 @@ class Song < ActiveRecord::Base
 
   has_many :playlist_songs
   has_many :playlists, through: :playlist_songs
+
+  def suggested_date_to_now
+    self.suggested_date = Time.now
+  end
 
   def standardized_title
     self.title.gsub(/[^a-zA-Z0-9]/, "")
