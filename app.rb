@@ -119,7 +119,7 @@ class MyApp < Sinatra::Base
 
   # get songs info for dashboard
   get '/dashboard' do
-    @songs = Playlist.current_alpha_hash
+    @songs = Playlist.currennt_alpha_hash
     erb :dashboard
   end
 
@@ -242,13 +242,12 @@ class MyApp < Sinatra::Base
 
 
   get "/weeklyplaylist" do
-    binding.pry
-    playlist = Playlist.by_week.alphabet_winners_hash
+    @winners_list = Playlist.by_week.alphabet_winners_hash
     #   select { |p| p.created_at.week_number == Time.now.week_number - 1 }.
     #   sort_by {|q| q.created_at }.
     #   reverse.
     #   first.
-    binding.pry
+    #binding.pry
     erb :weeklyplaylist
   end
 
