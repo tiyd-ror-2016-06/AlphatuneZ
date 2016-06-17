@@ -199,12 +199,6 @@ class MyApp < Sinatra::Base
     if @hits.count == 0
       @no_song = true
       erb :dashboard
-    elsif @hits.count == 1
-      @song.spotify_id = @hits.first["id"]
-      @song.artist = @hits.first["artist"]
-      @song.save!
-      200
-      redirect '/dashboard'
     else
       erb :choose_song
     end
