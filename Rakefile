@@ -43,8 +43,9 @@ end}.strip
   end
 end
 
-desc "Create a playlist "
+desc "Generate the weekly winners playlist"
 task :create_playlist do
   require './db/setup'
   require './lib/all'
+  Playlist.weekly_winners
 end
