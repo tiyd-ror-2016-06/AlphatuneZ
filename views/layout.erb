@@ -1,43 +1,42 @@
 <!-- color="#3d3b3c" -->
 
 <html>
-  <head>
-    <link rel = "stylesheet" href = "style.css">
-    <title>AlphatuneZ</title>
-  </head>
-  <body>
-    <!-- <h1> -->
-      <!-- <a href="/dashboard">AlphatuneZ</a> -->
-    <!-- </h1> -->
-    <!--navagation bar  -->
-    <!-- <ul class= "bar">
-      <% if current_user %>
-        <li style="float:left"><a href="/account">Account</a></li>
-        <li style="float:left"><a href="/dashboard">Suggest a Song</a></li>
-        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
+<head>
+  <link rel = "stylesheet" href = "style.css">
+  <title>AlphatuneZ</title>
+</head>
+<body class="background">
+  <div class="topbar">
+    <img class="displayed" src="final.jpg" alt="MidiControlTop" style="width:90%">
+    <h1>
+      <a class="title" href="/dashboard">AlphatuneZ</a>
+    </h1>
+    <% if current_user %>
+    <li id="b-account"><a href="/account">Account</a></li>
+    <li id="b-dashboard"><a href="/dashboard">Suggest a Song</a></li>
+    <li id="b-pplaylist"><a href="/previousplaylists">View the Previous Playlists</a></li>
+    <li>
+      <!-- <p>Invite Friend:</p> -->
+      <form method="POST" action="/invite">
+        <input name="email" type="email" placeholder="friend's email"></input>
+        <input name="current_user.email" type="hidden" value="<%= current_user.email %>"></input>
+        <input type="submit" class="invite" value="Invite">
+      </form>
+    </li>
+    <li id="logout">
+      <form action="/logout" method="POST">
+        <button type="submit"value="Logout" class="button">Logout</button>
+      </form>
+    </li>
 
-        <li style="float:right">
-        <form action="/logout" method="POST">
-          <button type="submit"value="Logout" class="button">Logout</button>
-        </form>
-        </li>
-        <li style="float:right">
-          <p>Invite Friend:</p> -->
-          <!-- <form method="POST" class="invite-container" action="/invite">
-            <input name="email" type="email" placeholder="friend's email"></input>
-            <input name="current_user.email" type="hidden" value="<%= current_user.email %>"></input>
-            <input type="submit" class="active" value="Invite">
-          </form>
-        </li>
+    <% else %>
+    <li id="b-login"><a href="/">Login</a></li>
+    <li id="b-pplaylist"><a href="/previousplaylists">View the Previous Playlists</a></li>
+    <% end %>
+  </div>
 
-      <% else %>
-        <li style="float:right"><a href="/">Login</a></li>
-        <li style="float:left"><a href="/previousplaylists">View the Previous Playlists</a></li>
-      <% end %>
-    </ul> -->
-
-    <div class="container">
-      <%= yield %>
-    </div>
-  </body>
+  <div class="container">
+    <%= yield %>
+  </div>
+</body>
 </html>

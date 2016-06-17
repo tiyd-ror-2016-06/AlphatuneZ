@@ -45,8 +45,8 @@ img.displayed {
 .title{
   color: #F8F9F9;
   position:absolute;
-   left: 850px;
-   top: 46px;
+   left: 980px;
+   top: 56px;
 
 }
 .title:hover {
@@ -56,22 +56,22 @@ img.displayed {
 
 #b-account a{
     position: absolute;
-    top: 250px;
-    left: 173px;
+    top: 285px;
+    left: 200px;
     text-decoration: none;
 }
 
 #b-dashboard a{
   position: absolute;
-  top: 250px;
-  left: 250px;
+  top: 285px;
+  left: 310px;
   text-decoration: none;
 }
 
 #b-pplaylist a{
   position: absolute;
-  top: 250px;
-  left: 390px;
+  top: 285px;
+  left: 440px;
   text-decoration: none;
 }
 a {
@@ -88,13 +88,29 @@ a:hover {
 li a {
   color: #000000;
 }
+input[type=email] {
+    background-color: #3d3b3c;
+    color: white;
+    border: 1px, white;
+    position: absolute;
+    top: 370px;
+    left: 150px;
+}
+
+.invite {
+  position: absolute;
+  top: 372px;
+  left: 285px;
+}
+
 #logout {
   position: absolute;
-  top: 280px;
-  left: 950px;
+  top: 350px;
+  left: 1080px;
 }
+
 li {
-  text-decoration: none;
+  list-style: none;
 }
 
 /*------------------------*/
