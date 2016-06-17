@@ -139,7 +139,7 @@ class SpotifyApiRequest
       Spotify_api + "/v1/me",
       headers: {"Authorization" => token }
     )
-  end 
+  end
 
   private # --- Everything from here down is only callable from this object ----
 
@@ -175,7 +175,7 @@ class SpotifyApiRequest
 end
 
 def no_song # title, artist
-  spotify = SpotifyApiRequest.new(song: "This is a song", test_file: "spotify_test_data/spotifytest1.json")
+  spotify = SpotifyApiRegquest.new(song: "This is a song", test_file: "spotify_test_data/spotifytest1.json")
   spotify.parse!
   hits = spotify.get_songs
 end
