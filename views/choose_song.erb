@@ -2,7 +2,10 @@
 <h2> Please confirm this is the song you wish to add:</h2>
 <% else %>
 <h2><%= @hits.count %> songs fit that criteria</h2>
-<h2> Please choose/confirm the song you wish to add:</h2>
+<h2> Please confirm the song you wish to add:</h2>
+<form align="center" action="/dashboard" method="GET">
+  <input type="submit" value="Song not on list">
+</form>
 <% end %>
 <%  @hits.each do |song|   %>
 <hr>
@@ -12,6 +15,6 @@
   <input name="title" type="hidden" value="<%= song["title"] %>"></input>
   <input name="artist" type="hidden" value="<%= song["artist"] %>"></input>
   <input name="spotify_id" type="hidden" value="<%= song["id"] %>"></input>
-<input type="submit" value="Choose/Confirm">
+<input type="submit" value="Confirm">
 </form>
 <% end %>
