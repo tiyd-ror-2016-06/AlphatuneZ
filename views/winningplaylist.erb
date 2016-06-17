@@ -11,7 +11,7 @@
 <h3><%= "View previous weeks' playlists:" %> </h3>
 
 <% @last_5_playlists.each do |playlist| %>
-<p><center><a href="/previousplaylists/<%="#{playlist.id}"%>"><%=playlist.created_at%></a> </center></p>
+<p><center><a href="/winningplaylist/<%="#{playlist.id}"%>"><%=playlist.created_at%></a> </center></p>
 <% end %>
 
-<p><center><a href="/previousplaylists/<%="#{@last_playlist.id}"%>"><%=@last_playlist.created_at%></a> </center></p>
+<!-- <p><center><a href="/winningplaylist/<%="#{@last_playlist.id}"%>"><%=@last_playlist.created_at%></a> </center></p> -->

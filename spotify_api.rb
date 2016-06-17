@@ -139,7 +139,7 @@ class SpotifyApiRequest
       Spotify_api + "/v1/me",
       headers: {"Authorization" => token }
     )
-  end 
+  end
 
   private # --- Everything from here down is only callable from this object ----
 
