@@ -213,7 +213,7 @@ class MyApp < Sinatra::Base
 
   post "/choose_song" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id, spotify_id: params[:spotify_id])
-    if @hits.include?(@song)
+    if (Playlist.current.map {|s| s.spotify_id}).include?(@song.spotify_id)
       session[:message] = "Song Already On List"
       redirect '/dashboard'
     elsif @song.save!
