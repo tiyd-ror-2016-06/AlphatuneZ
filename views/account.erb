@@ -16,9 +16,8 @@
   </div><!-- .main -->
 
   <div class="sidebar">
-
     <div class="widget">
-      <img src="https://www.rit.edu/science/sites/rit.edu.science/files/root/man-placeholder_27.jpg" alt="Profile Picture" width="150">
+      <img src="https://www.gravatar.com/avatar/<%= Digest::MD5.hexdigest(current_user.email) %>" alt="Profile Picture" width="150">
       <h2 class="profile">Stats</h2>
     </div><!-- .widget -->
     <div class="clear"></div>
