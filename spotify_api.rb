@@ -8,20 +8,14 @@ Spotify_api = "https://api.spotify.com"
 
 class SpotifyApiRequest
 
-  attr_reader :song, :raw_data
+  attr_reader :song, :raw_data, :token
 
   def initialize song:, test_file: nil
     @song = song
-    @token = token
+    @token_manager = SpotifyApiToken.new
+    @token = @token_manager.token
     @raw_data = []
     @test_file = test_file
-  end
-
-  def token
-    if @token.nil?
-      token_manager = SpotifyApiToken.new
-    end
-   token_manager.token
   end
 
   def get_song_query
