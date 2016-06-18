@@ -2,6 +2,7 @@ require 'httparty'
 require 'pry'
 require 'json'
 require 'base64'
+require './spotify_api_token'
 
 Spotify_api = "https://api.spotify.com"
 
@@ -12,64 +13,15 @@ class SpotifyApiRequest
   def initialize song:, test_file: nil
     @song = song
     @token = token
-    @client_token = client_token
-    @refresh_token = refresh_token
     @raw_data = []
     @test_file = test_file
   end
 
   def token
-    if @token.nil? || @token_expiration < Time.now
-      @token = get_new_token
+    if @token.nil?
+      token_manager = SpotifyApiToken.new
     end
-    @token
-  end
-
-  def get_new_token
-    new_token = HTTParty.post(
-        'https://accounts.spotify.com/api/token',
-        headers: {"Authorization" => client_token},
-        body: {
-          grant_type: "refresh_token",
-          refresh_token: refresh_token
-        })
-    @token_expiration = Time.at(Time.now + new_token["expires_in"])
-    new_token["token_type"] + " " + new_token["access_token"]
-  end
-
-  def refresh_token
-    unless @refresh_token
-      if ENV['REFRESH_TOKEN']
-        @refresh_token = ENV['REFRESH_TOKEN']
-      else
-        @refresh_token = File.read("./refresh_token.txt").chomp
-      end
-    end
-    @refresh_token
-  end
-
-  def client_token
-    return @client_token if @client_token
-    if ENV['CLIENT_ID'] && ENV['CLIENT_SECRET']
-      token_string = ENV['CLIENT_ID'] + ":" + ENV['CLIENT_SECRET']
-    else
-      token_file = './token.json'
-      begin
-        raw_token = JSON.parse(File.read token_file)
-      rescue JSON::ParserError
-        raise "There was a problem parsing your token.json file"
-      rescue Errno::ENOENT
-        raise "No 'token.json' file found."
-      end
-
-      if raw_token.values.include? ""
-        raise "'token.json' doesn't include any credentials."
-      end
-      token_string =  raw_token["Client_ID"] + ":" + raw_token["Client_Secret"]
-    end
-    @client_token = "Basic " + Base64.encode64(
-                      token_string
-                    ).sub(/\n/,"")
+   token_manager.token
   end
 
   def get_song_query
@@ -133,14 +85,6 @@ class SpotifyApiRequest
     each_song_array
   end
 
-
-  def login_with_spotify_account
-    # login HTTParty.get(
-    #   Spotify_api + "/v1/me",
-    #   headers: {"Authorization" => token }
-    # )
-  end
-
   private # --- Everything from here down is only callable from this object ----
 
   def create_playlist
@@ -172,10 +116,4 @@ class SpotifyApiRequest
       uris: tracks_array
       }.to_json)
   end
-end
-
-def no_song # title, artist
-  spotify = SpotifyApiRegquest.new(song: "This is a song", test_file: "spotify_test_data/spotifytest1.json")
-  spotify.parse!
-  hits = spotify.get_songs
 end
