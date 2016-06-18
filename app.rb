@@ -210,15 +210,26 @@ class MyApp < Sinatra::Base
     end
   end
 
-  get "/api/me" do
-    # if current_user
-    #   json current_user
-    # else
-    #   SpotifyApiRequest.login_with_spotify_account
-    #   erb :index
-    # end
+  get "/callback" do
+    redirect "/dashboard"
   end
 
+  get "/api/me" do
+    client_token = ENV['CLIENT_ID'] ||= File.read('./client_id.txt').chomp
+    if client_token
+      spotify_login client_token
+    else
+      halt
+    end
+  end
+
+  def spotify_login client_token
+    url = "https://accounts.spotify.com/authorize/"
+    response_type = "code"
+    redirect_uri = URI.encode("http://localhost:4567/callback")
+    scope = URI.encode("user-read-private user-read-email")
+    redirect "#{url}?client_id=#{client_token}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&#{scope}"
+  end
 
   post "/songs" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
