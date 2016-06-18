@@ -195,6 +195,12 @@ class MyApp < Sinatra::Base
     c.save!
   end
 
+  def token_string
+    session[:token_handler].access_token_type +
+      " " +
+      session[:token_handler].access_token
+  end
+
   def current_user
     if id = session[:logged_in_user_id]
       User.find_by id: id
@@ -247,7 +253,10 @@ class MyApp < Sinatra::Base
 
   post "/songs" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-    spotify = SpotifyApiRequest.new(song: @song.title)
+    spotify = SpotifyApiRequest.new(
+      authorization: token_string,
+      song: @song.title
+    )
     spotify.parse!
     @hits = spotify.get_songs
     if @hits.count == 0
