@@ -17,13 +17,6 @@ class SpotifyApiRequest
     @test_file = test_file
   end
 
-  # def token
-  #   if @token.nil?
-  #     token_manager = SpotifyApiToken.new
-  #   end
-  #  token_manager.token
-  # end
-
   def get_song_query
     st_encoded = URI.encode @song
     HTTParty.get(
