@@ -117,9 +117,3 @@ class SpotifyApiRequest
       }.to_json)
   end
 end
-
-def no_song # title, artist
-  spotify = SpotifyApiRegquest.new(song: "This is a song", test_file: "spotify_test_data/spotifytest1.json")
-  spotify.parse!
-  hits = spotify.get_songs
-end
