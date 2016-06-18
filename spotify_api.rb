@@ -10,25 +10,25 @@ class SpotifyApiRequest
 
   attr_reader :song, :raw_data
 
-  def initialize song:, test_file: nil
+  def initialize authorization:, song:, test_file: nil
     @song = song
-    @token = token
+    @authorization = authorization
     @raw_data = []
     @test_file = test_file
   end
 
-  def token
-    if @token.nil?
-      token_manager = SpotifyApiToken.new
-    end
-   token_manager.token
-  end
+  # def token
+  #   if @token.nil?
+  #     token_manager = SpotifyApiToken.new
+  #   end
+  #  token_manager.token
+  # end
 
   def get_song_query
     st_encoded = URI.encode @song
     HTTParty.get(
       Spotify_api + "/v1/search?q=#{st_encoded}&type=#{@type}",
-      headers: { "Accept" => "application/json", "Authorization" => token }
+      headers: { "Accept" => "application/json", "Authorization" => @authorization }
     )
   end
 
@@ -90,7 +90,7 @@ class SpotifyApiRequest
   def create_playlist
     r = HTTParty.post(
       Spotify_api + "/v1/users/ferretpenguin/playlists",
-      headers: { "Accept" => "application/json", "Authorization" => token},
+      headers: { "Accept" => "application/json", "Authorization" => @authorization},
       body: {
       name: "Weekly Playlist",
       }.to_json)
@@ -111,7 +111,7 @@ class SpotifyApiRequest
 
     r = HTTParty.post(
       Spotify_api + "/v1/users/ferretpenguin/playlists/#{playlist.spotify_id}/tracks",
-      headers: { "Accept" => "application/json", "Authorization" => token},
+      headers: { "Accept" => "application/json", "Authorization" => @authorization},
       body: {
       uris: tracks_array
       }.to_json)
