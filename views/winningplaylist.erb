@@ -1,5 +1,3 @@
-<!-- <h2><%= @songs.count %> songs</h2> -->
-
 <h2><%= "Last week's AlphatuneZ playlist:" %></h2>
 <% @songs.each do |song| %>
 <p><%= " '#{song.title}' by #{song.artist}" %></p>
@@ -12,7 +10,4 @@
 
 <% @last_5_playlists.each do |playlist| %>
 <p><center><a href="/winningplaylist/<%="#{playlist.id}"%>"><%=playlist.created_at%></a> </center></p>
-<!-- <p><center><a href="/winningplaylist/<%="#{playlist.id}"%>"><%=@time%></a> </center></p> -->
 <% end %>
-
-<!-- <p><center><a href="/winningplaylist/<%="#{@last_playlist.id}"%>"><%=@last_playlist.created_at%></a> </center></p> -->
