@@ -17,7 +17,6 @@ class SpotifyApiToken
     #@client_token = client_token
     #@refresh_token = refresh_token
 
-        binding.pry
   end
 
   def authorize!
@@ -29,14 +28,36 @@ class SpotifyApiToken
     return direct
   end
 
-
-
-  def token
-    if @token.nil? || @token_expiration < Time.now
-      @token = get_new_token
+  def access_token
+    if @access_token_expiration < Time.now
+      @access_token = get_new_token
     end
-    @token
+    @access_token
   end
+
+  # def token
+  #   if @token.nil? || @token_expiration < Time.now
+  #     @token = get_new_token
+  #   end
+  #   @token
+  # end
+
+  def get_new_token
+    response = HTTParty.post(
+        'https://accounts.spotify.com/api/token',
+        headers: {"Authorization" => @client_creds_encrypted},
+        body: {
+          grant_type: "refresh_token",
+          refresh_token: @refresh_token
+        })
+    @access_token_type = response["token_type"]
+    @access_token_expiration = Time.at(Time.now + response["expires_in"])
+    @access_token = response["access_token"]
+  end
+
+
+
+
 
 #  def get_new_token
 #    new_token = HTTParty.post(
@@ -63,15 +84,12 @@ class SpotifyApiToken
         redirect_uri: 'http://localhost:4567/callback',
         code: code
       })
-    binding.pry
+
     @access_token = response["access_token"]
     @access_token_type = response["token_type"]
     @access_token_expiration = Time.at(Time.now + response["expires_in"])
     @refresh_token = response["refresh_token"]
   end
-
-
-
 
   def client_id
     ENV["CLIENT_ID"] || File.read("./client_id.txt").chomp
