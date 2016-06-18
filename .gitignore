@@ -4,3 +4,4 @@ db/*.sqlite3
 token.txt
 .bundle
 token.json
+client_id.txt
