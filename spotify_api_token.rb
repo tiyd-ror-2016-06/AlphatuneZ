@@ -1,6 +1,9 @@
 
 
 class SpotifyApiToken
+
+  attr_reader :access_token_type
+
   def initialize
     #request_refresh_and_access_tokens code: code
 
