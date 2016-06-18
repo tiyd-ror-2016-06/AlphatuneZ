@@ -218,37 +218,13 @@ class MyApp < Sinatra::Base
   end
 
   get "/callback" do
-    #session[:token_handler] = SpotifyApiToken.new code: params['code']
-    # binding.pry
-    # #headers: {"Authorization" => "Basic " + ENV['CLIENT_ID']},
-    # my_code = params['code']
-    # SpotifyApiToken.request_refresh_and_access_tokens code: my_code
-    #session[:token_handler].request_refresh_and_access_tokens code: params['code']
     session[:token_handler].request_refresh_and_access_tokens params
-    binding.pry
     redirect "/dashboard"
   end
 
   get "/api/me" do
     session[:token_handler] = SpotifyApiToken.new
     redirect(session[:token_handler].authorize!)
-#    client_id = ENV['CLIENT_ID'] ||= File.read('./client_id.txt').chomp
-
- #   if client_id
- #     spotify_login #client_id
- #   else
- #     halt
- #   end
- # end
-  end
-
-
-  def spotify_login
-    url = "https://accounts.spotify.com/authorize/"
-    response_type = "code"
-    redirect_uri = URI.encode("http://localhost:4567/callback")
-    scope = URI.encode("user-read-private user-read-email")
-    redirect "#{url}?client_id=#{ENV['CLIENT_ID']}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&#{scope}"
   end
 
   post "/songs" do
