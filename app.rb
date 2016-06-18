@@ -270,6 +270,8 @@ class MyApp < Sinatra::Base
     playlist = Playlist.last
     @songs = playlist.songs
     @last_5_playlists = Playlist.last(5)
+    # created_at = playlist.created_at
+    # @time = Time.convert_to_US_civilian_time(created_at)
     erb :winningplaylist
   end
 
