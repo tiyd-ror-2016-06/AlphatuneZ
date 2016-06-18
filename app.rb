@@ -268,8 +268,10 @@ class MyApp < Sinatra::Base
   get "/winningplaylist" do
     @last_playlist = Playlist.last
     playlist = Playlist.last
-    @songs = playlist.songs
-    @last_5_playlists = Playlist.last(5)
+    if playlist
+        @songs = playlist.songs
+        @last_5_playlists = Playlist.last(5)
+    end
     erb :winningplaylist
   end
 
