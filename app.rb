@@ -282,6 +282,9 @@ class MyApp < Sinatra::Base
   get "/winningplaylist/:playlist_id" do
     @playlist = Playlist.find_by(id: params[:playlist_id])
     @songs = @playlist.songs
+    time = @playlist.created_at
+    twelve_hour_clock_time = '%m-%d-%Y %I:%M:%S %p'
+    @us_time = time.strftime(twelve_hour_clock_time)
     erb :winningplaylist_archive
   end
 
