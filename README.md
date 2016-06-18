@@ -44,7 +44,6 @@ Spotify provides a web interface for accessing the API through the browser. No `
 ### Use the API
 
 *Main Url*: for api calls: https://api.spotify.com/
-*Authorization Header* must be of the form: `Bearer <authorization token>`
 
 ### Endpoints
 
@@ -54,7 +53,7 @@ Spotify provides a web interface for accessing the API through the browser. No `
 
 - This endpoint seems to offer the most flexibility...
     - specify `type` of search `artist`, `album`, `track`, etc.
-    - within the scope of `type`, specify multiple fields such as `artists`, `name`, etc.
+    - within the scope of `type`, specify multiple fields..
 
 *EXAMPLE REQUEST* (Query by type `track` with generic query)
 
@@ -66,15 +65,14 @@ Spotify provides a web interface for accessing the API through the browser. No `
             Authorization: Bearer <Token_goes_here>
             User-Agent: Spotify API Console v0.1
 
-
 This query yields a JSON.
 When parsed, it is a hash with the songs sorted by popularity rating.
 
-With `raw_data` as the hash, the songs can be accessed in this way:
+With `raw_data` as the hash containing the results, the songs can be accessed in this way:
 
     rawdata["tracks"]["items"]
 
-Each item (song) contains:
+Each of the results for this query contain the following contains:
 
         [
             "album",
@@ -99,9 +97,9 @@ Each item (song) contains:
 
 The `SpotifyApiRequest` class is used to facilitate requests to Spotify.
 
-Specify the song to query as an argument to the keyword `song:` when instantiating the class:
+Specify the token_string to use for authorization, and the song to query as keyword arguments when instantiating the class:
 
-    my_request = SpotifyApiRequest.new song: 'Take Me Home Tonight'
+    my_request = SpotifyApiRequest.new authorization: token_string, song: 'Take Me Home Tonight'
 
 Parse the request from JSON:
 
@@ -116,27 +114,10 @@ The method `#get_songs` can be called on it, and it will return an array of song
 
 Pass a file as an argument to the keyword `test:` to use test_data (JSON formatted):
 
-    my_request = SpotifyApiRequest.new song: "empty", test: "mytestfile.json"
+    my_request = SpotifyApiRequest.new(authorization: token_string, song: "empty", test: "mytestfile.json")
 
 #### Authorization and Tokens
 
-There are two types of token:
-
-- A "client" token that is derived from `client_id`, and
-- `client secret`, and the "access" token.
-
-To properly intialize the "client" token, place your credentials (`client_id` and `client_secret`) in the `token.json`.
-`SpotifyApiRequest#prepare_client_token_basic_base64` will initialize the `@client_token` for you.
-
-The "access" token must be renewed periodically.
-This is all encapsulted within `#token` i.e. expect that a call to `token` will provide you with an up-to-date token.
-
-#### Notes, Improvements, Etc.
-
-- _It would be nice to instantiate the `SpotifyApiRequest` object with any combination of `song:`, `artist:`, and `album:`, and have it branch to the correct `type` resulting in a "better" `GET` request._
-
-- _It may make sense to create another class to split the duties?_
-
-- _It may make sense to have a procedural part, and an object part.
-
-- _Are there any additonal methods outside of just returning songs that might be useful?_
+The `SpotifyApiToken` class handles tokens.
+Authorization is a complex topic.
+See <https://developer.spotify.com/web-api/authorization-guide/> for more information.
