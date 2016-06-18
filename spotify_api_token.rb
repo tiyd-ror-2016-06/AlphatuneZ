@@ -1,16 +1,11 @@
 
 
 class SpotifyApiToken
-
-
-  def initialize code: nil
+  def initialize
     #request_refresh_and_access_tokens code: code
 
     #    @client_id = ENV['CLIENT_ID']
-    @client_id = client_id
-    @client_secret = client_secret
-    @client_creds_encrypted = client_creds_encrypted
-    #@token = token
+     #@token = token
     #@client_id = ENV['CLIENT_ID']
     #@code = ENV['SPOTIFY_CODE']
 
@@ -24,7 +19,7 @@ class SpotifyApiToken
     response_type = "code"
     redirect_uri = URI.encode("http://localhost:4567/callback")
     scope = URI.encode("user-read-private user-read-email")
-    direct = "#{url}?client_id=#{@client_id}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&#{scope}"
+    direct = "#{url}?client_id=#{client_id}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&#{scope}"
     return direct
   end
 
@@ -45,7 +40,7 @@ class SpotifyApiToken
   def get_new_token
     response = HTTParty.post(
         'https://accounts.spotify.com/api/token',
-        headers: {"Authorization" => @client_creds_encrypted},
+        headers: {"Authorization" => client_creds_encrypted},
         body: {
           grant_type: "refresh_token",
           refresh_token: @refresh_token
@@ -77,7 +72,7 @@ class SpotifyApiToken
     response = HTTParty.post(
       url,
       headers: {
-        "Authorization" => @client_creds_encrypted,
+        "Authorization" => client_creds_encrypted,
       },
       body: {
         grant_type: "authorization_code",
@@ -162,7 +157,7 @@ class SpotifyApiToken
   end
 
   def client_creds_encrypted
-    token_string =  @client_id + ":" + @client_secret
+    token_string =  client_id + ":" + client_secret
     "Basic " + Base64.encode64(
       token_string
     ).sub(/\n/,"")
