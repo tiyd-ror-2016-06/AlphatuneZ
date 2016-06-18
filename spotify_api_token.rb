@@ -1,3 +1,5 @@
+
+
 class SpotifyApiToken
 
   def initialize
@@ -58,13 +60,5 @@ class SpotifyApiToken
     @client_token = "Basic " + Base64.encode64(
                       token_string
                     ).sub(/\n/,"")
-  end
-
-
-    def login_with_spotify_account
-    # login HTTParty.get(
-    #   Spotify_api + "/v1/me",
-    #   headers: {"Authorization" => token }
-    # )
   end
 end
