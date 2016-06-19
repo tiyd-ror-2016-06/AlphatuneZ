@@ -61,18 +61,6 @@ class SpotifyApiToken
     ENV['CLIENT_SECRET'] || File.read("./client_secret.txt").chomp
   end
 
-  def refresh_token
-    unless @refresh_token
-      if ENV['REFRESH_TOKEN']
-        @refresh_token = ENV['REFRESH_TOKEN']
-      else
-        @refresh_token = File.read("./refresh_token.txt").chomp
-      end
-    end
-    @refresh_token
-  end
-
-
   def client_creds_encrypted
     token_string =
       client_id +
