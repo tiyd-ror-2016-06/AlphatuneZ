@@ -114,7 +114,7 @@ The method `#get_songs` can be called on it, and it will return an array of song
 
 Pass a file as an argument to the keyword `test:` to use test_data (JSON formatted):
 
-    my_request = SpotifyApiRequest.new(authorization: token_string, song: "empty", test: "mytestfile.json")
+    my_request = SpotifyApiRequest.new(authorization: token_string, song: "empty", test_file: "mytestfile.json")
 
 #### Authorization and Tokens
 
