@@ -14,7 +14,6 @@ require 'rollbar'
 require 'rollbar/middleware/sinatra'
 
 require 'securerandom'
-require 'base64'
 
 if ENV['ROLLBAR_ACCESS_TOKEN']
   Rollbar.configure do |config|
