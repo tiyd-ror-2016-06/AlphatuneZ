@@ -13,26 +13,6 @@ class SpotifyApiToken
     return direct
   end
 
-  def access_token
-    if @access_token_expiration < Time.now
-      @access_token = get_new_token
-    end
-    @access_token
-  end
-
-  def get_new_token
-    response = HTTParty.post(
-        'https://accounts.spotify.com/api/token',
-        headers: {"Authorization" => client_creds_encrypted},
-        body: {
-          grant_type: "refresh_token",
-          refresh_token: @refresh_token
-        })
-    @access_token_type = response["token_type"]
-    @access_token_expiration = Time.at(Time.now + response["expires_in"])
-    @access_token = response["access_token"]
-  end
-
   def request_refresh_and_access_tokens parameters
     code = parameters["code"]
     url = "https://accounts.spotify.com/api/token"
@@ -51,6 +31,28 @@ class SpotifyApiToken
     @access_token_type = response["token_type"]
     @access_token_expiration = Time.at(Time.now + response["expires_in"])
     @refresh_token = response["refresh_token"]
+  end
+
+  private
+
+  def access_token
+    if @access_token_expiration < Time.now
+      @access_token = get_new_token
+    end
+    @access_token
+  end
+
+  def get_new_token
+    response = HTTParty.post(
+        'https://accounts.spotify.com/api/token',
+        headers: {"Authorization" => client_creds_encrypted},
+        body: {
+          grant_type: "refresh_token",
+          refresh_token: @refresh_token
+        })
+    @access_token_type = response["token_type"]
+    @access_token_expiration = Time.at(Time.now + response["expires_in"])
+    @access_token = response["access_token"]
   end
 
   def client_id
