@@ -221,7 +221,7 @@ class MyApp < Sinatra::Base
   end
 
   get "/callback" do
-    if Base64.strict_encode64(session[:state]).to_s == params["state"]
+    if Digest::SHA256.hexdigest(session[:state]).to_s == params["state"]
       session[:token_handler].request_refresh_and_access_tokens params
       redirect "/dashboard"
     else
@@ -232,7 +232,7 @@ class MyApp < Sinatra::Base
   get "/api/me" do
     session[:token_handler] = SpotifyApiToken.new
     session[:state] = SecureRandom.random_number(2**1024).to_s
-    redirect(session[:token_handler].authorize! Base64.strict_encode64( session[:state] ))
+    redirect(session[:token_handler].authorize! Digest::SHA256.hexdigest( session[:state] ))
   end
 
   post "/songs" do
