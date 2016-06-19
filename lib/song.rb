@@ -10,6 +10,10 @@ class Song < ActiveRecord::Base
   has_many :playlist_songs
   has_many :playlists, through: :playlist_songs
 
+  has_many :favorite_songs
+  has_many :favorited_by, through: :favorite_songs, source: :user
+
+
   def suggested_date_to_now
     self.suggested_date = Time.now
   end
