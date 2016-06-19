@@ -4,6 +4,7 @@ require "rack/cors"
 require "date"
 require "json"
 require "./spotify_api"
+require "./spotify_api_token"
 require 'digest/sha2'
 
 require "./db/setup"
@@ -194,6 +195,12 @@ class MyApp < Sinatra::Base
     c.save!
   end
 
+  def token_string
+    session[:token_handler].access_token_type +
+      " " +
+      session[:token_handler].access_token
+  end
+
   def current_user
     if id = session[:logged_in_user_id]
       User.find_by id: id
@@ -210,19 +217,22 @@ class MyApp < Sinatra::Base
     end
   end
 
-  get "/api/me" do
-    # if current_user
-    #   json current_user
-    # else
-    #   SpotifyApiRequest.login_with_spotify_account
-    #   erb :index
-    # end
+  get "/callback" do
+    session[:token_handler].request_refresh_and_access_tokens params
+    redirect "/dashboard"
   end
 
+  get "/api/me" do
+    session[:token_handler] = SpotifyApiToken.new
+    redirect(session[:token_handler].authorize!)
+  end
 
   post "/songs" do
     @song = Song.new(title: params[:title], artist: params[:artist], suggester_id: current_user.id)
-    spotify = SpotifyApiRequest.new(song: @song.title)
+    spotify = SpotifyApiRequest.new(
+      authorization: token_string,
+      song: @song.title
+    )
     spotify.parse!
     @hits = spotify.get_songs
     if @hits.count == 0
