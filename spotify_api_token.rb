@@ -4,12 +4,12 @@ class SpotifyApiToken
 
   attr_reader :access_token_type
 
-  def authorize!
+  def authorize! state
     url = "https://accounts.spotify.com/authorize/"
     response_type = "code"
     redirect_uri = URI.encode("http://localhost:4567/callback")
     scope = URI.encode("user-read-private user-read-email")
-    direct = "#{url}?client_id=#{client_id}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&#{scope}"
+    direct = "#{url}?client_id=#{client_id}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&state=#{state}&#{scope}"
     return direct
   end
 

@@ -13,6 +13,9 @@ require 'pony'
 require 'rollbar'
 require 'rollbar/middleware/sinatra'
 
+require 'securerandom'
+require 'base64'
+
 if ENV['ROLLBAR_ACCESS_TOKEN']
   Rollbar.configure do |config|
     config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
@@ -218,13 +221,18 @@ class MyApp < Sinatra::Base
   end
 
   get "/callback" do
-    session[:token_handler].request_refresh_and_access_tokens params
-    redirect "/dashboard"
+    if Base64.strict_encode64(session[:state]).to_s == params["state"]
+      session[:token_handler].request_refresh_and_access_tokens params
+      redirect "/dashboard"
+    else
+      halt 401
+    end
   end
 
   get "/api/me" do
     session[:token_handler] = SpotifyApiToken.new
-    redirect(session[:token_handler].authorize!)
+    session[:state] = SecureRandom.random_number(2**1024).to_s
+    redirect(session[:token_handler].authorize! Base64.strict_encode64( session[:state] ))
   end
 
   post "/songs" do
