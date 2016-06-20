@@ -283,7 +283,7 @@ class MyApp < Sinatra::Base
         @last_5_playlists = Playlist.last(5)
     end
     time = playlist.created_at
-    twelve_hour_clock_time = '%m-%d-%Y %I:%M:%S %p'
+    twelve_hour_clock_time = '%m-%d-%Y'
     @us_time = time.strftime(twelve_hour_clock_time)
     erb :winningplaylist
   end
@@ -293,7 +293,7 @@ class MyApp < Sinatra::Base
     @playlist = Playlist.find_by(id: params[:playlist_id])
     @songs = @playlist.songs
     time = @playlist.created_at
-    twelve_hour_clock_time = '%m-%d-%Y %I:%M:%S %p'
+    twelve_hour_clock_time = '%m-%d-%Y'
     @us_time = time.strftime(twelve_hour_clock_time)
     erb :winningplaylist_archive
   end
