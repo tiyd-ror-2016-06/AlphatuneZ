@@ -1,5 +1,5 @@
 #Callback_uri = "http://localhost:4567/callback"
-Callback_uri = "http://alphatunez.herokuapp.com/callback"
+Callback_uri = "https://alphatunez.herokuapp.com/callback"
 
 class SpotifyApiToken
 
