@@ -299,6 +299,25 @@ class MyApp < Sinatra::Base
   end
 
 
+  def favorite
+    type = params[:type]
+    if type == "favorite"
+      current_user.favorites << @song
+      redirect_to :back, session[:message] 'You favorited #{@song.name}'
+
+    elsif type == "unfavorite"
+      current_user.favorites.delete(@song)
+      redirect_to :back, session[:message] 'Unfavorited #{@song.name}'
+
+    else
+      # Type missing, nothing happens
+      redirect_to :back, session[:message] 'Nothing happened.'
+    end
+  end
+
+
+
+
 
   # get "/weeklyplaylist" do
   #     weekly_songs = SongList.new
