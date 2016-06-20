@@ -189,6 +189,8 @@ class MyApp < Sinatra::Base
   def logout
     session[:message] = "Logout Successful"
     session.delete :logged_in_user_id
+    session.delete :token_handler
+    session.delete :state
   end
 
   def change_password newpassword
