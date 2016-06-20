@@ -1,4 +1,5 @@
-
+#Callback_uri = "http://localhost:4567/callback"
+Callback_uri = "http://alphatunez.herokuapp.com/callback"
 
 class SpotifyApiToken
 
@@ -7,7 +8,7 @@ class SpotifyApiToken
   def authorize! state
     url = "https://accounts.spotify.com/authorize/"
     response_type = "code"
-    redirect_uri = URI.encode("http://localhost:4567/callback")
+    redirect_uri = URI.encode(Callback_uri)
     scope = URI.encode("user-read-private user-read-email")
     direct = "#{url}?client_id=#{client_id}&response_type=#{response_type}&redirect_uri=#{redirect_uri}&state=#{state}&#{scope}"
     return direct
@@ -23,7 +24,7 @@ class SpotifyApiToken
       },
       body: {
         grant_type: "authorization_code",
-        redirect_uri: 'http://localhost:4567/callback',
+        redirect_uri: Callback_uri,
         code: code
       })
 
@@ -33,7 +34,7 @@ class SpotifyApiToken
     @refresh_token = response["refresh_token"]
   end
 
-  private
+  #private
 
   def access_token
     if @access_token_expiration < Time.now
