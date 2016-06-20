@@ -43,7 +43,7 @@
       <div class="widget" id="favorites">
         <h3>Favorites</h3>
         <ul>
-        <% current_user.favorite_songs.find_each do |song| %>
+        <% current_user.favorites.find_each do |song| %>
           <li><p><strong>Title:</strong> <%= song.title %>, <strong>Artist:</strong> <%= song.artist %></p></li></br>
         <% end %>
         <ul>
