@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   has_many :votes
   has_many :voted_songs, through: :votes, source: :song
   has_many :favorite_songs
-  has_many :favorites, through: :favorite_songs, source: :songs 
+  has_many :favorites, through: :favorite_songs, source: :song
+
 
   def points
     results = []
