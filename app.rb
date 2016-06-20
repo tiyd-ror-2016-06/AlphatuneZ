@@ -303,15 +303,15 @@ class MyApp < Sinatra::Base
     type = params[:type]
     if type == "favorite"
       current_user.favorites << @song
-      redirect_to :back, session[:message] 'You favorited #{@song.name}'
+      redirect_to :back, session[:message] = 'You favorited #{@song.name}'
 
     elsif type == "unfavorite"
       current_user.favorites.delete(@song)
-      redirect_to :back, session[:message] 'Unfavorited #{@song.name}'
+      redirect_to :back, session[:message] = 'Unfavorited #{@song.name}'
 
     else
       # Type missing, nothing happens
-      redirect_to :back, session[:message] 'Nothing happened.'
+      redirect_to :back, session[:message] = 'Nothing happened.'
     end
   end
 
