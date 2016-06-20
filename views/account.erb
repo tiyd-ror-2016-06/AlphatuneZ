@@ -34,13 +34,21 @@
   </div>
   <div class="clear"></div>
 
-
-
   <div class="widget" id="points">
     <h3>Points: <%= current_user.points %></h3>
   </div>
   <div class="clear"></div>
 
+
+      <div class="widget" id="favorites">
+        <h3>Favorites</h3>
+        <ul>
+        <% current_user.favorite_songs.find_each do |song| %>
+          <li><p><strong>Title:</strong> <%= song.title %>, <strong>Artist:</strong> <%= song.artist %></p></li></br>
+        <% end %>
+        <ul>
+      </div>
+      <div class="clear"></div>
 
 
 </div><!-- .container -->
