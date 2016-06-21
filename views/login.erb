@@ -1,0 +1,19 @@
+<div class="login-modal">
+    <form class="login-container" method="POST" action="/">
+
+        <div class=login>
+            <input id="username-login" placeholder="username" name="username"></input>
+        </div>
+        <div>
+            <input type="password" id="password-login" placeholder="password" name="password"></input>
+        </div>
+        <div>
+        <input type="submit" class="submit">
+        <p><a href="/api/me">Click here</a> to sign in with your Spotify account</p>
+
+    </form>
+
+    <% if @failed_login %>
+      <p><a href="/newuser">Click here</a> to create a new account</p>
+    <% end %>
+</div>

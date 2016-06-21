@@ -1,0 +1,17 @@
+<%      if @songs                                               %>
+<h2><%=     "Last week's AlphatuneZ playlist:"                  %></h2>
+<%          @songs.each do |song|                               %>
+<p><%=          " '#{song.title}' by #{song.artist}"            %></p>
+<%          end                                                 %>
+<%          end                                                 %>
+
+<br>
+<br>
+<%       if @last_5_playlists                                   %>
+<h3><%=     "View previous weeks' playlists:"                   %></h3>
+<%          @last_5_playlists.each do |playlist|                %>
+<p><center><a href="/winningplaylist/<%="#{playlist.id}"%>"><%=@us_time%></a> </center></p>
+<%            end                                               %>
+<%      else                                                    %>
+<h2><%=     "No playlists found."                               %></h2>
+<%      end                                                     %>

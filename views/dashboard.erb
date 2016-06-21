@@ -1,0 +1,75 @@
+<!--padding  -->
+<div>
+  <ul>
+  </ul>
+</div>
+
+<!--add a new song  -->
+<% if current_user %>
+<div class="login-modal">
+  <div class="login-container">
+    <form method="post" action="/songs">
+      <div class=login>
+        <% if @no_song %>
+          <p> There is no song by that name. Try again.</p>
+        <% else %>
+        <p> suggest a new song</p>
+        <% end %>
+        <input id="username-login" placeholder="title" name="title"></input>
+      </div>
+    <div>
+      <input id="password-login" placeholder="artist" name="artist"></input>
+
+    </div>
+  <div>
+      <input type="submit" class="submit">
+    </form>
+  </div>
+</div>
+<% end %>
+
+<!--song titles/artist and letters  -->
+<h2><%= @songs.values.flatten.count %> songs                             </h2>
+
+<%      @songs.each do |letter, songs|                                      %>
+<h3><%=   letter                                                       %></h3>
+<%        songs.each do |song|                                              %>
+<p><%=      "Title: #{song.title}, Artist: #{song.artist}"              %></p>
+<p><iframe src="https://embed.spotify.com/?uri=spotify:track:<%="#{song.spotify_id}"%>" frameborder="0" allowtransparency="true"></iframe></p>
+<% if current_user %>
+  <%          upvote_button = 'vote-button'                                   %>
+  <%          downvote_button = 'vote-button'                                 %>
+  <%          cast_vote = current_user.votes.find {|o| o.song_id == song.id}  %>
+  <%            if cast_vote                                                  %>
+  <%              disabled_attr = 'disabled'                                  %>
+  <%              if cast_vote.value == 1                                     %>
+  <%                upvote_button = 'vote-button-down-pressed'                %>
+  <%                downvote_button = 'vote-button-down'                      %>
+  <%              else                                                        %>
+  <%                upvote_button = 'vote-button-down'                        %>
+  <%                downvote_button = 'vote-button-down-pressed'              %>
+  <%              end                                                         %>
+  <%          end                                                             %>
+  <p>
+      <form method="POST" action="/user/song/vote">
+        <input class="<%= upvote_button %>" type="submit" value="upvote" <%= disabled_attr %>></input>
+        <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+        <input type="hidden" name="vote" value="up"></input>
+      </form>
+      <form method="POST" action="/user/song/vote">
+        <input class="<%= downvote_button %>" type="submit" value="downvote" <%= disabled_attr %>></input>
+        <input type="hidden" name="song_id" value="<%= song.id %>"></input>
+        <input type="hidden" name="vote" value="down"></input>
+      </form>
+      <% if current_user == song.suggester  %>
+          <form align="center" method="POST" action="/songs">
+            <input name="_method" type="hidden" value="DELETE">
+            <input name="title" type="hidden" value="<%= song.title %>"></input>
+            <input name="artist" type="hidden" value="<%= song.artist %>"></input>
+          <input type="submit" value="trash">
+        </form>
+      <% end %>
+  </p>
+  <%        end                                                               %>
+  <%      end                                                                 %>
+<% end %>

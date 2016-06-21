@@ -1,0 +1,20 @@
+<% if @hits.count == 1 %>
+<h2> Please confirm this is the song you wish to add:</h2>
+<% else %>
+<h2><%= @hits.count %> songs fit that criteria</h2>
+<h2> Please confirm the song you wish to add:</h2>
+<form align="center" action="/no_song" method="POST">
+  <input type="submit" value="Song not on list">
+</form>
+<% end %>
+<%  @hits.each do |song|   %>
+<hr>
+<p><%= "Title: #{song["title"]}, Artist: #{song["artist"]}, Album: #{song["album"]}"   %></p>
+<p><iframe src="https://embed.spotify.com/?uri=spotify:track:<%="#{song["id"]}"%>" frameborder="0" allowtransparency="true"></iframe></p>
+<form align="center" method="POST" action="/choose_song">
+  <input name="title" type="hidden" value="<%= song["title"] %>"></input>
+  <input name="artist" type="hidden" value="<%= song["artist"] %>"></input>
+  <input name="spotify_id" type="hidden" value="<%= song["id"] %>"></input>
+<input type="submit" value="Confirm">
+</form>
+<% end %>

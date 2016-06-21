@@ -1,0 +1,5 @@
+<center><a href="/winningplaylist/<%="#{@playlist.id}"%>"><%=@us_time%></a> </center>
+
+<% @songs.each do |song| %>
+<p><%= " '#{song.title}' by #{song.artist}" %></p>
+<%          end %>

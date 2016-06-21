@@ -1,0 +1,318 @@
+body {
+  background-color: #F5F5F5;
+}
+
+h1 {
+  font-family: Century Gothic;
+  text-align: center;
+   padding: 10px;
+}
+
+h2 {
+  font-family: Century Gothic;
+  text-align: center;
+   padding: 10px;
+}
+
+h3 {
+  font-family: Century Gothic;
+  text-align: center;
+   padding: 10px;
+}
+
+p {
+  font-family: Century Gothic;
+  text-align: center;
+}
+
+.login-container {
+  border: 1px solid grey;
+  height: 250px;
+  width: 350px;
+  /*padding: 0%;*/
+  margin: auto;
+  text-align: center;
+  background-color: #99CCCC;
+
+}
+/*navagation bar*/
+.bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+}
+
+.button {
+  margin-left: 50px;
+  margin-right: 10px;
+  display: block;
+  letter-spacing: 1.5px;
+  margin-top: 1.5em;
+  width: 10.3em;
+  height: 25px;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  border: none;
+  outline-style: none;
+  font-family: Century Gothic;
+  text-decoration: none;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    font-family: Century Gothic;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+#username-login {
+    /*margin-top: 4em;*/
+    /*padding-top: 15px;*/
+    padding: 7px;
+    letter-spacing: 3.5px;
+    display: block;
+    text-align: center;
+    margin: 0 9.4em;
+}
+#password-login {
+    /*padding-top: 15px;*/
+    padding: 7px;
+    visibility: visible;
+    letter-spacing: 3.5px;
+    display: block;
+    text-align: center;
+    margin: 0 9.4em;
+}
+
+.login {
+  margin-top: 4em;
+}
+
+.submit {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 23.3em;
+    height: 25px;
+    text-align: center;
+    background-color: #D5D5D5;
+    color: white;
+    /*border: none;*/
+    outline-style: none;
+}
+
+.vote-button {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #D5D5D5;
+    color: white;
+    /*border: none;*/
+    outline-style: none;
+}
+
+.vote-button-down {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #333;
+    color: #757575;
+    /*border: none;*/
+    outline-style: none;
+}
+
+.vote-button-down-pressed {
+    margin-left: 50px;
+    display: block;
+    letter-spacing: 1.5px;
+    margin-top: 2.5em;
+    width: 12em;
+    height: 25px;
+    text-align: center;
+    margin: auto;
+    background-color: #333;
+    color: pink;
+    /*border: none;*/
+    outline-style: none;
+    border: solid, 1px, yellow;
+}
+
+
+  .newsong {
+    border: 1px solid grey;
+    height: 250px;
+    width: 350px;
+    padding: 7px;
+    visibility: visible;
+    letter-spacing: 5.5px;
+    display: block;
+    text-align: center;
+    margin: auto;
+  }
+
+ .songform{
+    list-style-type: none;
+    text-align: center;
+    /*font-family: Century Gothic;*/
+  }
+
+
+/*.active {
+    background-color: #4CAF50;
+}*/
+
+
+
+* {
+     -moz-box-sizing: border-box; /* Firexfox */
+     -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+     box-sizing: border-box; /* IE */
+}
+
+.clear {
+	clear: both;
+}
+
+body {
+	background: url('../images/notebook.png'); /* add a fallback color of #d6d6d6 */
+	color: #000000;
+	font-family: 'Lato', sans-serif;
+	line-height: 1.7; /* line-height is unit-less */
+	font-size: 100%;
+}
+
+h1 {
+	letter-spacing: -5px;
+	font-size: 55px;
+	margin-bottom: 10px;
+}
+
+h2 {
+	font-size: 32px;
+	margin: 0;
+}
+
+blockquote {
+	border-left: 5px #BBB solid;
+	padding-left: 10px;
+	margin-left: 0;
+	font-style: italic;
+}
+
+a {
+  color: #333;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.container a {
+  border-bottom: 1px dotted #333;
+}
+
+a:hover {
+  color: #ff3300;
+  border-color: #ff3300;
+}
+
+
+/*-----------------------------------------------------------------------------
+02=LAYOUT
+-----------------------------------------------------------------------------*/
+.container {
+	margin: 0 auto 0 auto;
+	width: 1250px;
+}
+
+.main {
+	width: 600px;
+	float: right;
+	background: #FFF;
+	padding: 10px;
+	margin-right: 10px;
+	font-size: 12px;
+}
+
+.sidebar {
+	width: 340px;
+	float: left;
+	background: #FFF;
+	padding: 1px;
+	border-right: 3px solid #BBB;
+	/*border-bottom: 3px solid #BBB;*/
+}
+	.sidebar img {
+		border-radius: 300px;
+	}
+
+
+/*-----------------------------------------------------------------------------
+03=Account page
+-----------------------------------------------------------------------------*/
+.profile {
+  text-align: left;
+  font-size: 26px;
+}
+
+
+.tagline {
+	margin-top: -30px;
+	margin-bottom: 30px;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.post {
+	margin-bottom: 50px;
+}
+
+.post-meta {
+color: #999;
+padding: 10px 0px;
+border-top: #BBB solid 1px;
+}
+
+.widget {
+	margin-bottom: 45px;
+  margin-top: -30px;
+  float: left;
+}
+
+#points {
+  margin-top: -100px;
+}
+
+.vip {
+	margin-top: -50px;
+	margin-bottom: 50px;
+  padding-left: 15px;
+
+}
+
+#songs {
+  margin-top: -100px;
+}
